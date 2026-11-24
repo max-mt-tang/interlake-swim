@@ -172,11 +172,14 @@ function renderPosts(rows) {
   const sorted = [...rows].filter(row => row.category !== 'Coach introduction').sort((a, b) =>
     Number(b.pinned?.toLowerCase() === 'true') - Number(a.pinned?.toLowerCase() === 'true') || b.date.localeCompare(a.date));
   if (!sorted.length) target.append(el('p', 'No announcements posted yet. Coach’s weekly updates will appear here.', 'empty'));
+  const resultCount = sorted.filter(row => row.category === 'Meet results').length;
+  const updateCount = sorted.length - resultCount;
   for (const row of sorted) {
     const post = el('article', null, 'post');
     const meta = el('div', null, 'post-meta');
     meta.append(el('span', date(row.date)), el('span', '·'), el('span', row.category || 'Team update'));
-    if (row.pinned?.toLowerCase() === 'true') {
+    const sectionCount = row.category === 'Meet results' ? resultCount : updateCount;
+    if (sectionCount > 1 && row.pinned?.toLowerCase() === 'true') {
       const pinned = el('span', null, 'pinned-label');
       pinned.append(icon('pin'), el('span', 'Pinned'));
       meta.append(pinned);
