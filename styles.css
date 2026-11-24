@@ -457,8 +457,8 @@ html { scroll-padding-top: 94px; }
 h2 { font-size: 28px; letter-spacing: -.8px; }
 .eyebrow { margin-bottom: 7px; }
 .section-heading { margin-bottom: 16px; gap: 16px; }
-.coach-section { grid-template-columns: 150px minmax(0, 1fr); gap: 10px 24px; padding: 22px; border-radius: 10px; }
-.coach-photo-wrap { height: 210px; }
+.coach-section { grid-template-columns: 240px minmax(0, 1fr); gap: 10px 24px; padding: 22px; border-radius: 10px; }
+.coach-photo-wrap { height: 340px; }
 .coach-heading-group h1 { font-size: 32px; margin-bottom: 6px; }
 .coach-heading-group .eyebrow { margin-bottom: 6px; }
 .coach-bio > p { margin-bottom: 10px; }
@@ -501,9 +501,9 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
   .page-shell > .coach-section { margin-top: 14px; }
   h2 { font-size: 25px; }
   .section-heading { margin-bottom: 14px; gap: 12px; }
-  .coach-section { grid-template-columns: minmax(0, 1fr) 74px; padding: 17px; gap: 14px 12px; }
+  .coach-section { grid-template-columns: minmax(0, 1fr) 120px; padding: 17px; gap: 14px 12px; }
   .coach-heading-group h1 { font-size: 27px; }
-  .coach-photo-wrap { height: 96px; }
+  .coach-photo-wrap { height: 170px; }
   .coach-contact { gap: 0; }
   .upcoming-grid { gap: 12px; }
   .practice-card { padding: 13px 12px 6px; }
