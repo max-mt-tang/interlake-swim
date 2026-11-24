@@ -40,6 +40,7 @@ img { display: block; max-width: 100%; }
 .icon { display: inline-block; flex: 0 0 auto; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; vertical-align: middle; }
 .eyebrow { margin: 0 0 12px; font-size: 10px; font-weight: 750; letter-spacing: 1.7px; line-height: 1.5; }
 .muted { color: var(--muted); }
+.no-wrap { white-space: nowrap; }
 .page-shell, .header-inner, .footer-inner { width: min(100% - 64px, 1240px); margin-inline: auto; }
 .skip-link { position: fixed; left: 16px; top: -80px; z-index: 100; padding: 12px 20px; background: white; border: 2px solid var(--blue); border-radius: 8px; }
 .skip-link:focus { top: 12px; }
@@ -52,29 +53,16 @@ img { display: block; max-width: 100%; }
 #main-nav a { font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; padding-block: 12px; white-space: nowrap; }
 #main-nav a:hover, #main-nav a.active { color: var(--navy); }
 #main-nav a.active { box-shadow: 0 2px 0 var(--navy); }
-#main-nav .nav-contact { color: var(--navy); margin-left: 4px; display: flex; gap: 5px; align-items: center; }
-.nav-contact .icon { width: 16px; height: 16px; }
 .nav-toggle { display: none !important; }
 .page-shell > section { margin-top: 80px; }
-.page-shell > .overview-section { margin-top: 32px; }
-.hero { display: grid; grid-template-columns: 1.15fr 1fr; align-items: center; gap: 60px; overflow: hidden; background: var(--navy); border-radius: 18px; padding: 44px; position: relative; }
-.hero-copy { position: relative; isolation: isolate; padding: 2px 0 8px; }
-.season-label { color: #c2e1ed; font-size: 10px; font-weight: 700; letter-spacing: 1.6px; display: flex; align-items: center; gap: 9px; margin-bottom: 22px; }
-.season-label > span { width: 6px; height: 6px; border-radius: 50%; background: var(--sky); }
-h1 { margin: 0 0 20px; color: white; font: 700 clamp(65px, 6.9vw, 100px)/.91 'Barlow Condensed', 'Arial Narrow', sans-serif; letter-spacing: -.7px; }
-h1 > span { color: var(--sky); }
-.hero-intro { color: #d2e3ee; font-size: 15px; line-height: 1.7; margin-bottom: 26px; }
-.hero-actions { display: flex; align-items: center; gap: 26px; }
+.page-shell > .coach-section { margin-top: 32px; }
+.page-shell > .overview-section { margin-top: 48px; }
+.upcoming-grid { display: grid; grid-template-columns: .95fr 1.25fr; gap: 20px; align-items: start; }
 .button { min-height: 44px; display: inline-flex; justify-content: center; align-items: center; gap: 10px; padding: 11px 18px; border: 1px solid transparent; border-radius: 7px; background: var(--navy); color: white; font-size: 13px; font-weight: 650; line-height: 1.4; text-decoration: none; }
 .button:hover { background: #244964; text-decoration: none; }
-.button-white { background: white; color: var(--navy); }
-.button-white:hover { background: #e6f4f8; }
 .button-outline { background: white; border-color: var(--line); color: var(--navy); }
 .button-outline:hover { background: #eaf1f5; }
-.hero-link { font-size: 13px; font-weight: 600; color: white; }
-.hero-lanes { position: absolute; z-index: -1; pointer-events: none; left: 160px; top: -180px; transform: rotate(-30deg); opacity: .07; width: 440px; height: 800px; display: flex; justify-content: space-between; }
-.hero-lanes i { width: 46px; border-inline: 1px solid var(--sky); }
-.next-meet-card { position: relative; padding: 28px; background: white; border-radius: 12px; box-shadow: 0 10px 30px #0000000d; }
+.next-meet-card { padding: 28px; background: white; border: 1px solid var(--line); border-radius: 12px; }
 .card-topline { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 26px; }
 .card-topline .eyebrow { margin: 0; color: var(--muted); }
 .small-pill { background: #edf3f7; padding: 4px 9px; border-radius: 5px; color: var(--meet); font-size: 10px; font-weight: 750; white-space: nowrap; }
@@ -82,7 +70,7 @@ h1 > span { color: var(--sky); }
 .date-tile { width: 68px; min-height: 83px; flex-shrink: 0; background: #eaf4f8; border-radius: 8px; padding: 10px 4px; text-align: center; }
 .date-tile span { display: block; font-size: 10px; letter-spacing: 1.5px; font-weight: 750; color: var(--blue); }
 .date-tile strong { font: 700 38px/1.12 'Barlow Condensed', sans-serif; }
-.next-meet-card h2 { font-size: 27px; letter-spacing: -.7px; line-height: 1.17; }
+.next-meet-card h3 { font-size: 27px; letter-spacing: -.7px; line-height: 1.17; margin-bottom: 0; }
 .detail-line { display: flex; gap: 10px; align-items: flex-start; margin-top: 11px; }
 .detail-line > .icon { width: 18px; height: 18px; color: #638093; margin-top: 3px; }
 .detail-line p { font-size: 13px; line-height: 1.65; margin-bottom: 0; }
@@ -94,7 +82,8 @@ h1 > span { color: var(--sky); }
 .text-button { min-height: 44px; display: inline-flex; align-items: center; gap: 9px; border: 0; background: transparent; padding: 9px 0; color: var(--blue); font-size: 13px; font-weight: 650; line-height: 1.45; text-decoration: none; text-align: left; }
 .text-button:hover { text-decoration: underline; text-underline-offset: 4px; }
 .text-button .icon { width: 17px; height: 17px; }
-.quick-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 20px; }
+.quick-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.team-reminders { grid-column: 1 / -1; }
 .practice-card { background: white; border: 1px solid var(--line); padding: 22px 24px 12px; border-radius: 12px; display: flex; flex-direction: column; align-items: flex-start; }
 .practice-card .card-topline { width: 100%; margin-bottom: 18px; }
 .icon-disc { width: 33px; height: 33px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; background: #f0f3f5; color: #53677a; }
@@ -226,19 +215,23 @@ details[open] > summary .icon { transform: rotate(180deg); }
 .state-card { border-top: 3px solid #83b9cf; padding-top: 20px; }
 .section-footnote { font-size: 11px; color: var(--muted); margin-top: 16px; }
 .section-footnote a { display: inline; }
-.coach-section { display: grid; grid-template-columns: 290px 1fr; align-items: center; gap: 56px; background: white; border: 1px solid var(--line); border-radius: 16px; padding: 36px; margin-bottom: 80px; }
-.coach-photo-wrap { position: relative; align-self: stretch; min-height: 365px; }
+.coach-section { display: grid; grid-template-columns: 220px minmax(0, 1fr); grid-template-areas: "photo heading" "photo bio"; align-items: start; gap: 20px 40px; background: white; border: 1px solid var(--line); border-radius: 16px; padding: 32px; }
+.coach-heading-group { grid-area: heading; }
+.coach-heading-group .eyebrow { color: var(--blue); margin-bottom: 10px; }
+.coach-heading-group h1 { margin: 0 0 10px; color: var(--navy); font: 750 40px/1.1 system-ui, sans-serif; letter-spacing: -1.3px; }
+.coach-role { color: var(--muted); font-size: 14px; margin: 0; }
+.coach-bio { grid-area: bio; }
+.coach-photo-wrap { grid-area: photo; height: 300px; }
 .coach-photo { height: 100%; width: 100%; object-fit: cover; object-position: 50% 35%; border-radius: 9px; }
-.photo-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 32px 18px 18px; background: linear-gradient(transparent,#081d32b3); font-size: 9px; font-weight: 650; letter-spacing: 1.3px; color: white; border-radius: 0 0 9px 9px; }
-.coach-name { font-weight: 600; color: var(--blue); font-size: 16px; margin-top: 12px; margin-bottom: 20px; }
-.coach-bio > p:not(.eyebrow):not(.coach-name), .coach-more p { font-size: 14px; color: #435768; line-height: 1.8; }
+.coach-bio > p, .coach-more p { font-size: 14px; color: #435768; line-height: 1.8; }
 .coach-more summary { display: flex; align-items: center; font-size: 12px; font-weight: 650; color: var(--blue); min-height: 44px; }
 .coach-more p:first-of-type { margin-top: 12px; }
-.coach-contact { display: flex; flex-wrap: wrap; gap: 8px 28px; border-top: 1px solid var(--line); margin-top: 20px; padding-top: 17px; }
+.coach-contact { display: flex; flex-wrap: wrap; gap: 8px 28px; border-top: 1px solid var(--line); margin-top: 20px; padding-top: 12px; margin-bottom: 6px; }
 .coach-contact a { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; min-height: 36px; text-decoration: none; }
 .coach-contact a:hover { text-decoration: underline; }
 .coach-contact .icon { width: 17px; height: 17px; }
 .coach-contact a > .icon:last-child { width: 14px; height: 14px; }
+.page-shell { padding-bottom: 70px; }
 .site-footer { background: var(--deep); color: #b5c9d8; padding-block: 45px; }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 30px; }
 .footer-inner img { object-fit: contain; }
@@ -262,15 +255,13 @@ details[open] > summary .icon { transform: rotate(180deg); }
   #main-nav { gap: 18px; }
   .brand img { width: 174px; }
   .brand-sport { display: none; }
-  .hero { gap: 35px; padding: 34px; }
-  h1 { font-size: 82px; }
   .next-meet-card { padding: 24px; }
   .quick-grid { gap: 14px; }
   .practice-card { padding: 20px 19px 10px; }
   .updates-section { gap: 38px; }
   .postseason-grid { gap: 14px; }
   .postseason-card { padding-inline: 18px; }
-  .coach-section { gap: 35px; grid-template-columns: 260px 1fr; }
+  .coach-section { column-gap: 30px; }
   .meet-table td, .meet-table th { padding-inline: 19px; }
 }
 @media (max-width: 900px) {
@@ -283,14 +274,8 @@ details[open] > summary .icon { transform: rotate(180deg); }
   .nav-open #main-nav { display: flex; }
   #main-nav a { padding: 13px 12px; border-radius: 5px; font-size: 14px; }
   #main-nav a.active { box-shadow: none; background: #eef4f7; }
-  #main-nav .nav-contact { margin-left: 0; }
-  .hero { grid-template-columns: 1fr 1fr; gap: 25px; padding: 30px; }
-  h1 { font-size: clamp(56px, 8vw, 70px); }
-  .hero-intro { font-size: 13px; }
-  .hero-actions { gap: 15px; flex-wrap: wrap; }
-  .season-label { font-size: 9px; letter-spacing: 1px; }
   .next-meet-card { padding: 22px; }
-  .next-meet-card h2 { font-size: 23px; }
+  .next-meet-card h3 { font-size: 23px; }
   .meet-title-row { gap: 12px; }
   .date-tile { width: 53px; min-height: 72px; }
   .date-tile strong { font-size: 32px; }
@@ -307,8 +292,9 @@ details[open] > summary .icon { transform: rotate(180deg); }
   .post { padding: 24px; }
   .postseason-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .postseason-card { padding: 24px; }
-  .coach-section { grid-template-columns: 220px 1fr; gap: 28px; padding: 28px; }
-  .coach-bio h2 { font-size: 28px; }
+  .upcoming-grid { grid-template-columns: 1fr; }
+  .coach-section { grid-template-columns: 190px minmax(0, 1fr); column-gap: 25px; padding: 28px; }
+  .coach-heading-group h1 { font-size: 34px; }
 }
 @media (max-width: 700px) {
   .page-shell, .header-inner, .footer-inner { width: calc(100% - 36px); }
@@ -318,26 +304,17 @@ details[open] > summary .icon { transform: rotate(180deg); }
   .brand-sport { padding-left: 13px; font-size: 10px; letter-spacing: 1.1px; }
   #main-nav { padding-inline: 18px; }
   .page-shell > section { margin-top: 48px; }
-  .page-shell > .overview-section { margin-top: 18px; }
-  .hero { grid-template-columns: 1fr; padding: 25px 22px 22px; gap: 26px; border-radius: 13px; }
-  .hero-copy { padding: 6px 1px 0; }
-  .season-label { margin-bottom: 21px; font-size: 9px; }
-  h1 { font-size: clamp(62px, 15vw, 90px); line-height: .94; margin-bottom: 18px; }
-  .hero-intro { font-size: 13px; margin-bottom: 23px; }
-  .hero-actions { flex-wrap: nowrap; gap: 23px; }
-  .hero-actions .button { font-size: 12px; padding-inline: 15px; }
-  .hero-link { font-size: 12px; }
-  .hero-lanes { left: 140px; top: -210px; }
+  .page-shell > .coach-section { margin-top: 18px; }
   .next-meet-card { padding: 22px; border-radius: 9px; }
   .card-topline { margin-bottom: 23px; }
   .next-meet-card .eyebrow { font-size: 9px; letter-spacing: 1.3px; }
-  .next-meet-card h2 { font-size: 25px; }
+  .next-meet-card h3 { font-size: 25px; }
   .meet-title-row { gap: 15px; margin-bottom: 21px; }
   .date-tile { width: 58px; }
   .home-actions { gap: 16px; }
   .home-actions .button { flex-basis: auto; }
   .home-actions .text-button { font-size: 12px; }
-  .quick-grid { gap: 12px; margin-top: 14px; }
+  .quick-grid { gap: 12px; }
   .practice-card { border-radius: 9px; padding: 16px 14px 8px; }
   .practice-card .eyebrow { font-size: 8px; letter-spacing: .85px; }
   .practice-card .card-topline { margin-bottom: 14px; gap: 5px; }
@@ -411,11 +388,13 @@ details[open] > summary .icon { transform: rotate(180deg); }
   .postseason-card p:not(.eyebrow) { font-size: 11px; }
   .postseason-card .text-button { font-size: 11px; }
   .section-footnote { font-size: 10px; }
-  .coach-section { grid-template-columns: 1fr; padding: 22px; gap: 25px; border-radius: 12px; margin-bottom: 48px; }
-  .coach-photo-wrap { min-height: 0; height: 310px; }
-  .coach-photo { object-position: 50% 27%; }
-  .coach-bio h2 { font-size: 29px; }
-  .coach-bio > p:not(.eyebrow):not(.coach-name), .coach-more p { font-size: 13px; }
+  .coach-section { grid-template-columns: minmax(0, 1fr) 90px; grid-template-areas: "heading photo" "bio bio"; padding: 22px; gap: 22px 16px; border-radius: 12px; }
+  .coach-heading-group h1 { font-size: 30px; letter-spacing: -.8px; }
+  .coach-heading-group .eyebrow { font-size: 9px; }
+  .coach-role { font-size: 12px; line-height: 1.6; }
+  .coach-photo-wrap { height: 110px; }
+  .coach-photo { object-position: 50% 47%; }
+  .coach-bio > p, .coach-more p { font-size: 13px; }
   .coach-contact { display: grid; gap: 4px; }
   .coach-contact a { font-size: 13px; width: fit-content; }
   .footer-inner { flex-direction: column; align-items: flex-start; gap: 26px; }
@@ -428,12 +407,8 @@ details[open] > summary .icon { transform: rotate(180deg); }
   .page-shell, .header-inner, .footer-inner { width: calc(100% - 28px); }
   .brand img { width: 141px; }
   .brand-sport { font-size: 9px; }
-  .hero { padding: 23px 18px 18px; }
-  h1 { font-size: 59px; }
-  .hero-actions { gap: 15px; }
-  .hero-actions .button { padding-inline: 12px; }
   .next-meet-card { padding: 19px; }
-  .next-meet-card h2 { font-size: 23px; }
+  .next-meet-card h3 { font-size: 23px; }
   .home-actions { gap: 5px 14px; }
   .home-actions .button { flex-basis: 100%; }
   .quick-grid { grid-template-columns: 1fr; }
@@ -443,4 +418,7 @@ details[open] > summary .icon { transform: rotate(180deg); }
   .practice-card .muted, .practice-date, .practice-card .text-button { font-size: 12px; }
   .team-reminders { display: flex; padding-bottom: 12px; }
   .postseason-grid { grid-template-columns: 1fr; }
+  .coach-section { padding: 18px; grid-template-columns: minmax(0, 1fr) 74px; gap: 18px 12px; }
+  .coach-heading-group h1 { font-size: 28px; }
+  .coach-photo-wrap { height: 100px; }
 }
