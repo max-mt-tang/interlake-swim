@@ -450,24 +450,34 @@ const sectionObserver = new IntersectionObserver(entries => {
 }, { rootMargin: '-100px 0px -65% 0px', threshold: 0 });
 document.querySelectorAll('main > section').forEach(section => sectionObserver.observe(section));
 
+async function loadUpdates() {
+  const { loadPublishedPosts } = await import('./posts-feed.js');
+  const posts = await Promise.race([loadPublishedPosts(), new Promise((_, reject) => setTimeout(() => reject(new Error('Updates timed out')), 15000))]);
+  if (posts !== null) return posts;
+  return load(TEAM_CONFIG.updatesCsvUrl, ['published', 'date', 'title', 'body', 'pinned'], LOCAL_UPDATES);
+}
+
 async function init() {
   const results = await Promise.allSettled([
-    load(TEAM_CONFIG.updatesCsvUrl, ['published', 'date', 'title', 'body', 'pinned'], LOCAL_UPDATES),
+    loadUpdates(),
     load(TEAM_CONFIG.scheduleCsvUrl, ['published', 'date', 'time', 'end_time', 'title', 'type', 'location', 'notes', 'link'], LOCAL_EVENTS)
   ]);
-  renderPosts(results[0].status === 'fulfilled' ? results[0].value : LOCAL_UPDATES);
+  if (results[0].status === 'fulfilled') renderPosts(results[0].value);
+  else $('#posts').textContent = 'Updates could not load. Please refresh or contact the coach.';
   events = [...(results[1].status === 'fulfilled' ? results[1].value : LOCAL_EVENTS)].sort((a, b) => eventKey(a).localeCompare(eventKey(b)));
   renderHome();
   renderCalendar();
   renderMeets();
   renderPostseason();
-  const failed = results.some(result => result.status === 'rejected');
+  const failed = results[1].status === 'rejected';
   $('#status').textContent = failed
-    ? 'A live feed could not load. Saved information is from Nov. 22, 2026; confirm later changes with the coach.'
-    : !TEAM_CONFIG.updatesCsvUrl || !TEAM_CONFIG.scheduleCsvUrl
-      ? 'From Coach Eberth’s Nov. 22, 2026 update · All times Pacific · Confirm later changes with the coach.'
-      : 'Live team information · All times Pacific · Refresh for the latest changes.';
-  const editor = link(TEAM_CONFIG.coachSheetUrl, 'Open team editor');
-  if (editor) { $('#editor').hidden = false; $('#editor').replaceChildren(editor); }
+    ? 'The live schedule could not load. Saved schedule is from Nov. 22, 2026; confirm later changes with the coach.'
+    : !TEAM_CONFIG.scheduleCsvUrl
+      ? 'Schedule from Coach Eberth’s Nov. 22, 2026 update · All times Pacific · Confirm later changes with the coach.'
+      : 'Live schedule · All times Pacific · Refresh for the latest changes.';
+  $('#editor').hidden = false;
+  const editorLink = el('a', 'Sign in to post updates', 'text-button');
+  editorLink.href = 'admin.html';
+  $('#editor').replaceChildren(editorLink);
 }
 init();

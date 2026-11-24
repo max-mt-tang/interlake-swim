@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function editor() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in ['maxmttang@gmail.com', 'riverae@bsd405.org'];
+    }
+    function validPost(p) {
+      return p.keys().hasAll(['title','body','date','category','published','pinned','link','link_label','createdBy','createdAt','updatedAt','revision'])
+        && p.keys().hasOnly(['title','body','date','category','published','pinned','link','link_label','createdBy','createdAt','updatedAt','revision'])
+        && p.title is string && p.title.size() > 0 && p.title.size() <= 160
+        && p.body is string && p.body.size() > 0 && p.body.size() <= 20000
+        && p.date is string && p.date.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+        && p.category in ['Coach update','Meet reminder','Practice change','Team announcement']
+        && p.published is bool && p.pinned is bool
+        && p.link is string && p.link.size() <= 2048 && (p.link == '' || p.link.matches('^https://[^ ].*'))
+        && p.link_label is string && p.link_label.size() <= 100
+        && p.createdBy is string && p.createdAt is timestamp && p.updatedAt == request.time
+        && p.revision is int;
+    }
+    match /posts/{postId} {
+      allow read: if editor() || resource.data.published == true;
+      allow create: if editor() && validPost(request.resource.data)
+        && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.revision == 1;
+      allow update: if editor() && validPost(request.resource.data)
+        && request.resource.data.createdBy == resource.data.createdBy
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.revision == resource.data.revision + 1;
+      // Unpublish rather than permanently delete posts.
+      allow delete: if false;
+    }
+  }
+}
