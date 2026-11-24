@@ -28,6 +28,7 @@ let selected = null,
   currentUser = null;
 const message = (text) => {
   $("#message").textContent = text;
+  $("#message").hidden = !text;
 };
 const allowed = (user) =>
   user &&
@@ -111,6 +112,8 @@ async function listPosts() {
 }
 async function showUser(user) {
   currentUser = user;
+  document.body.classList.toggle("auth-screen", !allowed(user));
+  $("#editor-title").textContent = allowed(user) ? "Team updates" : "Coach sign-in";
   $("#login").hidden = !!user;
   $("#signout").hidden = !user;
   $("#verification").hidden = true;
@@ -118,7 +121,7 @@ async function showUser(user) {
   if (!user) {
     $("#post-list").replaceChildren();
     emptyForm();
-    message("Sign in to write and publish team updates.");
+    message("");
     return;
   }
   if (!editorEmails.includes(user.email?.toLowerCase())) {
@@ -160,7 +163,7 @@ if (!auth) {
   $("#google-login").addEventListener("click", () =>
     attempt(async () => {
       const provider = new GoogleAuthProvider();
-      provider.setCustomParameters({ prompt: "select_account" });
+      provider.setCustomParameters({ prompt: "select_account", login_hint: $("#email").value });
       await signInWithPopup(auth, provider);
     }),
   );

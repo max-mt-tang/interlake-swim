@@ -11,42 +11,30 @@
     <script src="team-data.js"></script>
     <script type="module" src="editor.js"></script>
   </head>
-  <body>
+  <body class="auth-screen">
     <header class="editor-header">
-      <a href="/">← Interlake Swim &amp; Dive</a
-      ><button id="signout" hidden>Sign out</button>
+      <a class="editor-brand" href="/" aria-label="Interlake Swim and Dive home"><img src="assets/interlake-logo.svg" width="174" height="52" alt="Interlake High School"><span>SWIM &amp; DIVE</span></a>
+      <div class="editor-header-actions"><a href="/">Back to team site <span aria-hidden="true">↗</span></a><button id="signout" hidden>Sign out</button></div>
     </header>
     <main class="editor-main">
-      <h1>Team updates</h1>
-      <p id="message" role="status" aria-live="polite">Loading editor…</p>
-      <section id="login" hidden>
-        <h2>Sign in to post</h2>
-        <p>
-          For Max and Coach Eberth. Parents can
-          <a href="/#updates">read updates here</a>.
-        </p>
-        <button id="google-login">Sign in with Google</button>
-        <p>Or sign in with your existing email and password.</p>
+      <h1 id="editor-title">Coach sign-in</h1>
+      <p id="message" role="status" aria-live="polite">Loading…</p>
+      <section id="login" aria-labelledby="editor-title" hidden>
+        <p class="login-intro">For Coach Eberth to post updates and Max to test posting.</p>
         <form id="login-form">
-          <label
-            >Email<input
-              id="email"
-              type="email"
-              autocomplete="username"
-              required /></label
-          ><label
-            >Password<input
-              id="password"
-              type="password"
-              autocomplete="current-password"
-              minlength="12"
-              required
-          /></label>
-          <div class="editor-actions">
-            <button type="submit">Sign in</button
-            ><button type="button" id="reset">Reset password</button>
-          </div>
+          <label for="email">Email</label>
+          <select id="email" name="email" required>
+            <option value="maxmttang@gmail.com">Max · maxmttang@gmail.com</option>
+            <option value="riverae@bsd405.org">Coach Eberth · riverae@bsd405.org</option>
+          </select>
+          <button type="button" id="google-login">Continue with Google <span aria-hidden="true">→</span></button>
+          <div class="login-divider"><span>or use your password</span></div>
+          <label for="password">Password</label>
+          <input id="password" type="password" autocomplete="current-password" required placeholder="Enter your password">
+          <button type="submit" class="primary email-signin">Sign in</button>
+          <button type="button" id="reset">Forgot password?</button>
         </form>
+        <p class="login-footer">Looking for team news? <a href="/#updates">Read updates</a></p>
       </section>
       <section id="verification" hidden>
         <h2>Verify your email</h2>
