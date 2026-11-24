@@ -21,6 +21,14 @@ import {
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
 const $ = (s) => document.querySelector(s);
+const writer = new Quill('#rich-body', {
+  theme: 'snow', placeholder: 'Write your update here…',
+  modules: {toolbar: '#format-toolbar'},
+  formats: ['header', 'bold', 'italic', 'underline', 'list', 'link'],
+});
+writer.root.setAttribute('role', 'textbox');
+writer.root.setAttribute('aria-labelledby', 'message-label');
+writer.root.setAttribute('aria-multiline', 'true');
 let selected = null,
   revision = null,
   dirty = false,
@@ -60,6 +68,7 @@ function emptyForm() {
   revision = null;
   dirty = false;
   $("#post-form").reset();
+  writer.setText('', 'silent');
   $("#post-date").value = new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/Los_Angeles",
     year: "numeric",
@@ -94,7 +103,7 @@ async function listPosts() {
       selected = p.id;
       revision = p.revision;
       $("#title").value = p.title;
-      $("#body").value = p.body;
+      writer.setContents(SwimContent.decode(p.body), 'silent');
       $("#post-date").value = p.date;
       $("#category").value = p.category;
       $("#post-link").value = p.link;
@@ -149,8 +158,8 @@ function preview() {
   box.replaceChildren();
   const title = document.createElement("h3");
   title.textContent = $("#title").value;
-  const body = document.createElement("p");
-  body.textContent = $("#body").value;
+  const body = document.createElement("div");
+  SwimContent.render(body, SwimContent.encode(writer.getContents()));
   box.append(title, body);
   box.hidden = false;
 }
@@ -257,6 +266,7 @@ if (!auth) {
   $("#post-form").addEventListener("input", () => {
     dirty = true;
   });
+  writer.on('text-change', () => { dirty = true; });
   $("#post-form").addEventListener("submit", (e) => {
     e.preventDefault();
     if (saving) return;
@@ -269,7 +279,7 @@ if (!auth) {
       }
       const data = {
         title: $("#title").value.trim(),
-        body: $("#body").value.trim(),
+        body: SwimContent.encode(writer.getContents()),
         date: $("#post-date").value,
         category: $("#category").value,
         pinned: $("#pinned").checked,
@@ -277,8 +287,12 @@ if (!auth) {
         link,
         link_label: $("#link-label").value.trim(),
       };
-      if (!data.title || !data.body) {
+      if (!data.title || !writer.getText().trim()) {
         message("Add a title and message.");
+        return;
+      }
+      if (data.body.length > 20000) {
+        message('This update is too long. Please shorten the message or split it into two posts.');
         return;
       }
       const ref = selected
@@ -286,6 +300,7 @@ if (!auth) {
         : doc(collection(db, "posts"));
       const oldRevision = revision;
       saving = true;
+      writer.enable(false);
       $("#post-form")
         .querySelectorAll("button,input,select,textarea")
         .forEach((n) => (n.disabled = true));
@@ -321,6 +336,7 @@ if (!auth) {
         await listPosts();
       } finally {
         saving = false;
+        writer.enable(true);
         $("#post-form")
           .querySelectorAll("button,input,select,textarea")
           .forEach((n) => (n.disabled = false));
