@@ -4,7 +4,7 @@ service cloud.firestore {
     function editor() {
       return request.auth != null
         && request.auth.token.email_verified == true
-        && request.auth.token.email in ['maxmttang@gmail.com', 'riverae@bsd405.org'];
+        && request.auth.token.email in ['maxmttang@gmail.com', 's-tangm@bsd405.org', 'riverae@bsd405.org'];
     }
     function validPost(p) {
       return p.keys().hasAll(['title','body','date','category','published','pinned','link','link_label','createdBy','createdAt','updatedAt','revision'])

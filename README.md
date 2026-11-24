@@ -18,8 +18,8 @@ This is a static site with no build step. Firebase browser SDK modules are loade
 
 Max and Coach Eberth write announcements at https://ihsswim.vercel.app/admin.html. Posts are saved in Cloud Firestore, not GitHub.
 
-- Max: choose **Sign in with Google** and use `maxmttang@gmail.com`.
-- Coach: use `riverae@bsd405.org`. The page shows password sign-in for Coach Eberth and Google sign-in for Max. The project owner must provision Eberth’s email/password account in Firebase Authentication; there is no registration button on the site. The coach must verify the email before posting.
+- Max: choose **Continue with Google** for `maxmttang@gmail.com`, or use password sign-in for `s-tangm@bsd405.org`. The school email needs a provisioned Firebase account and email verification.
+- Coach: use `riverae@bsd405.org`. The page shows password sign-in for Coach Eberth and Google sign-in for Max’s Gmail. The project owner must provision Eberth’s email/password account in Firebase Authentication; there is no registration button on the site. The coach must verify the email before posting.
 - Choose **New update**, enter a title, date and message, optionally add a link, and choose **Publish update**.
 - **Save draft / unpublish** keeps a post private to the two editors. Parents need no account to read published updates.
 - To edit a post, select it from the list. Conflicting edits are rejected so another editor’s work is not silently overwritten.
@@ -42,7 +42,7 @@ The month calendar is the desktop default; phones open in agenda view. Both view
 
 Project: `interlake-swim`, owned by Max’s Google account. Authentication uses Google and verified email/password; Firestore is the Standard default database in `nam5`. The project uses Spark (no billing upgrade). Photos remain static assets in the repository.
 
-`firebase-config.js` contains the public web configuration. It is not a secret or an authorization boundary. `firestore.rules` grants writes only to the two verified editor emails, restricts document fields and lengths, and lets the public read only published posts. All other collections are denied. Permanent deletion is disabled; unpublish instead.
+`firebase-config.js` contains the public web configuration. It is not a secret or an authorization boundary. `firestore.rules` grants writes only to the three approved, verified email addresses, restricts document fields and lengths, and lets the public read only published posts. All other collections are denied. Permanent deletion is disabled; unpublish instead.
 
 Keep console rules in sync with `firestore.rules` (Firebase CLI: `firebase deploy --only firestore:rules --project interlake-swim`, after authenticating as the project owner). If changing editors, update the rules as well as `editorEmails` in `firebase-config.js`. A UI-only change never grants database access. Authorized domains include `ihsswim.vercel.app`; add a new domain before switching the site address.
 
