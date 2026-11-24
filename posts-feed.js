@@ -15,6 +15,7 @@ export async function loadPublishedPosts() {
     const row = item.data();
     return {
       ...row,
+      id: item.id,
       published: String(row.published),
       pinned: String(row.pinned),
     };

@@ -22,6 +22,7 @@ import {
   runTransaction,
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+let requestedPost = new URLSearchParams(location.search).get("post");
 const $ = (s) => document.querySelector(s);
 const writer = new Quill('#rich-body', {
   theme: 'snow', placeholder: 'Write your update here…',
@@ -69,6 +70,7 @@ async function attempt(fn) {
 }
 function emptyForm() {
   selected = null;
+  $("#post-list").querySelectorAll("button").forEach(n => n.classList.remove("selected"));
   $("#delete-post").hidden = true;
   revision = null;
   dirty = false;
@@ -102,9 +104,17 @@ async function listPosts() {
   for (const p of rows) {
     const button = document.createElement("button");
     button.type = "button";
-    button.textContent = `${p.published ? "Published" : "Draft"} · ${p.date} · ${p.title}`;
+    const title = document.createElement("strong");
+    title.textContent = p.title;
+    const meta = document.createElement("span");
+    meta.className = "post-list-meta";
+    meta.textContent = (p.published ? "Published" : "Draft") + " · " + p.date;
+    button.append(title, meta);
+    button.classList.toggle("selected", selected === p.id);
     button.addEventListener("click", () => {
       if (saving || uploading || !mayDiscard()) return;
+      $("#post-list").querySelectorAll("button").forEach(n => n.classList.remove("selected"));
+      button.classList.add("selected");
       selected = p.id;
       $("#delete-post").hidden = false;
       revision = p.revision;
@@ -123,6 +133,7 @@ async function listPosts() {
       dirty = false;
     });
     $("#post-list").append(button);
+    if (requestedPost === p.id) { requestedPost = null; button.click(); }
   }
 }
 async function showUser(user) {

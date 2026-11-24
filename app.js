@@ -184,6 +184,11 @@ function renderPosts(rows) {
     const body = el('div', null, 'body');
     SwimContent.render(body, row.body || '');
     post.append(meta, el('h3', row.title), body);
+    if (row.id) {
+      const manage = el('a', 'Edit / delete post →', 'post-manage');
+      manage.href = 'admin.html?post=' + encodeURIComponent(row.id);
+      post.append(manage);
+    }
     const more = link(row.link, row.link_label || 'Read more');
     if (more) post.append(more);
     (row.category === 'Meet results' ? results : target).append(post);
