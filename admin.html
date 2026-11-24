@@ -27,12 +27,13 @@
             <option value="maxmttang@gmail.com">Max · maxmttang@gmail.com</option>
             <option value="riverae@bsd405.org" selected>Coach Eberth · riverae@bsd405.org</option>
           </select>
-          <button type="button" id="google-login">Continue with Google <span aria-hidden="true">→</span></button>
-          <div class="login-divider"><span>or use your password</span></div>
+          <button type="button" id="google-login" hidden>Continue with Google <span aria-hidden="true">→</span></button>
+          <div id="password-signin">
           <label for="password">Password</label>
           <input id="password" type="password" autocomplete="current-password" required placeholder="Enter your password">
           <button type="submit" class="primary email-signin">Sign in</button>
           <button type="button" id="reset">Forgot password?</button>
+          </div>
         </form>
         <p class="login-footer">Looking for team news? <a href="/#updates">Read updates</a></p>
       </section>
