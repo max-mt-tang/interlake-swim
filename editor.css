@@ -1,0 +1,116 @@
+[hidden] {
+  display: none !important;
+}
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 5%;
+  border-bottom: 1px solid var(--line);
+  background: white;
+}
+.editor-main {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 20px 60px;
+}
+.editor-main h1 {
+  font-size: 32px;
+  margin-bottom: 14px;
+}
+.editor-main h2 {
+  font-size: 23px;
+  margin: 16px 0;
+}
+.editor-main label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 14px 0;
+}
+.editor-main input:not([type="checkbox"]),
+.editor-main textarea,
+.editor-main select {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  border: 1px solid #a4b4c2;
+  border-radius: 5px;
+  font: inherit;
+  background: white;
+  color: #12334c;
+}
+.editor-main textarea {
+  resize: vertical;
+}
+.editor-main button,
+.editor-header button {
+  padding: 11px 14px;
+  min-height: 44px;
+  border: 1px solid #9babba;
+  border-radius: 5px;
+  background: white;
+  color: #12334c;
+  cursor: pointer;
+  font: inherit;
+}
+.editor-main .primary {
+  background: #123f60;
+  color: white;
+}
+.editor-main button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.editor-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 16px 0;
+}
+.editor-layout {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 30px;
+}
+#login {
+  max-width: 520px;
+}
+#message {
+  padding: 12px 15px;
+  background: #e8f2f9;
+  border-radius: 5px;
+}
+#post-list button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 8px;
+  overflow-wrap: anywhere;
+}
+.editor-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+#preview {
+  padding: 20px;
+  border: 1px solid var(--line);
+  background: white;
+  margin-top: 20px;
+  overflow-wrap: anywhere;
+}
+#preview p {
+  white-space: pre-wrap;
+}
+@media (max-width: 700px) {
+  .editor-layout,
+  .editor-row {
+    grid-template-columns: 1fr;
+  }
+  .editor-main {
+    margin-top: 20px;
+  }
+}

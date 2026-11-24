@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Team editor · Interlake Swim &amp; Dive</title>
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="editor.css" />
+    <script src="team-data.js"></script>
+    <script type="module" src="editor.js"></script>
+  </head>
+  <body>
+    <header class="editor-header">
+      <a href="/">← Interlake Swim &amp; Dive</a
+      ><button id="signout" hidden>Sign out</button>
+    </header>
+    <main class="editor-main">
+      <h1>Team updates</h1>
+      <p id="message" role="status" aria-live="polite">Loading editor…</p>
+      <section id="login" hidden>
+        <h2>Sign in to post</h2>
+        <p>
+          For Max and Coach Eberth. Parents can
+          <a href="/#updates">read updates here</a>.
+        </p>
+        <button id="google-login">Sign in with Google</button>
+        <p>Or use your email and password. For a new account, choose a password with at least 12 characters and verify your email.</p>
+        <form id="login-form">
+          <label
+            >Email<input
+              id="email"
+              type="email"
+              autocomplete="username"
+              required /></label
+          ><label
+            >Password<input
+              id="password"
+              type="password"
+              autocomplete="current-password"
+              minlength="12"
+              required
+          /></label>
+          <div class="editor-actions">
+            <button type="submit">Sign in</button
+            ><button type="button" id="register">Create editor account</button
+            ><button type="button" id="reset">Reset password</button>
+          </div>
+        </form>
+      </section>
+      <section id="verification" hidden>
+        <h2>Verify your email</h2>
+        <p>Open the verification message in your inbox, then return here.</p>
+        <button id="resend">Send verification email</button>
+        <button id="check-verification">I’ve verified my email</button>
+      </section>
+      <section id="workspace" hidden>
+        <div class="editor-actions">
+          <button id="new-post">New update</button
+          ><button id="reload-posts">Refresh list</button
+          ><button id="import-posts" hidden>
+            Import existing weekly update</button
+          ><a href="/#updates" target="_blank" rel="noopener"
+            >View published updates ↗</a
+          >
+        </div>
+        <div class="editor-layout">
+          <aside>
+            <h2>Your team’s posts</h2>
+            <div id="post-list"></div>
+          </aside>
+          <form id="post-form">
+            <h2 id="form-heading">New update</h2>
+            <label>Title<input id="title" maxlength="160" required /></label>
+            <div class="editor-row">
+              <label>Date<input id="post-date" type="date" required /></label
+              ><label
+                >Category<select id="category">
+                  <option>Coach update</option>
+                  <option>Meet reminder</option>
+                  <option>Practice change</option>
+                  <option>Team announcement</option>
+                </select></label
+              >
+            </div>
+            <label
+              >Message<textarea
+                id="body"
+                rows="12"
+                maxlength="20000"
+                required
+              ></textarea></label
+            ><label
+              >Optional link<input
+                id="post-link"
+                type="url"
+                placeholder="https://"
+                maxlength="2048" /></label
+            ><label>Link text<input id="link-label" maxlength="100" /></label
+            ><label class="check-label"
+              ><input id="pinned" type="checkbox" /> Pin this update</label
+            >
+            <div class="editor-actions">
+              <button type="button" id="preview-button">Preview</button
+              ><button type="submit" value="draft">
+                Save draft / unpublish</button
+              ><button type="submit" value="publish" class="primary">
+                Publish update
+              </button>
+            </div>
+            <p id="save-state"></p>
+            <article id="preview" hidden></article>
+          </form>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
