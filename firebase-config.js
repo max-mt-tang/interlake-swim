@@ -7,4 +7,4 @@ export const firebaseConfig = {
   messagingSenderId: "413508879777",
   appId: "1:413508879777:web:5a4f577bab34d7b3c437e0",
 };
-export const editorEmails = ["maxmttang@gmail.com", "s-tangm@bsd405.org", "riverae@bsd405.org"];
+export const editorEmails = ["maxmttang@gmail.com", "s-tangm@bsd405.org", "riverae@bsd405.org", "s-tangra@bsd405.org", "rayshinetang@gmail.com"];

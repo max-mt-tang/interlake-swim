@@ -55,7 +55,7 @@ function errorMessage(e) {
     'auth/popup-blocked': 'Allow the sign-in popup, then try again.',
     'auth/popup-closed-by-user': 'Sign-in was cancelled.',
     'auth/too-many-requests': 'Too many attempts. Please wait and try again.',
-    'not-editor': 'Use Max’s or Coach Eberth’s approved email address.',
+    'not-editor': 'Use Max’s, Ray’s, or Coach Eberth’s approved email address.',
     conflict: 'This post changed in another session. Copy your text, refresh the list and reopen the latest version before saving.'
   };
   return messages[e.code] || messages[e.message] || 'Could not complete the request. Check your connection and try again.';
@@ -184,7 +184,7 @@ $("#toggle-password").addEventListener("click", () => {
   setPasswordVisible($("#password").type === "password");
 });
 function updateSignInMethod() {
-  const useGoogle = $("#email").value === "maxmttang@gmail.com";
+  const useGoogle = ["maxmttang@gmail.com", "rayshinetang@gmail.com"].includes($("#email").value);
   $("#google-login").hidden = !useGoogle;
   $("#password-signin").hidden = useGoogle;
   $("#password").disabled = useGoogle;
@@ -205,7 +205,7 @@ if (!auth) {
   onAuthStateChanged(auth, showUser);
   $("#google-login").addEventListener("click", () =>
     attempt(async () => {
-      if ($("#email").value !== "maxmttang@gmail.com") return;
+      if (!["maxmttang@gmail.com", "rayshinetang@gmail.com"].includes($("#email").value)) return;
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({ prompt: "select_account", login_hint: $("#email").value });
       await signInWithPopup(auth, provider);
