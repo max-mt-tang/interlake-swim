@@ -188,3 +188,15 @@ body:not(.auth-screen) #message { background: transparent; padding: 0; margin: 6
   .publish-actions { gap: 8px; }
   .publish-actions .primary { margin-left: 0; }
 }
+.writing-area { border: 1px solid #cad6df; border-radius: 6px; }
+#format-toolbar { border: 0; border-bottom: 1px solid #dce4eb; background: #f6f8fa; border-radius: 6px 6px 0 0; padding: 10px; }
+#format-toolbar button { min-height: 28px; padding: 3px 5px; border: 0; border-radius: 3px; background: transparent; }
+#format-toolbar button:hover { background: #e1eaf1; }
+#rich-body { border: 0; font: inherit; }
+#rich-body .ql-editor { min-height: 320px; padding: 20px; font-size: 15px; line-height: 1.75; color: #12334c; }
+#rich-body .ql-editor.ql-blank::before { left: 20px; font-style: normal; color: #7b8b97; }
+#rich-body .ql-editor:focus-visible { outline: 2px solid #629fc4; outline-offset: -2px; }
+#rich-body .ql-tooltip { left: 0 !important; max-width: 100%; white-space: normal; z-index: 2; }
+#rich-body .ql-tooltip input { display: inline-block; width: 160px; }
+.field-help { font-size: 12px; line-height: 1.5; color: #586c7c; margin: 8px 0 0; }
+#preview :is(ul,ol) { padding-left: 24px; }

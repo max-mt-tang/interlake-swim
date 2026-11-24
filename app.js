@@ -158,7 +158,7 @@ function renderPosts(rows) {
       meta.append(pinned);
     }
     const body = el('div', null, 'body');
-    for (const paragraph of (row.body || '').split(/\n\s*\n/)) body.append(el('p', paragraph));
+    SwimContent.render(body, row.body || '');
     post.append(meta, el('h3', row.title), body);
     const more = link(row.link, row.link_label || 'Read more');
     if (more) post.append(more);
