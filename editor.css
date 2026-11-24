@@ -202,3 +202,6 @@ body:not(.auth-screen) #message { background: transparent; padding: 0; margin: 6
 #preview :is(ul,ol) { padding-left: 24px; }
 #format-toolbar #add-photo { width: auto; padding: 3px 9px; color: #123f60; font-size: 13px; font-weight: 600; }
 #rich-body img, #preview img { display: block; max-width: 100%; height: auto; border-radius: 6px; margin: 12px 0; }
+
+#delete-post { margin-top: 16px; color: #a12636; border-color: #d6a3aa; background: #fff; }
+#delete-post:hover { background: #fff1f3; }

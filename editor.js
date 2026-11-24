@@ -69,6 +69,7 @@ async function attempt(fn) {
 }
 function emptyForm() {
   selected = null;
+  $("#delete-post").hidden = true;
   revision = null;
   dirty = false;
   $("#post-form").reset();
@@ -105,6 +106,7 @@ async function listPosts() {
     button.addEventListener("click", () => {
       if (saving || uploading || !mayDiscard()) return;
       selected = p.id;
+      $("#delete-post").hidden = false;
       revision = p.revision;
       $("#title").value = p.title;
       writer.setContents(SwimContent.decode(p.body), 'silent');
@@ -336,6 +338,32 @@ if (!auth) {
       $('#photo-file').value = '';
     }
   });
+  $("#delete-post").addEventListener("click", () => {
+    if (!selected || saving || uploading || !allowed(auth.currentUser)) return;
+    if (!confirm('Permanently delete this post? This cannot be undone. Unsaved edits will be discarded. Uploaded photos and PDFs will remain in Drive.')) return;
+    const ref = doc(db, "posts", selected);
+    const oldRevision = revision;
+    saving = true;
+    writer.enable(false);
+    const controls = $("#post-form").querySelectorAll("button,input,select,textarea");
+    controls.forEach(n => n.disabled = true);
+    attempt(async () => {
+      try {
+        await runTransaction(db, async tx => {
+          const existing = await tx.get(ref);
+          if (!existing.exists() || existing.data().revision !== oldRevision) throw Error("conflict");
+          tx.delete(ref);
+        });
+        emptyForm();
+        message("Post deleted. Uploaded photos and PDFs remain in Drive.");
+        await listPosts();
+      } finally {
+        saving = false;
+        writer.enable(true);
+        controls.forEach(n => n.disabled = false);
+      }
+    });
+  });
   $("#post-form").addEventListener("submit", (e) => {
     e.preventDefault();
     if (saving || uploading) return;
@@ -396,6 +424,7 @@ if (!auth) {
           }
         });
         selected = ref.id;
+        $("#delete-post").hidden = false;
         revision = (oldRevision || 0) + 1;
         dirty = false;
         $("#save-state").textContent = data.published
