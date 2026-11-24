@@ -1,5 +1,6 @@
 import { auth, db } from "./firebase-client.js";
 import { editorEmails } from "./firebase-config.js";
+import { uploadPhoto } from './photo-upload.js';
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -23,16 +24,18 @@ import {
 const $ = (s) => document.querySelector(s);
 const writer = new Quill('#rich-body', {
   theme: 'snow', placeholder: 'Write your update here…',
-  modules: {toolbar: '#format-toolbar'},
-  formats: ['header', 'bold', 'italic', 'underline', 'list', 'link'],
+  modules: {toolbar: '#format-toolbar', uploader: {handler: () => message('Use Add photo to upload an image.')}},
+  formats: ['header', 'bold', 'italic', 'underline', 'list', 'link', 'image'],
 });
 writer.root.setAttribute('role', 'textbox');
 writer.root.setAttribute('aria-labelledby', 'message-label');
 writer.root.setAttribute('aria-multiline', 'true');
+writer.clipboard.addMatcher('IMG', () => ({ops: []}));
 let selected = null,
   revision = null,
   dirty = false,
   saving = false,
+  uploading = false,
   currentUser = null;
 const message = (text) => {
   $("#message").textContent = text;
@@ -99,7 +102,7 @@ async function listPosts() {
     button.type = "button";
     button.textContent = `${p.published ? "Published" : "Draft"} · ${p.date} · ${p.title}`;
     button.addEventListener("click", () => {
-      if (saving || !mayDiscard()) return;
+      if (saving || uploading || !mayDiscard()) return;
       selected = p.id;
       revision = p.revision;
       $("#title").value = p.title;
@@ -147,6 +150,12 @@ async function showUser(user) {
   $("#workspace").hidden = false;
   message(`Signed in as ${user.email}`);
   await attempt(listPosts);
+  try {
+    const response = await fetch('/api/photo-status', {headers:{Authorization:`Bearer ${await user.getIdToken()}`}});
+    if (!response.ok || !(await response.json()).configured) {
+      $('#photo-status').textContent = 'Photo uploads are waiting for Max to connect the team’s Google Drive folder. You can still write and publish text updates.';
+    }
+  } catch { $('#photo-status').textContent = 'Photo storage is not connected yet. Text updates are ready to use.'; }
 }
 function credentials() {
   const email = $("#email").value.trim().toLowerCase();
@@ -230,10 +239,10 @@ if (!auth) {
     }),
   );
   $("#signout").addEventListener("click", () => {
-    if (!saving && mayDiscard()) attempt(() => signOut(auth));
+    if (!saving && !uploading && mayDiscard()) attempt(() => signOut(auth));
   });
   $("#new-post").addEventListener("click", () => {
-    if (!saving && mayDiscard()) emptyForm();
+    if (!saving && !uploading && mayDiscard()) emptyForm();
   });
   $("#reload-posts").addEventListener("click", () => attempt(listPosts));
   $("#import-posts").addEventListener("click", () =>
@@ -267,9 +276,43 @@ if (!auth) {
     dirty = true;
   });
   writer.on('text-change', () => { dirty = true; });
+  let photoPosition = 0;
+  $('#add-photo').addEventListener('click', () => {
+    if (saving || uploading) return;
+    photoPosition = writer.getSelection()?.index ?? Math.max(0, writer.getLength()-1);
+    $('#photo-file').click();
+  });
+  $('#photo-file').addEventListener('change', async () => {
+    const file = $('#photo-file').files[0];
+    if (!file || saving || uploading) return;
+    if (writer.getContents().ops.filter(op => op.insert?.image).length >= 6) {
+      message('Please limit each update to six photos.');
+      $('#photo-file').value = '';
+      return;
+    }
+    uploading = true;
+    writer.enable(false);
+    $('#add-photo').disabled = true;
+    $('#photo-status').textContent = 'Resizing and uploading photo…';
+    try {
+      if (!allowed(auth.currentUser)) throw Error('Please sign in with a verified editor account.');
+      const url = await uploadPhoto(file, await auth.currentUser.getIdToken());
+      writer.insertEmbed(photoPosition, 'image', url, 'api');
+      writer.insertText(photoPosition+1, '\n', 'api');
+      dirty = true;
+      $('#photo-status').textContent = 'Photo added. Save or publish your update when ready. Uploaded photos are accessible to anyone with their image link.';
+    } catch(error) {
+      $('#photo-status').textContent = error.message || 'Could not upload the photo.';
+    } finally {
+      uploading = false;
+      writer.enable(true);
+      $('#add-photo').disabled = false;
+      $('#photo-file').value = '';
+    }
+  });
   $("#post-form").addEventListener("submit", (e) => {
     e.preventDefault();
-    if (saving) return;
+    if (saving || uploading) return;
     attempt(async () => {
       if (!allowed(auth.currentUser)) throw Error("not-editor");
       const link = $("#post-link").value.trim();
@@ -287,7 +330,7 @@ if (!auth) {
         link,
         link_label: $("#link-label").value.trim(),
       };
-      if (!data.title || !writer.getText().trim()) {
+      if (!data.title || (!writer.getText().trim() && !writer.getContents().ops.some(op => op.insert?.image))) {
         message("Add a title and message.");
         return;
       }
@@ -344,7 +387,7 @@ if (!auth) {
     });
   });
   window.addEventListener("beforeunload", (e) => {
-    if (dirty || saving) {
+    if (dirty || saving || uploading) {
       e.preventDefault();
       e.returnValue = "";
     }
