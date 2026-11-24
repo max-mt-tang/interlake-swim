@@ -1,3 +1,4 @@
+import { uploadDocument } from './document-upload.js';
 import { auth, db } from "./firebase-client.js";
 import { editorEmails } from "./firebase-config.js";
 import { uploadPhoto } from './photo-upload.js';
@@ -276,6 +277,31 @@ if (!auth) {
     dirty = true;
   });
   writer.on('text-change', () => { dirty = true; });
+  let documentPosition = 0;
+  $('#add-document').addEventListener('click', () => {
+    if (saving || uploading) return;
+    documentPosition = writer.getSelection()?.index ?? Math.max(0, writer.getLength()-1);
+    $('#document-file').click();
+  });
+  $('#document-file').addEventListener('change', async () => {
+    const file = $('#document-file').files[0];
+    if (!file || saving || uploading) return;
+    uploading = true;
+    writer.enable(false);
+    $('#add-document').disabled = true;
+    $('#document-status').textContent = 'Uploading PDF…';
+    try {
+      if (!allowed(auth.currentUser)) throw Error('Please sign in with a verified editor account.');
+      const result = await uploadDocument(file, await auth.currentUser.getIdToken());
+      if (!/^https:\/\/drive\.google\.com\/file\/d\/[A-Za-z0-9_-]{10,150}\/view$/.test(result.url)) throw Error('Invalid document link.');
+      writer.insertText(documentPosition, '\n', 'api');
+      writer.insertText(documentPosition+1, 'PDF: ' + file.name, {link:result.url}, 'api');
+      writer.insertText(documentPosition+1+('PDF: ' + file.name).length, '\n', {link:false}, 'api');
+      dirty = true;
+      $('#document-status').textContent = 'PDF attached. Save or publish when ready. For meet results, select the Meet results category.';
+    } catch(error) { $('#document-status').textContent = error.message || 'Could not upload the PDF.'; }
+    finally { uploading = false; writer.enable(true); $('#add-document').disabled = false; $('#document-file').value = ''; }
+  });
   let photoPosition = 0;
   $('#add-photo').addEventListener('click', () => {
     if (saving || uploading) return;

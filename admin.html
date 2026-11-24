@@ -74,7 +74,7 @@
               ><label
                 >Category<select id="category">
                   <option>Coach update</option>
-                  <option>Meet reminder</option>
+                  <option>Meet reminder</option><option>Meet results</option>
                   <option>Practice change</option>
                   <option>Team announcement</option>
                 </select></label
@@ -86,10 +86,11 @@
                 <span class="ql-formats"><select class="ql-header" aria-label="Text style"><option selected>Normal</option><option value="1">Heading</option><option value="2">Subheading</option></select></span>
                 <span class="ql-formats"><button type="button" class="ql-bold" aria-label="Bold"></button><button type="button" class="ql-italic" aria-label="Italic"></button><button type="button" class="ql-underline" aria-label="Underline"></button></span>
                 <span class="ql-formats"><button type="button" class="ql-list" value="bullet" aria-label="Bullet list"></button><button type="button" class="ql-list" value="ordered" aria-label="Numbered list"></button><button type="button" class="ql-link" aria-label="Add link"></button><button type="button" class="ql-clean" aria-label="Clear formatting"></button></span>
-                <span class="ql-formats"><button type="button" id="add-photo">Add photo</button></span>
+                <span class="ql-formats"><button type="button" id="add-photo">Add photo</button><button type="button" id="add-document">Attach PDF</button></span>
               </div>
               <div id="rich-body"></div>
             </div>
+            <input id="document-file" type="file" accept="application/pdf,.pdf" hidden><p id="document-status" class="field-help" role="status">PDFs up to 10 MB. Uploaded PDFs are public to anyone with the link, even before publishing. Remove a PDF link from the message to detach it; this does not delete the file.</p>
             <input id="photo-file" type="file" accept="image/jpeg,image/png,image/webp" hidden>
             <p id="photo-status" class="field-help" role="status">Photos are resized and saved to the team’s Google Drive folder. Uploaded photos can be viewed by anyone with their image link, including before a post is published.</p>
             <fieldset class="optional-link"><legend>Add a link <span>(optional)</span></legend><div class="editor-row"><label

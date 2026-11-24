@@ -6,9 +6,9 @@ const LOCAL_UPDATES = [
     "title": "Weekly Update #3",
     "category": "Coach update",
     "pinned": "TRUE",
-    "body": "Coach Eberth’s Nov. 22 update has the latest practice and meet schedule below. Sign up for the Dec. 1 meet by Friday, November 27. No late registrations will be accepted. Volunteers are needed to officiate home meets. WIAA high-school meet officials do not need certification; trained officials are needed on deck for meets to run.\n\nDiving practice is listed Monday–Friday, 3:30–5:00 PM at Bellevue Aquatic Center. The update labels the second practice week “Nov. 31–Dec. 4”; the calendar below uses Nov. 30–Dec. 4 to match the Monday–Friday sequence.",
-    "link": "https://youtu.be/bPFJCbQkZnc?si=2dETq9tVWauhWkOy",
-    "link_label": "6-minute officials basics video"
+    "body": "Coach Eberth’s Nov. 22 update has the latest practice and meet schedule below. Sign up for the Dec. 1 meet by Friday, November 27. No late registrations will be accepted.\n\nDiving practice is listed Monday–Friday, 3:30–5:00 PM at Bellevue Aquatic Center. The update labels the second practice week “Nov. 31–Dec. 4”; the calendar below uses Nov. 30–Dec. 4 to match the Monday–Friday sequence.",
+    "link": "",
+    "link_label": ""
   },
   {
     "published": "TRUE",
@@ -290,6 +290,10 @@ const LOCAL_EVENTS = [
 ];
 
 const POOL_DIRECTORY = {
+  "King County Aquatic Center": {
+    "name": "King County Aquatic Center",
+    "address": "650 SW Campus Dr, Federal Way, WA 98023"
+  },
   "Mary Wayte Pool": {
     "name": "Mary Wayte Pool",
     "address": "8815 SE 40th St, Mercer Island, WA 98040"

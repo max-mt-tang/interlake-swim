@@ -45,6 +45,17 @@ function link(value, label, className = 'text-button') {
   return anchor;
 }
 
+function poolLink(location) {
+  const pool = POOL_DIRECTORY[location];
+  const label = pool ? pool.name + ' · ' + pool.address : location;
+  const anchor = link('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(label), '', 'pool-map-link');
+  const name = el('span', pool?.name || location, 'pool-name');
+  name.append(icon('arrow-up-right'));
+  anchor.replaceChildren(name);
+  if (pool?.address) anchor.append(el('span', pool.address, 'pool-address'));
+  return anchor;
+}
+
 function action(label, handler, className = 'text-button') {
   const button = el('button', label, className);
   button.type = 'button';
@@ -105,7 +116,7 @@ function eventKey(event) {
   return event.date + 'T' + (/^([01][0-9]|2[0-3]):[0-5][0-9]$/.test(event.time) ? event.time : '23:59');
 }
 
-function date(value, options = { month: 'short', day: 'numeric', year: 'numeric' }) {
+function date(value, options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }) {
   return new Date(value + 'T12:00:00Z').toLocaleDateString('en-US', { ...options, timeZone: 'UTC' });
 }
 
@@ -122,6 +133,17 @@ function calendarTime(event) {
 function calendarClass(event) {
   if (event.type === 'Practice') return event.title.toLowerCase().includes('diving') ? 'dive' : 'swim';
   return event.type === 'Home meet' ? 'home' : event.type === 'WA State' ? 'state' : 'meet';
+}
+
+function sportBadge(event) {
+  const kind = calendarClass(event);
+  const labels = { swim: 'SWIM', dive: 'DIVE', home: 'HOME MEET', meet: event.type === 'Dual meet' ? 'AWAY MEET' : event.type.toUpperCase(), state: 'STATE' };
+  const icons = { swim: 'swimmer', dive: 'diver', home: 'house', meet: 'map-pin', state: 'trophy' };
+  const badge = el('span', null, 'sport-badge');
+  if (icons[kind]) badge.append(icon(icons[kind]));
+  badge.append(el('span', labels[kind]));
+  if (event.senior_night === 'TRUE') badge.append(el('span', 'SENIOR NIGHT', 'senior-label'));
+  return badge;
 }
 
 function schoolDayOff(value) {
@@ -145,6 +167,8 @@ async function load(url, required, fallback) {
 function renderPosts(rows) {
   const target = $('#posts');
   target.replaceChildren();
+  const results = $('#result-posts');
+  results.replaceChildren();
   const sorted = [...rows].filter(row => row.category !== 'Coach introduction').sort((a, b) =>
     Number(b.pinned?.toLowerCase() === 'true') - Number(a.pinned?.toLowerCase() === 'true') || b.date.localeCompare(a.date));
   if (!sorted.length) target.append(el('p', 'No announcements posted yet. Coach’s weekly updates will appear here.', 'empty'));
@@ -162,8 +186,9 @@ function renderPosts(rows) {
     post.append(meta, el('h3', row.title), body);
     const more = link(row.link, row.link_label || 'Read more');
     if (more) post.append(more);
-    target.append(post);
+    (row.category === 'Meet results' ? results : target).append(post);
   }
+  if (!results.children.length) results.append(el('p', 'Meet results and PDF reports will appear here after the coach publishes them.', 'empty'));
 }
 
 function renderHome() {
@@ -180,7 +205,7 @@ function renderHome() {
     $('#home-meet-day').textContent = Number(meet.date.slice(8));
     $('#home-meet-kind').textContent = meet.type === 'Home meet' ? (meet.senior_night === 'TRUE' ? 'HOME · SENIOR NIGHT' : 'HOME MEET') : meet.type === 'WA State' ? 'State' : 'Away meet';
     $('#home-meet-time').textContent = date(meet.date) + ' · ' + calendarTime(meet) + ' PT';
-    $('#home-meet-pool').textContent = POOL_DIRECTORY[meet.location]?.name || meet.location;
+    $('#home-meet-pool').replaceChildren(poolLink(meet.location));
     if (valid(meet.signup_deadline)) {
       deadline.hidden = false;
       const closed = meet.signup_deadline < today();
@@ -205,15 +230,13 @@ function renderHome() {
     button.hidden = !practice;
     if (practice) {
       heading.append(el('span', date(practice.date, { weekday: 'short', month: 'short', day: 'numeric' }), 'practice-date'), el('span', calendarTime(practice), 'practice-time'));
-      $(`#home-${kind}-pool`).textContent = practice.location;
+      $(`#home-${kind}-pool`).replaceChildren(poolLink(practice.location));
       button.onclick = () => showCalendarEvent(practice);
     } else {
       heading.textContent = 'Next dates coming soon';
       $(`#home-${kind}-pool`).textContent = 'Check back for the coach’s schedule.';
     }
   }
-  $('#download').disabled = !upcoming.length;
-  $('#download').onclick = () => download(upcoming);
 }
 
 function showCalendarEvent(event) {
@@ -221,7 +244,7 @@ function showCalendarEvent(event) {
   $('#cal-event-title').textContent = event.title;
   $('#cal-event-time').textContent = date(event.date) + ' · ' + calendarTime(event) + ' PT';
   const pool = POOL_DIRECTORY[event.location];
-  $('#cal-event-location').textContent = pool ? pool.name + ' · ' + pool.address : event.location;
+  $('#cal-event-location').replaceChildren(poolLink(event.location));
   $('#cal-event-notes').textContent = event.notes || '';
   $('#cal-event-notes').hidden = !event.notes;
   const links = $('#cal-event-links');
@@ -260,8 +283,10 @@ function renderMonth(key, year, month, count) {
         }
         for (const event of events.filter(item => item.date === keyDate)) {
           const button = el('button', null, 'cal-event ' + calendarClass(event));
+          const badge = sportBadge(event);
+          if (badge) button.append(badge);
           button.type = 'button';
-          button.append(el('strong', calendarTime(event)), el('span', event.type === 'Home meet' ? (event.senior_night === 'TRUE' ? 'HOME MEET · SENIOR NIGHT' : 'HOME MEET') : event.title.replace('Interlake vs. ', 'vs. ').replace(' · 3A boys swim & dive', '')));
+          button.append(el('strong', calendarTime(event)), el('span', event.title.replace('Interlake vs. ', 'vs. ').replace(' · 3A boys swim & dive', '')));
           button.setAttribute('aria-label', `${event.title}, ${date(event.date)}, ${calendarTime(event)}`);
           button.addEventListener('click', () => showCalendarEvent(event));
           cell.append(button);
@@ -291,12 +316,14 @@ function renderAgenda(key, count) {
     const holiday = holidayStarts.get(keyDate);
     if (holiday) {
       const end = holiday.end > key + '-' + count ? key + '-' + count : holiday.end;
-      items.append(el('div', holiday.title + ' · No school' + (end !== keyDate ? ' through ' + date(end, { month: 'short', day: 'numeric' }) : ''), 'agenda-holiday'));
+      items.append(el('div', holiday.title + ' · No school' + (end !== keyDate ? ' through ' + date(end, { weekday: 'short', month: 'short', day: 'numeric' }) : ''), 'agenda-holiday'));
     }
     for (const event of monthlyEvents.filter(item => item.date === keyDate)) {
       const button = el('button', null, 'agenda-event ' + calendarClass(event));
       button.type = 'button';
       const content = el('span');
+      const badge = sportBadge(event);
+      if (badge) content.append(badge);
       content.append(el('span', calendarTime(event), 'agenda-time'), el('span', (event.type === 'Home meet' ? 'HOME MEET · ' : '') + event.title, 'agenda-title'), el('span', POOL_DIRECTORY[event.location]?.name || event.location, 'agenda-location'));
       button.append(content, icon('chevron-right'));
       button.setAttribute('aria-label', `${event.title}, ${date(event.date)}, ${calendarTime(event)}`);
@@ -342,18 +369,13 @@ function renderMeets() {
     const isHome = event.type === 'Home meet';
     const row = el('tr', null, isHome ? 'home-meet' : '');
     const dateCell = el('td');
-    dateCell.append(el('strong', date(event.date)), el('span', date(event.date, { weekday: 'long' }), 'cell-detail'));
+    dateCell.append(el('strong', date(event.date)));
     const timeCell = el('td', time(event.time), 'meet-start');
     const matchup = el('td', null, 'meet-matchup');
     matchup.append(el('strong', event.title.replace('Senior Night · ', '').replace(' @ ', ' vs. ')), el('span', isHome ? (event.senior_night === 'TRUE' ? 'HOME MEET · SENIOR NIGHT' : 'HOME MEET') : 'AWAY MEET', 'meet-badge ' + (isHome ? 'home-badge' : 'away-badge')));
     if (event.senior_night === 'TRUE') matchup.append(el('span', 'A small party celebrating our seniors.', 'cell-detail'));
     const poolCell = el('td');
-    const pool = POOL_DIRECTORY[event.location];
-    if (pool) {
-      const directions = link('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(pool.name + ', ' + pool.address), pool.name, '');
-      directions.title = 'Open ' + pool.name + ' in Google Maps';
-      poolCell.append(directions, el('span', pool.address, 'cell-detail'));
-    } else poolCell.append(el('span', event.location));
+    poolCell.append(poolLink(event.location));
     row.append(dateCell, timeCell, matchup, poolCell);
     target.append(row);
   }
@@ -381,32 +403,12 @@ function renderPostseason() {
     title.scope = 'row';
     const when = el('td');
     when.append(el('strong', date(event.date)), el('span', time(event.time), 'cell-detail'));
-    const location = el('td', event.location);
+    const location = el('td');
+    location.append(poolLink(event.location));
     location.append(action('Event details', () => showCalendarEvent(event)));
     row.append(title, when, location);
     target.append(row);
   }
-}
-
-function download(rows) {
-  const escape = value => (value || '').replaceAll('\\', '\\\\').replaceAll('\n', '\\n').replaceAll(',', '\\,').replaceAll(';', '\\;');
-  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Interlake Swim//EN'];
-  for (const event of rows) {
-    const day = event.date.replaceAll('-', '');
-    lines.push('BEGIN:VEVENT', 'UID:' + encodeURIComponent(event.date + event.time + event.title) + '@interlake-swim', 'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z');
-    if (/^([01][0-9]|2[0-3]):[0-5][0-9]$/.test(event.time)) {
-      lines.push('DTSTART;TZID=America/Los_Angeles:' + day + 'T' + event.time.replace(':', '') + '00');
-      if (event.end_time > event.time && /^([01][0-9]|2[0-3]):[0-5][0-9]$/.test(event.end_time)) lines.push('DTEND;TZID=America/Los_Angeles:' + day + 'T' + event.end_time.replace(':', '') + '00');
-    } else lines.push('DTSTART;VALUE=DATE:' + day);
-    lines.push('SUMMARY:' + escape(event.title), 'LOCATION:' + escape(event.location), 'DESCRIPTION:' + escape(event.notes), 'END:VEVENT');
-  }
-  lines.push('END:VCALENDAR');
-  const url = URL.createObjectURL(new Blob([lines.join('\r\n') + '\r\n'], { type: 'text/calendar;charset=utf-8' }));
-  const anchor = el('a');
-  anchor.href = url;
-  anchor.download = 'interlake-swim.ics';
-  anchor.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 function setNavigation(open) {

@@ -16,8 +16,10 @@
   }
   function render(target, body) {
     target.replaceChildren();
+    const plainText = !body?.startsWith(PREFIX);
     let line = [], list = null;
     function flush(attributes = {}) {
+      if (plainText && !line.length) return;
       let block;
       if (['bullet', 'ordered'].includes(attributes.list)) {
         const tag = attributes.list === 'bullet' ? 'UL' : 'OL';
