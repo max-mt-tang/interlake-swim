@@ -154,6 +154,19 @@ function preview() {
   box.append(title, body);
   box.hidden = false;
 }
+function updateSignInMethod() {
+  const useGoogle = $("#email").value === "maxmttang@gmail.com";
+  $("#google-login").hidden = !useGoogle;
+  $("#password-signin").hidden = useGoogle;
+  $("#password").disabled = useGoogle;
+  $("#password").required = !useGoogle;
+  $("#password").value = "";
+}
+updateSignInMethod();
+$("#email").addEventListener("change", () => {
+  updateSignInMethod();
+  message("");
+});
 if (!auth) {
   message("The editor is being connected. Please check back soon.");
 } else {
@@ -162,6 +175,7 @@ if (!auth) {
   onAuthStateChanged(auth, showUser);
   $("#google-login").addEventListener("click", () =>
     attempt(async () => {
+      if ($("#email").value !== "maxmttang@gmail.com") return;
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({ prompt: "select_account", login_hint: $("#email").value });
       await signInWithPopup(auth, provider);
@@ -169,6 +183,7 @@ if (!auth) {
   );
   $("#login-form").addEventListener("submit", (e) => {
     e.preventDefault();
+    if ($("#password-signin").hidden) return;
     attempt(async () => {
       const c = credentials();
       await signInWithEmailAndPassword(auth, c.email, c.password);

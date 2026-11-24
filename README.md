@@ -19,7 +19,7 @@ This is a static site with no build step. Firebase browser SDK modules are loade
 Max and Coach Eberth write announcements at https://ihsswim.vercel.app/admin.html. Posts are saved in Cloud Firestore, not GitHub.
 
 - Max: choose **Sign in with Google** and use `maxmttang@gmail.com`.
-- Coach: use `riverae@bsd405.org`. If it is a Google account, use Google sign-in. Otherwise the project owner must provision an email/password account in Firebase Authentication; there is no registration button on the site. The coach must verify the email before posting.
+- Coach: use `riverae@bsd405.org`. The page shows password sign-in for Coach Eberth and Google sign-in for Max. The project owner must provision Eberth’s email/password account in Firebase Authentication; there is no registration button on the site. The coach must verify the email before posting.
 - Choose **New update**, enter a title, date and message, optionally add a link, and choose **Publish update**.
 - **Save draft / unpublish** keeps a post private to the two editors. Parents need no account to read published updates.
 - To edit a post, select it from the list. Conflicting edits are rejected so another editor’s work is not silently overwritten.
