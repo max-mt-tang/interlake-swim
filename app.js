@@ -187,7 +187,7 @@ function renderPosts(rows) {
     if (row.id) {
       const manage = el('a', 'Edit / delete post →', 'post-manage');
       manage.href = 'admin.html?post=' + encodeURIComponent(row.id);
-      post.append(manage);
+      meta.append(manage);
     }
     const more = link(row.link, row.link_label || 'Read more');
     if (more) post.append(more);

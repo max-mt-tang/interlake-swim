@@ -746,5 +746,5 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 
 .editor-session { padding: 9px max(18px, calc((100% - 1240px)/2)); background: #e8f3fa; border-bottom: 1px solid #bfd8e7; display: flex; gap: 12px; justify-content: space-between; flex-wrap: wrap; color: #123f60; font-size: 13px; }
 .editor-session[hidden], .post-manage { display: none; }
-.signed-in-editor .post-manage { display: inline-block; margin-top: 16px; font-size: 13px; font-weight: 600; }
+.signed-in-editor .post-manage { display: inline-flex; align-items: center; margin: 0 0 0 auto; padding: 6px 10px; border: 1px solid #bfd3e1; border-radius: 4px; background: #edf5fa; color: #123f60; font-size: 12px; font-weight: 600; text-decoration: none; white-space: nowrap; }
 .editor-session a { font-weight: 700; }

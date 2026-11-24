@@ -15,7 +15,7 @@ if (auth) onAuthStateChanged(auth, user => {
   const nav = document.querySelector('.nav-post');
   if (nav) nav.lastChild.textContent = editor ? 'Manage posts' : 'Coach to post';
   document.querySelectorAll('a[href="admin.html"]').forEach(link => {
-    if (link.textContent === 'Sign in to post updates' || link.dataset.sessionLink) {
+    if (link.textContent.trim() === 'Sign in to post updates' || link.dataset.sessionLink) {
       link.dataset.sessionLink = 'true';
       link.textContent = editor ? 'Manage posts →' : 'Sign in to post updates';
     }
