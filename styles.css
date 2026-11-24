@@ -422,3 +422,27 @@ details[open] > summary .icon { transform: rotate(180deg); }
   .coach-heading-group h1 { font-size: 28px; }
   .coach-photo-wrap { height: 100px; }
 }
+
+/* Compact postseason schedule on every screen size. */
+.postseason-table-wrap { background: white; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.postseason-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.postseason-table th, .postseason-table td { padding: 16px 22px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); font-size: 13px; overflow-wrap: anywhere; }
+.postseason-table thead th { background: #f0f5f7; font-size: 11px; color: var(--muted); }
+.postseason-table th:first-child { width: 34%; }
+.postseason-table th:nth-child(2) { width: 28%; }
+.postseason-table tbody th { font-weight: 650; }
+.postseason-table tbody tr:last-child > * { border-bottom: 0; }
+.postseason-table .text-button { display: flex; min-height: 30px; font-size: 12px; padding: 5px 0 0; }
+.meet-table .home-meet { background: #fff4d9; }
+.meet-table .home-meet td:first-child { border-left: 5px solid #ab6a00; }
+.meet-table .home-badge { background: #80500a; color: white; font-size: 11px; padding: 6px 10px; letter-spacing: .35px; margin-top: 9px; }
+.cal-event.home, .agenda-event.home { --event-bg: #fff0c7; --event-text: #714500; border-left-width: 4px; font-weight: 650; }
+@media (max-width: 700px) {
+  .postseason-table th, .postseason-table td { padding: 12px 9px; font-size: 11px; }
+  .postseason-table thead th { font-size: 10px; }
+  .postseason-table .text-button { font-size: 10px; }
+  .postseason-table .cell-detail { font-size: 10px; }
+  .meet-table .home-meet { background: #fff4d9; border: 1px solid #c38a2f; border-left: 5px solid #ab6a00; }
+  .meet-table .home-meet td:first-child { border-left: 0; }
+  .meet-table .home-badge { font-size: 10px; }
+}
