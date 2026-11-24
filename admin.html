@@ -48,8 +48,8 @@
         <button id="check-verification">I’ve verified my email</button>
       </section>
       <section id="workspace" hidden>
-        <div class="editor-actions">
-          <button id="new-post">New update</button
+        <div class="editor-actions workspace-toolbar">
+          <button id="new-post" class="primary">+ New update</button
           ><button id="reload-posts">Refresh list</button
           ><button id="import-posts" hidden>
             Import existing weekly update</button
@@ -59,12 +59,13 @@
         </div>
         <div class="editor-layout">
           <aside>
-            <h2>Your team’s posts</h2>
+            <h2>Recent updates</h2>
             <div id="post-list"></div>
           </aside>
           <form id="post-form">
             <h2 id="form-heading">New update</h2>
-            <label>Title<input id="title" maxlength="160" required /></label>
+            <p class="form-intro">Share practice changes, meet details, and weekly news with families.</p>
+            <label>Title<input id="title" maxlength="160" required placeholder="e.g. This week’s practice and meet details" /></label>
             <div class="editor-row">
               <label>Date<input id="post-date" type="date" required /></label
               ><label
@@ -82,18 +83,20 @@
                 rows="12"
                 maxlength="20000"
                 required
+                placeholder="Write your update here…"
               ></textarea></label
-            ><label
+            >
+            <fieldset class="optional-link"><legend>Add a link <span>(optional)</span></legend><div class="editor-row"><label
               >Optional link<input
                 id="post-link"
                 type="url"
                 placeholder="https://"
                 maxlength="2048" /></label
-            ><label>Link text<input id="link-label" maxlength="100" /></label
+            ><label>Link text<input id="link-label" maxlength="100" placeholder="e.g. Meet schedule" /></label></div></fieldset
             ><label class="check-label"
-              ><input id="pinned" type="checkbox" /> Pin this update</label
+              ><input id="pinned" type="checkbox" /> Keep this update at the top</label
             >
-            <div class="editor-actions">
+            <div class="editor-actions publish-actions">
               <button type="button" id="preview-button">Preview</button
               ><button type="submit" value="draft">
                 Save draft / unpublish</button
