@@ -1,11 +1,13 @@
 import { firebaseConfig } from "./firebase-config.js";
 export async function loadPublishedPosts() {
   if (!firebaseConfig) return null;
-  const [{ db }, { collection, getDocs, query, where }] =
+  const [{ initializeApp, getApp, getApps }, { getFirestore, collection, getDocs, query, where }] =
     await Promise.all([
-      import("./firebase-client.js"),
-      import("https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js"),
+      import("https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js"),
+      import("https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore-lite.js"),
     ]);
+  const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  const db = getFirestore(app);
   const result = await getDocs(
     query(collection(db, "posts"), where("published", "==", true)),
   );
