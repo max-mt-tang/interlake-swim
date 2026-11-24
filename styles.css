@@ -743,3 +743,8 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
   .brand-sport { padding-left: 8px; font-size: 17px; }
   .header-inner { gap: 8px; }
 }
+
+.editor-session { padding: 9px max(18px, calc((100% - 1240px)/2)); background: #e8f3fa; border-bottom: 1px solid #bfd8e7; display: flex; gap: 12px; justify-content: space-between; flex-wrap: wrap; color: #123f60; font-size: 13px; }
+.editor-session[hidden], .post-manage { display: none; }
+.signed-in-editor .post-manage { display: inline-block; margin-top: 16px; font-size: 13px; font-weight: 600; }
+.editor-session a { font-weight: 700; }
