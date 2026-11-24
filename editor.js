@@ -4,7 +4,6 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
   sendEmailVerification,
   sendPasswordResetEmail,
   signOut,
@@ -173,16 +172,6 @@ if (!auth) {
       $("#password").value = "";
     });
   });
-  $("#register").addEventListener("click", () =>
-    attempt(async () => {
-      if (!$("#login-form").reportValidity()) return;
-      const c = credentials();
-      const r = await createUserWithEmailAndPassword(auth, c.email, c.password);
-      $("#password").value = "";
-      await sendEmailVerification(r.user);
-      message("Verification email sent. Open it before posting.");
-    }),
-  );
   $("#reset").addEventListener("click", () =>
     attempt(async () => {
       const c = credentials();
