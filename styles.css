@@ -446,3 +446,79 @@ details[open] > summary .icon { transform: rotate(180deg); }
   .meet-table .home-meet td:first-child { border-left: 0; }
   .meet-table .home-badge { font-size: 10px; }
 }
+
+/* Denser team-information layout, with readable text and full-size controls. */
+.header-inner { min-height: 76px; }
+.brand img { width: 170px; height: 50px; }
+html { scroll-padding-top: 94px; }
+.page-shell > section, .page-shell > .overview-section { margin-top: 32px; }
+.page-shell > .coach-section { margin-top: 20px; }
+.page-shell { padding-bottom: 32px; }
+h2 { font-size: 28px; letter-spacing: -.8px; }
+.eyebrow { margin-bottom: 7px; }
+.section-heading { margin-bottom: 16px; gap: 16px; }
+.coach-section { grid-template-columns: 150px minmax(0, 1fr); gap: 10px 24px; padding: 22px; border-radius: 10px; }
+.coach-photo-wrap { height: 210px; }
+.coach-heading-group h1 { font-size: 32px; margin-bottom: 6px; }
+.coach-heading-group .eyebrow { margin-bottom: 6px; }
+.coach-bio > p { margin-bottom: 10px; }
+.coach-contact { margin-top: 10px; padding-top: 7px; margin-bottom: 0; }
+.upcoming-grid, .quick-grid { gap: 12px; }
+.next-meet-card { padding: 18px 20px; }
+.card-topline, .practice-card .card-topline { margin-bottom: 12px; }
+.meet-title-row { margin-bottom: 14px; gap: 12px; }
+.date-tile { width: 56px; min-height: 66px; padding: 7px 4px; }
+.date-tile strong { font-size: 32px; }
+.next-meet-card h3 { font-size: 23px; }
+.detail-line { margin-top: 7px; }
+.signup-deadline { margin-top: 12px; padding-top: 10px; }
+.home-actions { margin-top: 12px; gap: 12px; }
+.practice-card { padding: 15px 18px 7px; }
+.practice-card h3 { margin-bottom: 6px; }
+.practice-card .muted { margin-bottom: 3px; }
+.source-status { margin-top: 8px; }
+.updates-section { grid-template-columns: 235px minmax(0, 1fr); gap: 26px; }
+.section-intro > p:not(.eyebrow) { margin-top: 12px; }
+.post { padding: 20px 24px; }
+.post-meta, .post h3 { margin-bottom: 12px; }
+.post .body { line-height: 1.65; }
+.calendar-toolbar { padding: 15px 20px 10px; }
+.calendar-subbar { padding: 0 20px 10px; }
+.cal-legend { padding: 10px 20px; }
+.month-calendar td { height: 95px; padding: 6px 7px 8px; }
+.school-breaks { padding: 9px 20px; }
+.meet-table th { padding: 11px 18px; }
+.meet-table td { padding: 14px 18px; }
+.postseason-table th, .postseason-table td { padding: 12px 18px; }
+.site-footer { padding-block: 26px; }
+@media (max-width: 900px) {
+  .updates-section { grid-template-columns: 190px minmax(0, 1fr); gap: 20px; }
+}
+@media (max-width: 700px) {
+  .header-inner { min-height: 68px; }
+  .brand img { width: 150px; height: 44px; }
+  .page-shell > section, .page-shell > .overview-section { margin-top: 26px; }
+  .page-shell > .coach-section { margin-top: 14px; }
+  h2 { font-size: 25px; }
+  .section-heading { margin-bottom: 14px; gap: 12px; }
+  .coach-section { grid-template-columns: minmax(0, 1fr) 74px; padding: 17px; gap: 14px 12px; }
+  .coach-heading-group h1 { font-size: 27px; }
+  .coach-photo-wrap { height: 96px; }
+  .coach-contact { gap: 0; }
+  .upcoming-grid { gap: 12px; }
+  .practice-card { padding: 13px 12px 6px; }
+  .team-reminders { padding: 13px 15px; }
+  .updates-section { grid-template-columns: 1fr; gap: 12px; }
+  .post { padding: 17px; }
+  .calendar-toolbar { padding: 13px 14px 10px; }
+  .calendar-subbar { padding: 0 14px 10px; gap: 9px; }
+  .cal-legend { padding: 9px 14px; }
+  .agenda-day { padding: 12px 13px; gap: 10px; }
+  .agenda-event { padding: 10px 12px; }
+  .school-breaks { padding: 8px 14px; }
+  .meet-table tr { padding: 14px 16px; margin-bottom: 9px; }
+  .meet-table td { padding: 0; }
+  .meet-table td:nth-child(3) { margin-top: 10px; padding-top: 10px; }
+  .meet-table td:nth-child(4) { padding-top: 9px; }
+  .postseason-table th, .postseason-table td { padding: 10px 9px; }
+}
