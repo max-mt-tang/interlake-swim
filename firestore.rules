@@ -29,8 +29,8 @@ service cloud.firestore {
         && request.resource.data.createdBy == resource.data.createdBy
         && request.resource.data.createdAt == resource.data.createdAt
         && request.resource.data.revision == resource.data.revision + 1;
-      // Unpublish rather than permanently delete posts.
-      allow delete: if false;
+      // Only verified, approved editors can delete posts.
+      allow delete: if editor();
     }
   }
 }
