@@ -129,6 +129,9 @@
 #login-form select, #login-form input { margin: 0; min-height: 46px; border-color: #c9d4df; border-radius: 6px; font-size: 14px; }
 #login-form select { padding-right: 24px; }
 #login-form input::placeholder { color: #7c8997; }
+.password-field { position: relative; }
+#login-form .password-field input { padding-right: 120px; }
+#login-form #toggle-password { position: absolute; right: 4px; top: 4px; min-height: 38px; margin: 0; padding: 6px 8px; border: 0; background: transparent; color: #315d7c; font-size: 12px; }
 #google-login { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 12px; min-height: 46px; border-color: #b8c7d5; font-size: 14px; font-weight: 650; border-radius: 6px; }
 #google-login:hover { background: #f1f5f8; border-color: #123f60; }
 .login-divider { display: flex; align-items: center; gap: 12px; margin: 24px 0 18px; color: #73808e; font-size: 12px; }
