@@ -16,7 +16,7 @@ const LOCAL_UPDATES = [
     "title": "Meet Coach Eberth",
     "category": "Coach introduction",
     "pinned": "FALSE",
-    "body": "Coach Eberth Rivera served as an assistant coach for Interlake’s swim team for multiple seasons. This season, he serves as head coach. He brings more than 30 years of coaching and competitive-sports experience, including coaching and competing in Colombia.\n\nOriginally from Bogotá, Coach Eberth enjoys swimming, soccer, camping, and spending time outdoors with his family. His coaching philosophy centers on each swimmer’s individual growth, open communication, mutual respect, confidence, and a supportive team where every swimmer matters."
+    "body": "Coach Eberth Rivera worked alongside the previous head coach for multiple seasons, supporting Interlake swimmers as they competed at the state championships. This season, he serves as head coach. He brings more than 30 years of coaching and competitive-sports experience, including coaching and competing in Colombia.\n\nOriginally from Bogotá, Coach Eberth enjoys swimming, soccer, camping, and spending time outdoors with his family. His coaching philosophy centers on each swimmer’s individual growth, open communication, mutual respect, confidence, and a supportive team where every swimmer matters."
   }
 ];
 
