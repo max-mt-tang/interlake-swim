@@ -178,7 +178,7 @@ function renderHome() {
     $('#home-meet-title').textContent = meet.title;
     $('#home-meet-month').textContent = date(meet.date, { month: 'short' }).toUpperCase();
     $('#home-meet-day').textContent = Number(meet.date.slice(8));
-    $('#home-meet-kind').textContent = meet.type === 'Home meet' ? 'Home meet' : meet.type === 'WA State' ? 'State' : 'Away meet';
+    $('#home-meet-kind').textContent = meet.type === 'Home meet' ? (meet.senior_night === 'TRUE' ? 'HOME · SENIOR NIGHT' : 'HOME MEET') : meet.type === 'WA State' ? 'State' : 'Away meet';
     $('#home-meet-time').textContent = date(meet.date) + ' · ' + calendarTime(meet) + ' PT';
     $('#home-meet-pool').textContent = POOL_DIRECTORY[meet.location]?.name || meet.location;
     if (valid(meet.signup_deadline)) {
@@ -261,7 +261,7 @@ function renderMonth(key, year, month, count) {
         for (const event of events.filter(item => item.date === keyDate)) {
           const button = el('button', null, 'cal-event ' + calendarClass(event));
           button.type = 'button';
-          button.append(el('strong', calendarTime(event)), el('span', event.type === 'Home meet' ? 'Home · Senior Night' : event.title.replace('Interlake vs. ', 'vs. ').replace(' · 3A boys swim & dive', '')));
+          button.append(el('strong', calendarTime(event)), el('span', event.type === 'Home meet' ? (event.senior_night === 'TRUE' ? 'HOME MEET · SENIOR NIGHT' : 'HOME MEET') : event.title.replace('Interlake vs. ', 'vs. ').replace(' · 3A boys swim & dive', '')));
           button.setAttribute('aria-label', `${event.title}, ${date(event.date)}, ${calendarTime(event)}`);
           button.addEventListener('click', () => showCalendarEvent(event));
           cell.append(button);
@@ -297,7 +297,7 @@ function renderAgenda(key, count) {
       const button = el('button', null, 'agenda-event ' + calendarClass(event));
       button.type = 'button';
       const content = el('span');
-      content.append(el('span', calendarTime(event), 'agenda-time'), el('span', event.title, 'agenda-title'), el('span', POOL_DIRECTORY[event.location]?.name || event.location, 'agenda-location'));
+      content.append(el('span', calendarTime(event), 'agenda-time'), el('span', (event.type === 'Home meet' ? 'HOME MEET · ' : '') + event.title, 'agenda-title'), el('span', POOL_DIRECTORY[event.location]?.name || event.location, 'agenda-location'));
       button.append(content, icon('chevron-right'));
       button.setAttribute('aria-label', `${event.title}, ${date(event.date)}, ${calendarTime(event)}`);
       button.addEventListener('click', () => showCalendarEvent(event));
@@ -345,7 +345,7 @@ function renderMeets() {
     dateCell.append(el('strong', date(event.date)), el('span', date(event.date, { weekday: 'long' }), 'cell-detail'));
     const timeCell = el('td', time(event.time), 'meet-start');
     const matchup = el('td', null, 'meet-matchup');
-    matchup.append(el('strong', event.title.replace('Senior Night · ', '').replace(' @ ', ' vs. ')), el('span', isHome ? (event.senior_night === 'TRUE' ? 'HOME · SENIOR NIGHT' : 'HOME MEET') : 'AWAY MEET', 'meet-badge ' + (isHome ? 'home-badge' : 'away-badge')));
+    matchup.append(el('strong', event.title.replace('Senior Night · ', '').replace(' @ ', ' vs. ')), el('span', isHome ? (event.senior_night === 'TRUE' ? 'HOME MEET · SENIOR NIGHT' : 'HOME MEET') : 'AWAY MEET', 'meet-badge ' + (isHome ? 'home-badge' : 'away-badge')));
     if (event.senior_night === 'TRUE') matchup.append(el('span', 'A small party celebrating our seniors.', 'cell-detail'));
     const poolCell = el('td');
     const pool = POOL_DIRECTORY[event.location];
@@ -367,20 +367,24 @@ function renderMeets() {
 }
 
 function renderPostseason() {
-  const target = $('#postseason-cards');
+  const target = $('#postseason-rows');
   target.replaceChildren();
-  for (const [index, title] of ['KingCo championships', 'District championships'].entries()) {
-    const card = el('article', null, 'postseason-card pending');
-    card.append(el('span', '0' + (index + 1), 'stage-number'), el('p', 'DATES PENDING', 'eyebrow'), el('h3', title), el('p', 'Awaiting the official meet schedule. Dates, times, and location to be confirmed.'));
-    target.append(card);
+  for (const title of ['KingCo championships', 'District championships']) {
+    const row = el('tr');
+    row.append(el('th', title), el('td', 'To be confirmed'), el('td', 'Awaiting the official schedule'));
+    row.firstChild.scope = 'row';
+    target.append(row);
   }
-  const stateEvents = events.filter(event => event.type === 'WA State');
-  for (const [index, event] of stateEvents.entries()) {
-    const card = el('article', null, 'postseason-card state-card');
-    const title = event.title.replace(' · 3A boys swim & dive', '');
-    card.append(el('span', String(index + 3).padStart(2, '0'), 'stage-number'), el('p', 'WASHINGTON STATE · 3A', 'eyebrow'), el('h3', title), el('p', date(event.date) + ' · ' + time(event.time), 'postseason-date'), el('p', event.location));
-    card.append(action('Event details', () => showCalendarEvent(event)));
-    target.append(card);
+  for (const event of events.filter(item => item.type === 'WA State')) {
+    const row = el('tr');
+    const title = el('th', event.title.replace(' · 3A boys swim & dive', ' · 3A'));
+    title.scope = 'row';
+    const when = el('td');
+    when.append(el('strong', date(event.date)), el('span', time(event.time), 'cell-detail'));
+    const location = el('td', event.location);
+    location.append(action('Event details', () => showCalendarEvent(event)));
+    row.append(title, when, location);
+    target.append(row);
   }
 }
 
