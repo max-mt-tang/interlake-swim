@@ -218,7 +218,7 @@ details[open] > summary .icon { transform: rotate(180deg); }
 .coach-section { display: grid; grid-template-columns: 220px minmax(0, 1fr); grid-template-areas: "photo heading" "photo bio"; align-items: start; gap: 20px 40px; background: white; border: 1px solid var(--line); border-radius: 16px; padding: 32px; }
 .coach-heading-group { grid-area: heading; }
 .coach-heading-group .eyebrow { color: var(--blue); margin-bottom: 10px; }
-.coach-heading-group h1 { margin: 0 0 10px; color: var(--navy); font: 750 40px/1.1 system-ui, sans-serif; letter-spacing: -1.3px; }
+.coach-heading-group h2 { margin: 0 0 10px; color: var(--navy); font: 750 40px/1.1 system-ui, sans-serif; letter-spacing: -1.3px; }
 .coach-role { color: var(--muted); font-size: 14px; margin: 0; }
 .coach-bio { grid-area: bio; }
 .coach-photo-wrap { grid-area: photo; height: 300px; }
@@ -294,7 +294,7 @@ details[open] > summary .icon { transform: rotate(180deg); }
   .postseason-card { padding: 24px; }
   .upcoming-grid { grid-template-columns: 1fr; }
   .coach-section { grid-template-columns: 190px minmax(0, 1fr); column-gap: 25px; padding: 28px; }
-  .coach-heading-group h1 { font-size: 34px; }
+  .coach-heading-group h2 { font-size: 34px; }
 }
 @media (max-width: 700px) {
   .page-shell, .header-inner, .footer-inner { width: calc(100% - 36px); }
@@ -389,7 +389,7 @@ details[open] > summary .icon { transform: rotate(180deg); }
   .postseason-card .text-button { font-size: 11px; }
   .section-footnote { font-size: 10px; }
   .coach-section { grid-template-columns: minmax(0, 1fr) 90px; grid-template-areas: "heading photo" "bio bio"; padding: 22px; gap: 22px 16px; border-radius: 12px; }
-  .coach-heading-group h1 { font-size: 30px; letter-spacing: -.8px; }
+  .coach-heading-group h2 { font-size: 30px; letter-spacing: -.8px; }
   .coach-heading-group .eyebrow { font-size: 9px; }
   .coach-role { font-size: 12px; line-height: 1.6; }
   .coach-photo-wrap { height: 110px; }
@@ -419,7 +419,7 @@ details[open] > summary .icon { transform: rotate(180deg); }
   .team-reminders { display: flex; padding-bottom: 12px; }
   .postseason-grid { grid-template-columns: 1fr; }
   .coach-section { padding: 18px; grid-template-columns: minmax(0, 1fr) 74px; gap: 18px 12px; }
-  .coach-heading-group h1 { font-size: 28px; }
+  .coach-heading-group h2 { font-size: 28px; }
   .coach-photo-wrap { height: 100px; }
 }
 
@@ -459,7 +459,7 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .section-heading { margin-bottom: 16px; gap: 16px; }
 .coach-section { grid-template-columns: 240px minmax(0, 1fr); gap: 10px 24px; padding: 22px; border-radius: 10px; }
 .coach-photo-wrap { height: 340px; }
-.coach-heading-group h1 { font-size: 32px; margin-bottom: 6px; }
+.coach-heading-group h2 { font-size: 32px; margin-bottom: 6px; }
 .coach-heading-group .eyebrow { margin-bottom: 6px; }
 .coach-bio > p { margin-bottom: 10px; }
 .coach-contact { margin-top: 10px; padding-top: 7px; margin-bottom: 0; }
@@ -502,7 +502,7 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
   h2 { font-size: 25px; }
   .section-heading { margin-bottom: 14px; gap: 12px; }
   .coach-section { grid-template-columns: minmax(0, 1fr) 120px; padding: 17px; gap: 14px 12px; }
-  .coach-heading-group h1 { font-size: 27px; }
+  .coach-heading-group h2 { font-size: 27px; }
   .coach-photo-wrap { height: 170px; }
   .coach-contact { gap: 0; }
   .upcoming-grid { gap: 12px; }
@@ -534,3 +534,20 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 #photo-back { opacity: 0; transition: opacity 600ms ease; }
 .photo-status { margin: 8px 0 0; font-size: 13px; color: #435768; }
 @media (prefers-reduced-motion: reduce) { #photo-back { transition: none; } }
+
+/* Photo-led landing banner, inspired by Interlake Rocketry. */
+.page-shell > .photo-hero { max-width: none; margin: 20px 0 0; position: relative; height: 480px; overflow: hidden; border-radius: 10px; background: var(--navy); }
+.photo-hero .photo-stage { height: 100%; aspect-ratio: auto; border-radius: 0; }
+.photo-hero .photo-stage img { object-fit: cover; object-position: center 42%; }
+.photo-hero::after { content: ''; pointer-events: none; position: absolute; inset: 0; background: linear-gradient(90deg,rgba(4,23,39,.8),rgba(4,23,39,.05)),linear-gradient(0deg,rgba(4,23,39,.65),transparent 45%); }
+.photo-hero-content { position: absolute; z-index: 1; left: 40px; top: 50%; transform: translateY(-50%); color: white; pointer-events: none; }
+.photo-hero-content .eyebrow { color: #d1e8fa; margin-bottom: 16px; }
+.photo-hero-content h1 { color: white; font: 750 clamp(40px,5vw,68px)/1.05 system-ui,sans-serif; letter-spacing: -2px; margin: 0 0 26px; }
+.photo-hero-links { display: flex; gap: 12px; flex-wrap: wrap; }
+.photo-hero-links a { pointer-events: auto; padding: 13px 17px; background: white; color: #12334c; border-radius: 5px; font-weight: 700; font-size: 14px; text-decoration: none; }
+.photo-hero-links a + a { color: white; background: rgba(0,0,0,.35); border: 1px solid #b5c6d0; }
+.photo-hero-bottom { position: absolute; z-index: 2; bottom: 18px; right: 22px; }
+.photo-hero .photo-controls button { background: rgba(4,23,39,.65); color: white; border-color: #b5c6d0; }
+.photo-hero #photo-count { color: white; margin-right: 8px; }
+.photo-hero .photo-status { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); }
+@media(max-width:700px) { .page-shell > .photo-hero { height: 390px; margin-top: 14px; } .photo-hero-content { left: 22px; right: 16px; top: 43%; } .photo-hero-content h1 { font-size: 42px; } .photo-hero-content .eyebrow { font-size: 9px; } .photo-hero-links { gap: 8px; } .photo-hero-links a { padding: 12px; font-size: 12px; } .photo-hero-bottom { bottom: 15px; right: 16px; } }
