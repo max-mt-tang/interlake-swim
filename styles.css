@@ -52,8 +52,6 @@ img { display: block; max-width: 100%; }
 #main-nav { display: flex; align-items: center; gap: 18px; }
 #main-nav a { display: inline-flex; align-items: center; gap: 6px; }
 #main-nav .icon { width: 16px; height: 16px; }
-#main-nav a.nav-post { padding: 10px 12px; border-radius: 6px; background: var(--navy); color: white; }
-#main-nav a.nav-post:hover { background: #1c466c; color: white; }
 #main-nav a:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
 #main-nav a { font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; padding-block: 12px; white-space: nowrap; }
 #main-nav a:hover, #main-nav a.active { color: var(--navy); }
@@ -156,7 +154,13 @@ img { display: block; max-width: 100%; }
 .cal-event strong { font-size: 10px; font-weight: 650; line-height: 1.4; }
 .cal-event span { margin-top: 2px; font-size: 10px; line-height: 1.35; }
 .swim { --event-color: var(--swim); --event-bg: #eaf3fb; --event-text: #215a87; }
-.dive { --event-color: var(--dive); --event-bg: #eaf5f1; --event-text: #18645c; }
+.dive { --event-color: #7952b3; --event-bg: #f2ecfa; --event-text: #633697; }
+.cal-event .sport-badge, .agenda-event .sport-badge { display: flex; align-items: center; gap: 5px; margin: 0 0 4px; font-size: 10px; font-weight: 800; letter-spacing: .5px; }
+.sport-badge .icon, .agenda-event .sport-badge .icon { width: 22px; height: 22px; }
+.cal-event .sport-badge span { margin: 0; font-size: inherit; }
+.cal-legend .legend-swim::before, .cal-legend .legend-dive::before { display: none; }
+.cal-legend .legend-swim { color: var(--swim); }
+.cal-legend .legend-dive { color: #633697; }
 .meet { --event-color: var(--meet); --event-bg: #edf0f7; --event-text: #344c72; }
 .home { --event-color: var(--home); --event-bg: #fcf4e3; --event-text: #845204; }
 .state { --event-color: var(--state); --event-bg: #f2ecf8; --event-text: #68418f; }
@@ -259,7 +263,7 @@ details[open] > summary .icon { transform: rotate(180deg); }
 @media (max-width: 1100px) {
   #main-nav { gap: 18px; }
   .brand img { width: 174px; }
-  .brand-sport { display: none; }
+  .brand-sport { display: block; }
   .next-meet-card { padding: 24px; }
   .quick-grid { gap: 14px; }
   .practice-card { padding: 20px 19px 10px; }
@@ -562,3 +566,180 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .post .body :is(h3, h4) { margin: 20px 0 10px; }
 .post .body p { white-space: pre-wrap; }
 .post .body img { display: block; max-width: 100%; height: auto; border-radius: 6px; margin: 16px 0; }
+
+/* Calendar hierarchy: competitions stand out from recurring practices. */
+.cal-event, .agenda-event { border-left-width: 4px; }
+.cal-event.swim, .agenda-event.swim { --event-bg: #dcefff; --event-text: #125286; --event-color: #1684cf; }
+.cal-event.dive, .agenda-event.dive { --event-bg: #eee3ff; --event-text: #652b99; --event-color: #8c46c4; }
+.cal-event.meet, .agenda-event.meet { --event-bg: #b52e42; --event-text: #fff; --event-color: #851c2c; }
+.cal-event.home, .agenda-event.home { --event-bg: #ffd15a; --event-text: #392700; --event-color: #b66c00; }
+.cal-event.state, .agenda-event.state { --event-bg: #66329b; --event-text: #fff; --event-color: #3c1763; }
+.cal-event:is(.meet,.home,.state) { padding: 9px 8px; box-shadow: 0 2px 4px #102b461a; }
+.cal-event:is(.meet,.home,.state) > span:last-child { font-size: 12px; font-weight: 750; }
+.agenda-event:is(.meet,.home,.state) .agenda-time, .agenda-event:is(.meet,.home,.state) .agenda-location { color: inherit; opacity: 1; }
+.sport-badge { flex-wrap: wrap; }
+.sport-badge .senior-label { padding: 2px 4px; border: 1px solid currentColor; border-radius: 3px; }
+.cal-legend .legend-meet, .cal-legend .legend-home, .cal-legend .legend-state { padding: 4px 9px; border-radius: 4px; font-weight: 750; }
+.cal-legend .legend-meet { background: #b52e42; color: white; }
+.cal-legend .legend-home { background: #ffd15a; color: #392700; }
+.cal-legend .legend-state { background: #66329b; color: white; }
+.cal-legend .legend-meet::before, .cal-legend .legend-home::before, .cal-legend .legend-state::before { display: none; }
+.cal-event:focus-visible, .agenda-event:focus-visible { outline: 3px solid #102b46; outline-offset: 3px; }
+
+.pool-map-link { color: #175f88; text-decoration: underline; text-underline-offset: 3px; }
+.pool-map-link .icon { width: 14px; height: 14px; margin-left: 4px; vertical-align: middle; }
+
+.team-people { grid-column: 1 / -1; border-top: 1px solid var(--line); margin-top: 0; padding-top: 10px; }
+.team-people h3 { margin: 0 0 14px; font-size: 17px; color: var(--navy); }
+.team-people dl { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.team-people dl > div { font-size: 14px; line-height: 1.7; }
+.team-people dt { font-size: 15px; font-weight: 750; color: var(--navy); margin-bottom: 6px; }
+.team-people dd { margin: 0; color: var(--text); }
+.team-people dd span { color: var(--muted); }
+@media (max-width: 700px) { .team-people dl { grid-template-columns: 1fr; gap: 14px; } }
+
+.parent-contact { display: flex; flex-direction: column; align-items: flex-start; margin-top: 3px; font-size: 13px; }
+.parent-contact a { overflow-wrap: anywhere; color: var(--blue); text-underline-offset: 3px; }
+.parent-person { margin-top: 12px; }
+
+.team-people dl > div:not(:first-child) { font-size: 13px; }
+.team-people dl > div:not(:first-child) dt { font-size: 12px; font-weight: 600; color: var(--muted); }
+
+.team-people > p { margin: 0; font-size: 14px; }
+.parent-volunteers dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.parent-volunteers h3 { font-size: 15px; color: var(--muted); }
+.parent-volunteers dl > div { font-size: 13px; }
+.parent-volunteers dt { font-size: 12px; font-weight: 600; color: var(--muted); }
+@media (max-width: 600px) { .parent-volunteers dl { grid-template-columns: 1fr; } }
+
+/* Let the biography continue beneath the portrait on wider screens. */
+@media (min-width: 701px) {
+  .coach-section { display: flow-root; }
+  .coach-photo-wrap { float: left; width: 240px; height: 340px; margin: 0 24px 14px 0; }
+  .coach-heading-group { margin-bottom: 14px; }
+  .coach-bio > p { display: block; }
+  .coach-contact, .coach-section > .team-people { clear: both; }
+}
+
+/* Keep the biography disclosure directly beneath its closing paragraph. */
+.coach-bio > p:has(+ .coach-more) { margin-bottom: 0; }
+.coach-bio > .coach-more { margin-top: 0; }
+.coach-bio > .coach-more summary { min-height: 32px; }
+
+/* Outlined slideshow controls. */
+.photo-hero .photo-controls { gap: 18px; }
+.photo-hero .photo-controls button { display: grid; place-items: center; width: 64px; height: 64px; padding: 0; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.75); background: transparent; color: white; font: 38px/1 system-ui,sans-serif; transition: background .15s; }
+.photo-hero .photo-controls button:hover { background: rgba(255,255,255,.18); border-color: white; }
+.photo-hero .photo-controls button:focus-visible { outline: 3px solid white; outline-offset: 4px; }
+.photo-hero #photo-count { font-size: 14px; font-weight: 650; letter-spacing: 3px; font-variant-numeric: tabular-nums; margin-right: 8px; }
+#photo-toggle::before { content: ''; width: 16px; height: 24px; border-left: 5px solid currentColor; border-right: 5px solid currentColor; box-sizing: border-box; }
+#photo-toggle.is-paused::before { width: 0; height: 0; border: 0; border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-left: 19px solid currentColor; margin-left: 4px; }
+@media (max-width:700px) { .photo-hero .photo-controls { gap: 12px; } .photo-hero .photo-controls button { width: 48px; height: 48px; font-size: 30px; } .photo-hero #photo-count { font-size: 12px; letter-spacing: 2px; } }
+
+/* Stronger hierarchy for the next meet and practice schedule. */
+#team-home > .section-heading { border-top: 4px solid #102b46; padding-top: 16px; }
+.upcoming-grid { grid-template-columns: 1.1fr 1fr; gap: 22px; align-items: stretch; }
+.next-meet-card { background: #102b46; color: white; border: 0; border-top: 6px solid #f4c64e; border-radius: 3px; padding: 24px; }
+.next-meet-card .card-topline .eyebrow { color: #f4c64e; }
+.next-meet-card .small-pill { background: #b52e42; color: white; border-radius: 2px; }
+.next-meet-card h3 { color: white; font: 700 clamp(30px,3.4vw,44px)/1.05 'Barlow Condensed',sans-serif; letter-spacing: 0; }
+.next-meet-card .date-tile { background: #f4c64e; color: #102b46; border-radius: 0; width: 72px; padding: 8px 4px; }
+.next-meet-card .date-tile span { color: #102b46; }
+.next-meet-card .date-tile strong { font-size: 54px; }
+.next-meet-card .detail-line > .icon { color: #a9d6ef; }
+.next-meet-card .pool-map-link { color: #d4edff; }
+.next-meet-card .signup-deadline { border-color: #496075; }
+.next-meet-card .signup-deadline strong { color: #ffdc76; }
+.next-meet-card .signup-deadline span { color: #c7d4df; }
+.next-meet-card .home-actions .button { background: #f4c64e; color: #102b46; border-color: #f4c64e; border-radius: 2px; }
+.next-meet-card .home-actions .button:hover { background: #ffdc76; }
+.next-meet-card .home-actions .text-button { color: white; }
+.quick-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+.practice-card { border: 0; border-radius: 3px; padding: 18px; }
+.practice-swim { background: #d9efff; border-top: 5px solid #127bb8; }
+.practice-dive { background: #eee0fa; border-top: 5px solid #8642ae; }
+.practice-swim .eyebrow, .practice-swim .text-button, .practice-swim .pool-map-link { color: #095582; }
+.practice-dive .eyebrow, .practice-dive .text-button, .practice-dive .pool-map-link { color: #653087; }
+.practice-card .icon-disc { background: transparent; border-radius: 0; }
+.practice-card .icon-disc .icon { width: 28px; height: 28px; }
+.practice-dive .icon-disc { color: #653087; }
+.practice-card .practice-time { font: 700 25px/1.15 'Barlow Condensed',sans-serif; }
+.practice-card .practice-date { color: #435768; }
+.team-reminders { background: #fff0bf; border-left: 5px solid #d29513; padding: 13px 18px; }
+.team-reminders .card-topline { margin-bottom: 4px; }
+.team-reminders .eyebrow, .team-reminders .icon-disc { color: #795000; }
+.team-reminders h3 { font-size: 17px; margin-bottom: 5px; }
+.team-reminders .muted { color: #594b2d; }
+.team-reminders .text-button { color: #795000; }
+#updates .section-intro { border-top: 4px solid #127bb8; padding-top: 16px; }
+#updates .post { border-radius: 3px; border: 0; border-left: 4px solid #127bb8; }
+@media(max-width:900px) { .upcoming-grid { grid-template-columns: 1fr; } }
+@media(max-width:500px) { .quick-grid { grid-template-columns: 1fr; } .next-meet-card { padding: 18px; } }
+
+/* Carry the team palette through the remaining sections. */
+.coach-section { border: 0; border-top: 5px solid #127bb8; border-radius: 3px; }
+.coach-heading-group .eyebrow { color: #096597; }
+.coach-heading-group h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 40px; letter-spacing: 0; }
+.coach-photo { border-radius: 2px; }
+.coach-section > .team-people { border-top: 3px solid #f4c64e; }
+.coach-section > .team-people h3 { color: #095582; }
+#calendar > .section-heading, #meets > .section-heading, #results > .section-heading, #postseason > .section-heading { border-top: 4px solid #127bb8; padding-top: 16px; }
+#meets > .section-heading { border-color: #b52e42; }
+#results > .section-heading { border-color: #d29513; }
+#postseason > .section-heading { border-color: #8642ae; }
+.meet-table-wrap, .postseason-table-wrap { border-radius: 3px; }
+.meet-table th { background: #102b46; color: white; border-bottom: 3px solid #b52e42; }
+.meet-table tbody tr:not(.home-meet):nth-child(even) { background: #edf5fb; }
+.meet-table .away-badge { background: #b52e42; color: white; border-radius: 2px; padding: 3px 7px; }
+.meet-table .home-meet { background: #fff0bf; }
+.meet-table .home-badge { background: #f4c64e; color: #392700; border-radius: 2px; }
+.postseason-table thead th { background: #66329b; color: white; }
+.postseason-table tbody tr:nth-child(even) { background: #f3ebfa; }
+#result-posts .post { border-radius: 3px; border: 0; border-left: 4px solid #d29513; }
+#result-posts .empty { background: #fff4d6; color: #675023; padding: 18px 20px; border-left: 4px solid #d29513; }
+.pinned-label { background: #fff0bf; color: #765100; border-radius: 2px; }
+#calendar .cal-months button[aria-pressed="true"] { background: #102b46; color: white; }
+.site-footer { border-top: 5px solid #f4c64e; }
+@media(max-width:700px) { .coach-heading-group h2 { font-size: 32px; } }
+
+.month-calendar th { background: #102b46; color: white; border-color: #304c66; }
+#calendar .view-switch button[aria-pressed="true"] { background: #127bb8; color: white; }
+
+.parent-help { max-width: 760px; margin-bottom: 16px; color: var(--muted); font-size: 13px; }
+.parent-help p { margin-bottom: 0; }
+
+/* Keep the upper part of each team photo unobstructed. */
+.photo-hero-content { top: auto; bottom: 30px; transform: none; }
+@media (max-width: 700px) {
+  .photo-hero-content { top: auto; bottom: 82px; }
+  .photo-hero-content h1 { font-size: 38px; margin-bottom: 18px; }
+  .photo-hero-content .eyebrow { margin-bottom: 10px; }
+}
+
+.pool-map-link { display: inline-block; text-decoration: none; }
+.pool-map-link .pool-name { display: block; text-decoration: underline; text-underline-offset: 3px; }
+.pool-map-link .pool-address { display: block; margin-top: 3px; font-size: 12px; font-weight: 400; line-height: 1.5; color: var(--muted); }
+.next-meet-card .pool-map-link .pool-address { color: #c7d4df; }
+.pool-map-link:hover .pool-address { text-decoration: underline; }
+.pool-map-link .pool-name { font-size: 15px; font-weight: 750; line-height: 1.4; color: #095582; }
+.next-meet-card .pool-map-link .pool-name { color: #fff; font-size: 16px; }
+.practice-dive .pool-map-link .pool-name { color: #653087; }
+
+.brand-sport { white-space: nowrap; font-family: "Barlow Condensed", sans-serif; font-size: 23px; font-weight: 700; line-height: 1; letter-spacing: .8px; color: #095582; }
+.brand-sport .brand-amp { color: #996006; }
+@media(max-width:700px) { .brand-sport { font-size: 19px; padding-left: 12px; letter-spacing: .5px; } }
+
+/* Keep the branding and shortened navigation together on desktop. */
+@media (min-width: 901px) and (max-width: 1100px) {
+  .header-inner { gap: 16px; }
+  .brand { gap: 12px; }
+  .brand img { width: 150px; }
+  .brand-sport { padding-left: 12px; font-size: 21px; }
+  #main-nav { gap: 12px; }
+}
+@media (max-width: 380px) {
+  .brand { gap: 8px; }
+  .brand img { width: 130px; }
+  .brand-sport { padding-left: 8px; font-size: 17px; }
+  .header-inner { gap: 8px; }
+}

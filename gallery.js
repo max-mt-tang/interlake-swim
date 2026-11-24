@@ -81,7 +81,10 @@
   let index = 0, paused = reduced.matches, timer, busy = false, visible = false;
   function schedule() {
     clearTimeout(timer);
-    toggle.textContent = paused ? 'Play' : 'Pause';
+    toggle.textContent = '';
+    toggle.classList.toggle('is-paused', paused);
+    toggle.setAttribute('aria-label', paused ? 'Play slideshow' : 'Pause slideshow');
+    toggle.title = paused ? 'Play slideshow' : 'Pause slideshow';
     status.setAttribute('aria-live', paused ? 'polite' : 'off');
     if (!paused && visible && !document.hidden) timer = setTimeout(() => show(index + 1), 6000);
   }
@@ -99,7 +102,7 @@
       back.style.opacity = '0';
       index = next;
       link.href = photo.link;
-      document.getElementById('photo-count').textContent = (index + 1) + ' / ' + photos.length;
+      document.getElementById('photo-count').textContent = String(index + 1).padStart(2, '0') + ' / ' + String(photos.length).padStart(2, '0');
       status.textContent = photo.alt;
       busy = false;
       schedule();
