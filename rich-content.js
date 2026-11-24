@@ -1,6 +1,7 @@
 /* Shared structured post format. Never render stored text as HTML. */
 (() => {
   const PREFIX = 'IHS_RICH_V1\n';
+  const safeImage = value => typeof value === 'string' && /^\/api\/photo\?id=[A-Za-z0-9_-]{10,150}$/.test(value);
   function safeLink(value) {
     try { const u = new URL(value); return ['https:', 'mailto:'].includes(u.protocol) ? u.href : null; }
     catch { return null; }
@@ -10,7 +11,7 @@
     try {
       const parsed = JSON.parse(body.slice(PREFIX.length));
       if (!Array.isArray(parsed.ops)) throw Error();
-      return {ops: parsed.ops.filter(op => typeof op.insert === 'string').map(op => ({insert: op.insert, attributes: op.attributes || {}}))};
+      return {ops: parsed.ops.filter(op => typeof op.insert === 'string' || safeImage(op.insert?.image)).map(op => ({insert: op.insert, attributes: op.attributes || {}}))};
     } catch { return {ops: [{insert: 'This update could not be displayed.\n'}]}; }
   }
   function render(target, body) {
@@ -40,6 +41,16 @@
       line = [];
     }
     for (const op of decode(body).ops) {
+      if (typeof op.insert !== 'string') {
+        if (line.length) flush();
+        list = null;
+        const image = document.createElement('img');
+        image.src = op.insert.image;
+        image.alt = 'Photo shared in the team update';
+        image.loading = 'lazy';
+        target.append(image);
+        continue;
+      }
       const parts = op.insert.split('\n');
       parts.forEach((part, i) => {
         if (part) line.push({text: part, attrs: op.attributes || {}});

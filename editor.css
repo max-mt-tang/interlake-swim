@@ -200,3 +200,5 @@ body:not(.auth-screen) #message { background: transparent; padding: 0; margin: 6
 #rich-body .ql-tooltip input { display: inline-block; width: 160px; }
 .field-help { font-size: 12px; line-height: 1.5; color: #586c7c; margin: 8px 0 0; }
 #preview :is(ul,ol) { padding-left: 24px; }
+#format-toolbar #add-photo { width: auto; padding: 3px 9px; color: #123f60; font-size: 13px; font-weight: 600; }
+#rich-body img, #preview img { display: block; max-width: 100%; height: auto; border-radius: 6px; margin: 12px 0; }

@@ -556,3 +556,4 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .post .body li { margin: 5px 0; }
 .post .body :is(h3, h4) { margin: 20px 0 10px; }
 .post .body p { white-space: pre-wrap; }
+.post .body img { display: block; max-width: 100%; height: auto; border-radius: 6px; margin: 16px 0; }

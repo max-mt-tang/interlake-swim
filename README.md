@@ -47,3 +47,39 @@ Project: `interlake-swim`, owned by Max’s Google account. Authentication uses 
 Keep console rules in sync with `firestore.rules` (Firebase CLI: `firebase deploy --only firestore:rules --project interlake-swim`, after authenticating as the project owner). If changing editors, update the rules as well as `editorEmails` in `firebase-config.js`. A UI-only change never grants database access. Authorized domains include `ihsswim.vercel.app`; add a new domain before switching the site address.
 
 The editor can import the existing Nov. 22 weekly update once. Its fixed document ID prevents duplicate imports or overwriting a later edit.
+
+### Rich text and Google Drive photos
+
+The editor uses vendored Quill 2.0.3 (license in `assets/vendor/`) for headings,
+lists, emphasis, and links. `rich-content.js` renders an allowlisted structured
+format using DOM nodes, never stored HTML. Existing plain-text posts still work.
+
+Photo integration is implemented but requires a one-time connection before
+uploads work. Use **max.interlake.swim@gmail.com**, the dedicated team account,
+not Max's personal Drive. Firebase authentication remains unchanged.
+
+Configure these **server-only Vercel environment variables**:
+
+- `GOOGLE_DRIVE_CLIENT_ID` and `GOOGLE_DRIVE_CLIENT_SECRET`: a web OAuth client.
+- `GOOGLE_DRIVE_REFRESH_TOKEN`: offline authorization by the dedicated account,
+  limited to `https://www.googleapis.com/auth/drive.file`.
+- `GOOGLE_DRIVE_FOLDER_ID`: a folder created through that same OAuth client.
+
+Enable the Drive API for the OAuth project. Do not use a service account with a
+personal My Drive folder (service accounts have no personal storage quota).
+OAuth apps left in external Testing can issue refresh tokens that expire after
+seven days; use the appropriate production configuration for the narrow
+non-sensitive `drive.file` scope. Never commit tokens or client secrets.
+
+`/api/upload-photo` validates Firebase identity and the verified editor allowlist,
+then uploads resized JPEGs under random filenames. `/api/photo` serves only JPEGs
+created by this app within the configured folder. The API does not expose Google
+credentials or provide access to arbitrary Drive files. Photos are publicly
+viewable by their site image URL even while a post is a draft. Removing an image
+from a post does not delete its Drive file; the team account owner can delete it
+in Drive. Cached copies may remain available for up to one hour after deletion.
+
+Uploads accept JPG/PNG/WebP, resize to at most 1600px, and encode JPEG under 1MB.
+The editor limits each post to six photos. Free Google storage and Vercel usage
+quotas still apply; there is no paid billing configuration in this change.
+Run API authorization checks with `node --test tests/photo-api.test.js`.
