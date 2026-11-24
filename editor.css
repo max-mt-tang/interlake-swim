@@ -114,3 +114,35 @@
     margin-top: 20px;
   }
 }
+
+/* Compact sign-in page; the writing workspace keeps its wider layout. */
+.editor-brand { display: flex; align-items: center; gap: 20px; text-decoration: none; }
+.editor-brand img { display: block; width: 174px; height: auto; }
+.editor-brand span { padding-left: 20px; border-left: 1px solid var(--line); color: var(--navy); font-size: 11px; font-weight: 750; letter-spacing: 1.4px; }
+.editor-header-actions { display: flex; align-items: center; gap: 20px; font-size: 13px; }
+.editor-header-actions > a { color: var(--muted); text-decoration: none; }
+.auth-screen { background: #f4f7f9; }
+.auth-screen .editor-main { max-width: 440px; margin: 56px auto; padding: 32px 36px 24px; background: #fff; border: 1px solid #dce4eb; border-radius: 12px; box-shadow: 0 8px 28px #102b4608; }
+.auth-screen .editor-main h1 { margin: 0 0 8px; font-size: 28px; letter-spacing: -.7px; }
+.login-intro { color: var(--muted); font-size: 14px; line-height: 1.6; margin: 0 0 24px; }
+#login-form label { margin: 16px 0 6px; font-size: 13px; }
+#login-form select, #login-form input { margin: 0; min-height: 46px; border-color: #c9d4df; border-radius: 6px; font-size: 14px; }
+#login-form select { padding-right: 24px; }
+#login-form input::placeholder { color: #7c8997; }
+#google-login { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 12px; min-height: 46px; border-color: #b8c7d5; font-size: 14px; font-weight: 650; border-radius: 6px; }
+#google-login:hover { background: #f1f5f8; border-color: #123f60; }
+.login-divider { display: flex; align-items: center; gap: 12px; margin: 24px 0 18px; color: #73808e; font-size: 12px; }
+.login-divider::before, .login-divider::after { content: ''; flex: 1; height: 1px; background: #e1e7ed; }
+#login-form .email-signin { width: 100%; margin-top: 16px; min-height: 46px; border-color: #123f60; border-radius: 6px; font-size: 14px; font-weight: 650; }
+#login-form .email-signin:hover { background: #102b46; }
+#login-form #reset { display: block; margin: 4px auto 0; border: 0; background: transparent; font-size: 13px; color: #315d7c; padding: 10px; }
+.login-footer { border-top: 1px solid #e1e7ed; padding-top: 18px; margin: 12px 0 0; text-align: center; font-size: 12px; color: var(--muted); }
+.auth-screen #message { font-size: 13px; line-height: 1.5; margin: 14px 0; }
+.editor-main :is(input,select,button,a):focus-visible { outline: 3px solid #629fc4; outline-offset: 3px; }
+@media (max-width: 600px) {
+  .editor-header { padding: 14px 20px; min-height: 76px; }
+  .editor-brand img { width: 146px; }
+  .editor-brand span { display: none; }
+  .editor-header-actions { gap: 8px; font-size: 12px; }
+  .auth-screen .editor-main { margin: 28px 16px; max-width: none; padding: 28px 24px 22px; }
+}
