@@ -31,7 +31,10 @@
           <button type="button" id="google-login" hidden>Continue with Google <span aria-hidden="true">→</span></button>
           <div id="password-signin">
           <label for="password">Password</label>
-          <input id="password" type="password" autocomplete="current-password" required placeholder="Enter your password">
+          <div class="password-field">
+            <input id="password" type="password" autocomplete="current-password" required placeholder="Enter your password">
+            <button type="button" id="toggle-password" aria-controls="password" aria-pressed="false">Show password</button>
+          </div>
           <button type="submit" class="primary email-signin">Sign in</button>
           <button type="button" id="reset">Forgot password?</button>
           </div>

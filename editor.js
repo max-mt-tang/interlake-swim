@@ -154,6 +154,14 @@ function preview() {
   box.append(title, body);
   box.hidden = false;
 }
+function setPasswordVisible(visible) {
+  $("#password").type = visible ? "text" : "password";
+  $("#toggle-password").textContent = visible ? "Hide password" : "Show password";
+  $("#toggle-password").setAttribute("aria-pressed", String(visible));
+}
+$("#toggle-password").addEventListener("click", () => {
+  setPasswordVisible($("#password").type === "password");
+});
 function updateSignInMethod() {
   const useGoogle = $("#email").value === "maxmttang@gmail.com";
   $("#google-login").hidden = !useGoogle;
@@ -161,6 +169,7 @@ function updateSignInMethod() {
   $("#password").disabled = useGoogle;
   $("#password").required = !useGoogle;
   $("#password").value = "";
+  setPasswordVisible(false);
 }
 updateSignInMethod();
 $("#email").addEventListener("change", () => {
@@ -188,6 +197,7 @@ if (!auth) {
       const c = credentials();
       await signInWithEmailAndPassword(auth, c.email, c.password);
       $("#password").value = "";
+      setPasswordVisible(false);
     });
   });
   $("#reset").addEventListener("click", () =>
