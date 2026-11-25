@@ -37,7 +37,18 @@ function safe(value) {
 function link(value, label, className = 'text-button') {
   const url = safe(value);
   if (!url) return null;
-  const anchor = el('a', label, className);
+  const parsed = new URL(url);
+  const trainingVideo = (parsed.hostname === 'youtu.be' && parsed.pathname === '/bPFJCbQkZnc') || (['www.youtube.com', 'youtube.com'].includes(parsed.hostname) && parsed.searchParams.get('v') === 'bPFJCbQkZnc');
+  const anchor = el('a', trainingVideo ? null : label, trainingVideo ? 'video-preview' : className);
+  if (trainingVideo) {
+    const frame = el('span', null, 'video-preview-image');
+    const image = el('img');
+    image.src = 'https://i.ytimg.com/vi/bPFJCbQkZnc/hqdefault.jpg';
+    image.alt = ''; image.loading = 'lazy'; image.width = 480; image.height = 360;
+    const play = el('span', '▶', 'video-play'); play.setAttribute('aria-hidden', 'true');
+    frame.append(image, play);
+    anchor.append(frame, el('span', label + ' · Watch on YouTube', 'video-preview-caption'));
+  }
   anchor.href = url;
   anchor.target = '_blank';
   anchor.rel = 'noopener noreferrer';

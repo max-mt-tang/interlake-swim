@@ -758,3 +758,13 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
   margin-top: 5px;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='15' viewBox='0 0 32 15'%3E%3Cpath d='M0 2.5Q4 0 8 2.5T16 2.5T24 2.5T32 2.5M0 7.5Q4 5 8 7.5T16 7.5T24 7.5T32 7.5M0 12.5Q4 10 8 12.5T16 12.5T24 12.5T32 12.5' fill='none' stroke='%232f8dc4' stroke-width='1.5'/%3E%3C/svg%3E") repeat-x left center;
 }
+
+.video-preview { display: block; width: min(100%, 320px); margin-top: 14px; color: #123f60; text-decoration: none; }
+.video-preview-image { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 6px; background: #102b46; }
+.video-preview-image img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.video-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: grid; place-items: center; width: 54px; height: 38px; padding-left: 3px; border-radius: 9px; background: #c5221f; color: white; font-size: 22px; }
+.video-preview-caption { display: block; margin-top: 8px; font-size: 13px; line-height: 1.5; font-weight: 600; }
+.video-preview:hover .video-play { background: #f00; }
+.video-preview:hover .video-preview-caption { text-decoration: underline; }
+.video-preview > .icon { display: none; }
+.video-preview:focus-visible { outline: 3px solid #1684b5; outline-offset: 4px; }
