@@ -698,11 +698,11 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 #result-posts .post { border-radius: 3px; border: 0; border-left: 4px solid #d29513; }
 #result-posts .empty { background: #fff4d6; color: #675023; padding: 18px 20px; border-left: 4px solid #d29513; }
 .pinned-label { background: #fff0bf; color: #765100; border-radius: 2px; }
-#calendar .cal-months button[aria-pressed="true"] { background: #102b46; color: white; }
+#calendar .cal-months button[aria-pressed="true"] { background: #d7edfb; color: #124b70; border-color: #83b8d9; }
 .site-footer { border-top: 5px solid #f4c64e; }
 @media(max-width:700px) { .coach-heading-group h2 { font-size: 32px; } }
 
-.month-calendar th { background: #102b46; color: white; border-color: #304c66; }
+.month-calendar th { background: #dceefa; color: #163f5c; border-color: #b1cddd; }
 #calendar .view-switch button[aria-pressed="true"] { background: #127bb8; color: white; }
 
 .parent-help { max-width: 760px; margin-bottom: 16px; color: var(--muted); font-size: 13px; }
@@ -789,5 +789,5 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
   .parent-volunteers .parent-training { margin-top: 4px; padding: 18px 0 0; border-left: 0; border-top: 1px solid #c7d7e2; }
 }
 
-/* Carry the calendar columns clearly through the dark weekday header. */
-.month-calendar th:not(:last-child) { border-right: 1px solid #7893aa; }
+/* Keep weekday column dividers visible against the light blue header. */
+.month-calendar th:not(:last-child) { border-right: 1px solid #9fbfd3; }
