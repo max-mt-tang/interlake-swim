@@ -628,8 +628,8 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 
 /* Outlined slideshow controls. */
 .photo-hero .photo-controls { gap: 18px; }
-.photo-hero .photo-controls button { display: grid; place-items: center; width: 64px; height: 64px; padding: 0; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.75); background: transparent; color: white; font: 38px/1 system-ui,sans-serif; transition: background .15s; }
-.photo-hero .photo-controls button:hover { background: rgba(255,255,255,.18); border-color: white; }
+.photo-hero .photo-controls button { display: grid; place-items: center; width: 64px; height: 64px; padding: 0; border-radius: 6px; border: 0; background: transparent; color: white; font: 38px/1 system-ui,sans-serif; transition: background .15s; }
+.photo-hero .photo-controls button:hover { background: rgba(255,255,255,.12); }
 .photo-hero .photo-controls button:focus-visible { outline: 3px solid white; outline-offset: 4px; }
 .photo-hero #photo-count { font-size: 14px; font-weight: 650; letter-spacing: 3px; font-variant-numeric: tabular-nums; margin-right: 8px; }
 #photo-toggle::before { content: ''; width: 16px; height: 24px; border-left: 5px solid currentColor; border-right: 5px solid currentColor; box-sizing: border-box; }
