@@ -18,7 +18,7 @@
   --dive: #13776e;
   --meet: #344c72;
   --home: #996006;
-  --state: #7953a6;
+  --state: #087f8c;
 }
 * { box-sizing: border-box; }
 html { scroll-padding-top: 116px; }
@@ -163,7 +163,7 @@ img { display: block; max-width: 100%; }
 .cal-legend .legend-dive { color: #633697; }
 .meet { --event-color: var(--meet); --event-bg: #edf0f7; --event-text: #344c72; }
 .home { --event-color: var(--home); --event-bg: #fcf4e3; --event-text: #845204; }
-.state { --event-color: var(--state); --event-bg: #f2ecf8; --event-text: #68418f; }
+.state { --event-color: var(--state); --event-bg: #e4f4f2; --event-text: #12665f; }
 .agenda-view { border-top: 1px solid var(--line); }
 .agenda-day { display: grid; grid-template-columns: 72px 1fr; gap: 22px; padding: 20px 26px; border-bottom: 1px solid #e8edef; }
 .agenda-day:last-child { border-bottom: 0; }
@@ -570,10 +570,10 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 /* Calendar hierarchy: competitions stand out from recurring practices. */
 .cal-event, .agenda-event { border-left-width: 4px; }
 .cal-event.swim, .agenda-event.swim { --event-bg: #dcefff; --event-text: #125286; --event-color: #1684cf; }
-.cal-event.dive, .agenda-event.dive { --event-bg: #eee3ff; --event-text: #652b99; --event-color: #8c46c4; }
+.cal-event.dive, .agenda-event.dive { --event-bg: #d9f2ed; --event-text: #12665f; --event-color: #168575; }
 .cal-event.meet, .agenda-event.meet { --event-bg: #b52e42; --event-text: #fff; --event-color: #851c2c; }
 .cal-event.home, .agenda-event.home { --event-bg: #ffd15a; --event-text: #392700; --event-color: #b66c00; }
-.cal-event.state, .agenda-event.state { --event-bg: #66329b; --event-text: #fff; --event-color: #3c1763; }
+.cal-event.state, .agenda-event.state { --event-bg: #086c78; --event-text: #fff; --event-color: #064b53; }
 .cal-event:is(.meet,.home,.state) { padding: 9px 8px; box-shadow: 0 2px 4px #102b461a; }
 .cal-event:is(.meet,.home,.state) > span:last-child { font-size: 12px; font-weight: 750; }
 .agenda-event:is(.meet,.home,.state) .agenda-time, .agenda-event:is(.meet,.home,.state) .agenda-location { color: inherit; opacity: 1; }
@@ -582,7 +582,7 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .cal-legend .legend-meet, .cal-legend .legend-home, .cal-legend .legend-state { padding: 4px 9px; border-radius: 4px; font-weight: 750; }
 .cal-legend .legend-meet { background: #b52e42; color: white; }
 .cal-legend .legend-home { background: #ffd15a; color: #392700; }
-.cal-legend .legend-state { background: #66329b; color: white; }
+.cal-legend .legend-state { background: #086c78; color: white; }
 .cal-legend .legend-meet::before, .cal-legend .legend-home::before, .cal-legend .legend-state::before { display: none; }
 .cal-event:focus-visible, .agenda-event:focus-visible { outline: 3px solid #102b46; outline-offset: 3px; }
 
@@ -657,12 +657,12 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .quick-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
 .practice-card { border: 0; border-radius: 3px; padding: 18px; }
 .practice-swim { background: #d9efff; border-top: 5px solid #127bb8; }
-.practice-dive { background: #eee0fa; border-top: 5px solid #8642ae; }
+.practice-dive { background: #d9f2ed; border-top: 5px solid #168575; }
 .practice-swim .eyebrow, .practice-swim .text-button, .practice-swim .pool-map-link { color: #095582; }
-.practice-dive .eyebrow, .practice-dive .text-button, .practice-dive .pool-map-link { color: #653087; }
+.practice-dive .eyebrow, .practice-dive .text-button, .practice-dive .pool-map-link { color: #12665f; }
 .practice-card .icon-disc { background: transparent; border-radius: 0; }
 .practice-card .icon-disc .icon { width: 28px; height: 28px; }
-.practice-dive .icon-disc { color: #653087; }
+.practice-dive .icon-disc { color: #12665f; }
 .practice-card .practice-time { font: 700 25px/1.15 'Barlow Condensed',sans-serif; }
 .practice-card .practice-date { color: #435768; }
 .team-reminders { background: #fff0bf; border-left: 5px solid #d29513; padding: 13px 18px; }
@@ -686,15 +686,15 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 #calendar > .section-heading, #meets > .section-heading, #results > .section-heading, #postseason > .section-heading { border-top: 4px solid #127bb8; padding-top: 16px; }
 #meets > .section-heading { border-color: #b52e42; }
 #results > .section-heading { border-color: #d29513; }
-#postseason > .section-heading { border-color: #8642ae; }
+#postseason > .section-heading { border-color: #168575; }
 .meet-table-wrap, .postseason-table-wrap { border-radius: 3px; }
 .meet-table th { background: #102b46; color: white; border-bottom: 3px solid #b52e42; }
 .meet-table tbody tr:not(.home-meet):nth-child(even) { background: #edf5fb; }
 .meet-table .away-badge { background: #b52e42; color: white; border-radius: 2px; padding: 3px 7px; }
 .meet-table .home-meet { background: #fff0bf; }
 .meet-table .home-badge { background: #f4c64e; color: #392700; border-radius: 2px; }
-.postseason-table thead th { background: #66329b; color: white; }
-.postseason-table tbody tr:nth-child(even) { background: #f3ebfa; }
+.postseason-table thead th { background: #086c78; color: white; }
+.postseason-table tbody tr:nth-child(even) { background: #eaf6f3; }
 #result-posts .post { border-radius: 3px; border: 0; border-left: 4px solid #d29513; }
 #result-posts .empty { background: #fff4d6; color: #675023; padding: 18px 20px; border-left: 4px solid #d29513; }
 .pinned-label { background: #fff0bf; color: #765100; border-radius: 2px; }
@@ -723,7 +723,7 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .pool-map-link:hover .pool-address { text-decoration: underline; }
 .pool-map-link .pool-name { font-size: 15px; font-weight: 750; line-height: 1.4; color: #095582; }
 .next-meet-card .pool-map-link .pool-name { color: #fff; font-size: 16px; }
-.practice-dive .pool-map-link .pool-name { color: #653087; }
+.practice-dive .pool-map-link .pool-name { color: #12665f; }
 
 .brand-sport { white-space: nowrap; font-family: "Barlow Condensed", sans-serif; font-size: 23px; font-weight: 700; line-height: 1; letter-spacing: .8px; color: #095582; }
 .brand-sport .brand-amp { color: #996006; }
