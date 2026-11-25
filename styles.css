@@ -768,3 +768,12 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .video-preview:hover .video-preview-caption { text-decoration: underline; }
 .video-preview > .icon { display: none; }
 .video-preview:focus-visible { outline: 3px solid #1684b5; outline-offset: 4px; }
+
+.parent-volunteers dl { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.parent-training { max-width: 480px; margin: 24px auto 0; padding-top: 18px; border-top: 1px solid var(--line); }
+.parent-training .parent-help { margin: 0 0 12px; line-height: 1.6; }
+.parent-training .video-preview { width: 100%; margin-top: 0; }
+@media (max-width: 600px) {
+  .parent-volunteers dl { grid-template-columns: 1fr; gap: 18px; }
+  .parent-training { margin-top: 20px; }
+}
