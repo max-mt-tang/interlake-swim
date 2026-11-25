@@ -788,3 +788,6 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
   .parent-volunteers > h2 { margin-bottom: 0; }
   .parent-volunteers .parent-training { margin-top: 4px; padding: 18px 0 0; border-left: 0; border-top: 1px solid #c7d7e2; }
 }
+
+/* Carry the calendar columns clearly through the dark weekday header. */
+.month-calendar th:not(:last-child) { border-right: 1px solid #7893aa; }
