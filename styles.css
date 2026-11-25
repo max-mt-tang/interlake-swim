@@ -791,3 +791,23 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 
 /* Keep weekday column dividers visible against the light blue header. */
 .month-calendar th:not(:last-child) { border-right: 1px solid #9fbfd3; }
+
+/* Shared header treatment across the calendar and schedule tables. */
+.month-calendar thead th,
+.meet-table thead th,
+.postseason-table thead th {
+  background: #dceefa;
+  color: #163f5c;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  padding-block: 11px;
+  border-top: 1px solid #b1cddd;
+  border-bottom: 1px solid #b1cddd;
+}
+.month-calendar thead th:not(:last-child),
+.meet-table thead th:not(:last-child),
+.postseason-table thead th:not(:last-child) {
+  border-right: 1px solid #9fbfd3;
+}
