@@ -540,6 +540,9 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .photo-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 #photo-back { opacity: 0; transform: scale(1.045); clip-path: inset(0); }
 #photo-back.effect-zoom-out { transform: scale(.94); }
+#photo-back.effect-fireworks { transform: scale(1.06) rotate(.7deg); }
+#photo-back.effect-explosion { transform: scale(.72) rotate(-3deg); }
+#photo-back.effect-confetti { transform: translateY(4%) scale(1.04); }
 #photo-back.effect-slide-left { transform: translateX(5%) scale(1.03); }
 #photo-back.effect-slide-right { transform: translateX(-5%) scale(1.03); }
 #photo-back.effect-slide-up { transform: translateY(5%) scale(1.03); }
@@ -547,8 +550,24 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 #photo-back.effect-reveal { opacity: 1; transform: scale(1.02); clip-path: inset(0 100% 0 0); }
 #photo-back.effect-reveal-up { opacity: 1; transform: scale(1.02); clip-path: inset(100% 0 0 0); }
 #photo-back.is-transitioning { opacity: 1; transform: none; clip-path: inset(0); transition: opacity 850ms ease-out, transform 1100ms ease-out, clip-path 1100ms ease-in-out; }
+.photo-effects { position: absolute; z-index: 1; inset: 0; overflow: hidden; pointer-events: none; }
+.photo-effects .spark, .photo-effects .confetti { display: none; position: absolute; }
+.photo-effects.is-fireworks .spark { display: block; width: 5px; height: 5px; border-radius: 50%; background: #fff; box-shadow: 0 -35px #ffdb70, 25px -25px #8ddbf2, 35px 0 #fff, 25px 25px #f7a8b7, 0 35px #ffdb70, -25px 25px #8ddbf2, -35px 0 #fff, -25px -25px #f7a8b7; animation: photo-firework 950ms ease-out both; }
+.photo-effects.is-fireworks .spark:nth-child(1) { left: 24%; top: 28%; }
+.photo-effects.is-fireworks .spark:nth-child(2) { left: 68%; top: 35%; animation-delay: 120ms; }
+.photo-effects.is-fireworks .spark:nth-child(3) { left: 49%; top: 63%; animation-delay: 180ms; }
+@keyframes photo-firework { 0% { opacity: 0; transform: scale(.1); } 18% { opacity: 1; } 75% { opacity: 1; } 100% { opacity: 0; transform: scale(1.35); } }
+.photo-effects.is-explosion::before, .photo-effects.is-explosion::after { content: ''; position: absolute; left: 50%; top: 50%; border-radius: 50%; }
+.photo-effects.is-explosion::before { width: 90px; height: 90px; border: 4px solid #ffda7a; box-shadow: 0 0 30px #ffda7a88; animation: photo-burst-ring 900ms ease-out both; }
+.photo-effects.is-explosion::after { width: 8px; height: 8px; background: #fff; box-shadow: 0 -48px #ffda7a, 34px -34px #fff, 48px 0 #8ddbf2, 34px 34px #ffda7a, 0 48px #fff, -34px 34px #8ddbf2, -48px 0 #ffda7a, -34px -34px #fff; animation: photo-burst-sparks 1000ms ease-out both; }
+@keyframes photo-burst-ring { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.1); } 20% { opacity: .9; } 100% { opacity: 0; transform: translate(-50%, -50%) scale(4); } }
+@keyframes photo-burst-sparks { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.1) rotate(0deg); } 18% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -50%) scale(2.4) rotate(35deg); } }
+.photo-effects.is-confetti .confetti { display: block; top: -20px; width: 9px; height: 15px; border-radius: 2px; background: #ffda7a; animation: photo-confetti 900ms ease-in var(--delay) both; }
+.photo-effects.is-confetti .confetti:nth-child(3n) { background: #8ddbf2; }
+.photo-effects.is-confetti .confetti:nth-child(3n + 1) { background: #f7a8b7; }
+@keyframes photo-confetti { 0% { opacity: 0; transform: translateY(-20px) rotate(0deg); } 15% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--drift), 480px) rotate(560deg); } }
 .photo-status { margin: 8px 0 0; font-size: 13px; color: #435768; }
-@media (prefers-reduced-motion: reduce) { #photo-back.is-transitioning { transition: none; } }
+@media (prefers-reduced-motion: reduce) { #photo-back.is-transitioning { transition: none; } .photo-effects { display: none; } }
 
 /* Photo-led landing banner, inspired by Interlake Rocketry. */
 .page-shell > .photo-hero { max-width: none; margin: 20px 0 0; position: relative; height: 480px; overflow: hidden; border-radius: 10px; background: var(--navy); }

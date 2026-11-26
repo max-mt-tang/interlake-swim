@@ -125,6 +125,23 @@
   const front = document.getElementById('photo-front');
   const back = document.getElementById('photo-back');
   const link = document.getElementById('photo-link');
+  const effectsLayer = document.createElement('div');
+  effectsLayer.className = 'photo-effects';
+  effectsLayer.setAttribute('aria-hidden', 'true');
+  for (let i = 0; i < 3; i++) {
+    const spark = document.createElement('span');
+    spark.className = 'spark';
+    effectsLayer.append(spark);
+  }
+  for (let i = 0; i < 12; i++) {
+    const piece = document.createElement('span');
+    piece.className = 'confetti';
+    piece.style.left = `${5 + i * 8}%`;
+    piece.style.setProperty('--delay', `${(i % 4) * 40}ms`);
+    piece.style.setProperty('--drift', `${(i % 2 ? -1 : 1) * (18 + i * 3)}px`);
+    effectsLayer.append(piece);
+  }
+  link.append(effectsLayer);
   const toggle = document.getElementById('photo-toggle');
   const status = document.getElementById('photo-status');
   const viewer = document.getElementById('photo-viewer');
@@ -133,7 +150,7 @@
   const viewerCaption = document.getElementById('viewer-caption');
   const viewerOriginal = document.getElementById('viewer-original');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  const effects = ['zoom', 'slide-left', 'reveal', 'slide-up', 'zoom-out', 'slide-right', 'reveal-up', 'slide-down'];
+  const effects = ['zoom', 'slide-left', 'fireworks', 'reveal', 'slide-up', 'explosion', 'zoom-out', 'slide-right', 'confetti', 'reveal-up', 'slide-down'];
   let index = 0, viewerIndex = 0, paused = reduced.matches, timer, busy = false, visible = false;
   function showViewerPhoto(next) {
     viewerIndex = (next + photos.length) % photos.length;
@@ -170,11 +187,13 @@
     back.src = photo.src;
     try { await back.decode(); } catch { busy = false; schedule(); return; }
     back.getBoundingClientRect();
+    if (!reduced.matches) effectsLayer.className = `photo-effects is-${effects[next % effects.length]}`;
     back.classList.add('is-transitioning');
     setTimeout(() => {
       front.src = photo.src;
       front.alt = photo.alt;
       back.classList.remove('is-transitioning');
+      effectsLayer.className = 'photo-effects';
       index = next;
       link.href = photo.link;
       link.setAttribute('aria-label', photo.link.startsWith('assets/') ? 'Open current photo' : 'Open current photo in Google Photos');
