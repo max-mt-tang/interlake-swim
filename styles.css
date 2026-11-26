@@ -863,15 +863,10 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 /* Keep weekday column dividers visible against the light blue header. */
 .month-calendar th:not(:last-child) { border-right: 1px solid #9fbfd3; }
 
-.pending-event-card:has(.banquet-visual) { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(320px, 600px); align-items: center; gap: 24px; }
-.banquet-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.banquet-gallery img { display: block; width: 100%; height: 170px; object-fit: cover; border-radius: 6px; }
-.banquet-gallery img:nth-child(2) { object-position: center 62%; }
-.banquet-caption { margin: 7px 0 0; color: var(--muted); font-size: 11px; line-height: 1.4; }
-.banquet-caption a { color: inherit; text-underline-offset: 2px; }
+.pending-event-card:has(.banquet-photo) { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(220px, 325px); align-items: center; gap: 24px; }
+.banquet-photo { display: block; width: 100%; height: auto; border-radius: 6px; }
 @media (max-width: 700px) {
-  .pending-event-card:has(.banquet-visual) { grid-template-columns: 1fr; gap: 16px; }
-  .banquet-gallery img { height: 130px; }
+  .pending-event-card:has(.banquet-photo) { grid-template-columns: 1fr; gap: 16px; }
 }
 
 .parent-volunteers .parent-help { grid-column: 1 / -1; max-width: none; margin: 0 0 24px; padding: 24px 28px; border: 1px solid #e4c66c; border-left: 6px solid #d29513; border-radius: 10px; background: #fff9e9; color: var(--navy); line-height: 1.5; }

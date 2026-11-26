@@ -379,34 +379,13 @@ function renderPendingEvents() {
     info.append(el('p', 'Date & time to be announced', 'eyebrow'), el('h4', event.title), poolLink(event.location));
     card.append(info);
     if (event.title === 'Final Banquet') {
-      const gallery = el('div', null, 'banquet-gallery');
-      for (const photo of [
-        { src: 'assets/banquet/buffet.jpg', alt: 'Guest serving food from a buffet', name: 'Justin Agyarko', url: 'https://www.pexels.com/photo/elegant-buffet-dining-experience-with-diverse-dishes-34278821/' },
-        { src: 'assets/banquet/desserts.jpg', alt: 'Dessert table with cake and pastries', name: 'Alexander Mass', url: 'https://www.pexels.com/photo/elegant-dessert-buffet-at-celebration-event-33038483/' }
-      ]) {
-        const image = el('img');
-        image.src = photo.src;
-        image.alt = photo.alt;
-        image.loading = 'lazy';
-        image.width = 1200;
-        image.height = photo.name === 'Alexander Mass' ? 1800 : 800;
-        gallery.append(image);
-      }
-      const caption = el('p', 'Sample food photos only. This year’s menu has not been announced. ', 'banquet-caption');
-      for (const [name, url] of [
-        ['Justin Agyarko', 'https://www.pexels.com/photo/elegant-buffet-dining-experience-with-diverse-dishes-34278821/'],
-        ['Alexander Mass', 'https://www.pexels.com/photo/elegant-dessert-buffet-at-celebration-event-33038483/']
-      ]) {
-        const credit = el('a', name);
-        credit.href = url;
-        credit.target = '_blank';
-        credit.rel = 'noopener noreferrer';
-        caption.append(credit);
-        if (name === 'Justin Agyarko') caption.append(' · ');
-      }
-      const visual = el('div', null, 'banquet-visual');
-      visual.append(gallery, caption);
-      card.append(visual);
+      const image = el('img', null, 'banquet-photo');
+      image.src = 'assets/banquet/chips-and-dips.jpg';
+      image.alt = 'Chips with salsa and dips';
+      image.loading = 'lazy';
+      image.width = 325;
+      image.height = 217;
+      card.append(image);
     }
     list.append(card);
   }
