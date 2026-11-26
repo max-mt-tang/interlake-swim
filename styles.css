@@ -224,6 +224,7 @@ details[open] > summary .icon { transform: rotate(180deg); }
 .meet-table td:nth-child(2) { white-space: nowrap; }
 .meet-table td:nth-child(3) { width: 29%; }
 .meet-table td:nth-child(4) { width: 36%; }
+.meet-table td:nth-child(4) > .text-button { display: flex; width: fit-content; margin-top: 12px; }
 .meet-table td strong { font-weight: 650; }
 .cell-detail { display: block; font-size: 11px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
 .meet-badge { display: table; width: fit-content; font-size: 9px; font-weight: 650; padding: 2px 7px; margin-top: 7px; border-radius: 4px; letter-spacing: .3px; }
