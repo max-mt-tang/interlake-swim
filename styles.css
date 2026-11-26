@@ -548,10 +548,10 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .page-shell > .photo-hero { max-width: none; margin: 20px 0 0; position: relative; height: 480px; overflow: hidden; border-radius: 10px; background: var(--navy); }
 .photo-hero .photo-stage { height: 100%; aspect-ratio: auto; border-radius: 0; }
 .photo-hero .photo-stage img { object-fit: cover; object-position: center 42%; }
-.photo-hero::after { content: ''; pointer-events: none; position: absolute; inset: 0; background: linear-gradient(90deg,rgba(4,23,39,.8),rgba(4,23,39,.05)),linear-gradient(0deg,rgba(4,23,39,.65),transparent 45%); }
+.photo-hero::after { content: ''; pointer-events: none; position: absolute; inset: 0; background: linear-gradient(90deg,rgba(4,23,39,.58),transparent 60%),linear-gradient(0deg,rgba(4,23,39,.45),transparent 48%); }
 .photo-hero-content { position: absolute; z-index: 1; left: 40px; top: 50%; transform: translateY(-50%); color: white; pointer-events: none; }
 .photo-hero-content .eyebrow { color: #d1e8fa; margin-bottom: 16px; }
-.photo-hero-content h1 { color: white; font: 750 clamp(40px,5vw,68px)/1.05 system-ui,sans-serif; letter-spacing: -2px; margin: 0 0 26px; }
+.photo-hero-content h1 { color: white; font: 750 clamp(40px,5vw,68px)/1.05 system-ui,sans-serif; letter-spacing: -2px; margin: 0 0 26px; text-shadow: 0 2px 12px #04172780; }
 .photo-hero-links { display: flex; gap: 12px; flex-wrap: wrap; }
 .photo-hero-links a { pointer-events: auto; padding: 13px 17px; background: white; color: #12334c; border-radius: 5px; font-weight: 700; font-size: 14px; text-decoration: none; }
 .photo-hero-links a + a { color: white; background: rgba(0,0,0,.35); border: 1px solid #b5c6d0; }
