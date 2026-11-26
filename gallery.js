@@ -104,6 +104,11 @@
     src: `assets/team/${name}.jpg`,
     link: `assets/team/${name}.jpg`,
     alt
+  })),
+  ..."KQ1A0628 KQ1A0727 KQ1A0756 KQ1A0782 KQ1A0795 KQ1A0822 KQ1A0829 KQ1A0852 KQ1A0894 KQ1A0901 KQ1A0931 KQ1A0935 KQ1A0937 KQ1A0946 KQ1A0947 KQ1A0948 KQ1A0952 KQ1A0962 KQ1A0970 KQ1A0982 KQ1A0997 KQ1A1000 KQ1A1011 KQ1A1012 KQ1A1013 KQ1A1055 KQ1A1067 KQ1A1068 KQ1A1071 KQ1A1078 KQ1A1085 KQ1A1106 KQ1A1109 KQ1A1121 KQ1A1173-EDIT".split(" ").map(name => ({
+    src: `assets/team/${name}.jpg`,
+    link: `assets/team/${name}.jpg`,
+    alt: "Interlake swim meet photo"
   }))
 ];
   const root = document.getElementById('photos');
