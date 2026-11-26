@@ -840,26 +840,17 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .video-preview > .icon { display: none; }
 .video-preview:focus-visible { outline: 3px solid #1684b5; outline-offset: 4px; }
 
+/* Contacts, meet request, and training follow in reading order. */
+.parent-volunteers { display: block; }
+.parent-volunteers > h2 { margin: 0 0 22px; }
 .parent-volunteers dl { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-.parent-training { max-width: 480px; margin: 24px auto 0; padding-top: 18px; border-top: 1px solid var(--line); }
-.parent-training .parent-help { margin: 0 0 12px; line-height: 1.6; }
-.parent-training .parent-help h3 { margin: 0 0 10px; font-size: 19px; }
-.parent-training .parent-help p + p { margin-top: 10px; }
-.parent-training .video-preview { width: 100%; margin-top: 0; }
-@media (max-width: 600px) {
+.parent-volunteers .parent-help { max-width: 760px; margin: 28px 0 0; padding: 0; border: 0; background: none; color: var(--text); font-size: 14px; line-height: 1.6; }
+.parent-volunteers .parent-help h3 { margin: 0 0 12px; font-size: 19px; }
+.parent-volunteers .parent-help p { margin: 0 0 12px; }
+.parent-volunteers .parent-training { width: min(100%, 360px); max-width: none; margin: 20px 0 0; padding: 0; border: 0; }
+.parent-volunteers .video-preview { width: 100%; margin-top: 0; }
+@media (max-width: 700px) {
   .parent-volunteers dl { grid-template-columns: 1fr; gap: 18px; }
-  .parent-training { margin-top: 20px; }
-}
-
-/* Contacts on the left, volunteer training on the right. */
-.parent-volunteers { display: grid; grid-template-columns: minmax(240px, 320px) minmax(0, 1fr); column-gap: 28px; align-items: start; }
-.parent-volunteers > h2 { grid-column: 1 / -1; margin: 0 0 16px; }
-.parent-volunteers dl { grid-template-columns: 1fr; gap: 18px; }
-.parent-volunteers .parent-training { width: 100%; max-width: 560px; margin: 0; padding: 0 0 0 28px; border: 0; border-left: 1px solid #c7d7e2; }
-@media (max-width: 600px) {
-  .parent-volunteers { grid-template-columns: 1fr; gap: 18px; }
-  .parent-volunteers > h2 { margin-bottom: 0; }
-  .parent-volunteers .parent-training { margin-top: 4px; padding: 18px 0 0; border-left: 0; border-top: 1px solid #c7d7e2; }
 }
 
 /* Keep weekday column dividers visible against the light blue header. */
@@ -869,31 +860,6 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .banquet-photo { display: block; width: 100%; height: auto; border-radius: 6px; }
 @media (max-width: 700px) {
   .pending-event-card:has(.banquet-photo) { grid-template-columns: 1fr; gap: 16px; }
-}
-
-.parent-volunteers .parent-help { grid-column: 1 / -1; max-width: none; margin: 0 0 24px; padding: 24px 28px; border: 1px solid #e4c66c; border-left: 6px solid #d29513; border-radius: 10px; background: #fff9e9; color: var(--navy); line-height: 1.5; }
-.parent-volunteers .parent-help .eyebrow { margin: 0 0 6px; color: #875c00; font-size: 12px; font-weight: 800; letter-spacing: 1.2px; }
-.parent-volunteers .parent-help h3 { margin: 0 0 6px; font-size: clamp(22px, 2.4vw, 28px); }
-.parent-volunteers .parent-help p { margin: 0; font-size: 15px; }
-.parent-volunteers .parent-help .senior-night-invite { margin-top: 12px; font-weight: 700; }
-.parent-volunteers .parent-help h4 { margin: 20px 0 10px; color: var(--navy); font-size: 17px; }
-.volunteer-roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin: 0 0 12px; padding: 0; list-style: none; }
-.volunteer-roles li { display: flex; flex-direction: column; justify-content: center; min-height: 66px; padding: 10px 14px; border: 1px solid #e4c66c; border-radius: 6px; background: white; color: var(--navy); }
-.volunteer-roles strong { font-size: 16px; }
-.volunteer-roles li:first-child { border-color: #d29513; background: #fff1c8; }
-.volunteer-roles li:first-child strong { font-size: 20px; }
-.volunteer-roles span { color: var(--muted); font-size: 12px; }
-.parent-volunteers .parent-help .volunteer-role-note { margin: 0 0 18px; color: var(--muted); font-size: 12px; }
-.volunteer-contact { display: inline-flex; align-items: center; gap: 8px; padding: 11px 15px; border-radius: 5px; background: var(--navy); color: white; font-size: 14px; font-weight: 700; text-decoration: none; }
-.volunteer-contact:hover { background: #175f88; }
-.volunteer-contact:focus-visible { outline: 3px solid #1684b5; outline-offset: 3px; }
-.volunteer-contact .icon { width: 15px; height: 15px; }
-.parent-volunteers .parent-help .volunteer-postseason { margin-top: 18px; color: var(--muted); font-size: 12px; }
-@media (max-width: 600px) {
-  .parent-volunteers .parent-help { margin-bottom: 0; padding: 18px; }
-  .volunteer-roles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  .volunteer-roles li { min-height: 62px; padding: 8px 10px; }
-  .volunteer-roles strong { font-size: 14px; }
 }
 
 /* Shared header treatment across the calendar and schedule tables. */
