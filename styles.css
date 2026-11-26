@@ -845,17 +845,20 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 /* Contacts, meet request, and training follow in reading order. */
 .parent-volunteers { display: block; }
 .parent-volunteers > h2 { margin: 0 0 22px; }
+.parent-volunteers .volunteer-tile { padding: 22px 24px; border: 1px solid var(--line); border-radius: 10px; background: white; }
 .parent-volunteers dl { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-.parent-volunteers .parent-help { max-width: 760px; margin: 28px 0 0; padding: 0; border: 0; background: none; color: var(--text); font-size: 14px; line-height: 1.6; }
+.parent-volunteers .home-meet-volunteer-tile { margin-top: 16px; }
+.parent-volunteers .parent-help { max-width: 960px; margin: 0; padding: 0; border: 0; background: none; color: var(--text); font-size: 14px; line-height: 1.6; }
 .parent-volunteers .parent-help h3 { margin: 0 0 12px; font-size: 19px; }
 .parent-volunteers .parent-help p { margin: 0 0 12px; }
 .parent-volunteers .parent-training { width: min(100%, 360px); max-width: none; margin: 20px 0 0; padding: 0; border: 0; }
 .parent-volunteers .video-preview { width: 100%; margin-top: 0; }
-.postseason-volunteers { max-width: 760px; margin-top: 28px; }
+.postseason-volunteers { margin-top: 16px; }
 .postseason-volunteers h3 { margin: 0 0 8px; font-size: 19px; }
 .postseason-volunteers p { margin: 0; font-size: 14px; }
 @media (max-width: 700px) {
   .parent-volunteers dl { grid-template-columns: 1fr; gap: 18px; }
+  .parent-volunteers .volunteer-tile { padding: 18px; }
 }
 
 /* Keep weekday column dividers visible against the light blue header. */
