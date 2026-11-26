@@ -165,8 +165,10 @@
     busy = true;
     next = (next + photos.length) % photos.length;
     const photo = photos[next];
+    back.className = `effect-${['zoom', 'slide-left', 'reveal', 'slide-right'][next % 4]}`;
     back.src = photo.src;
     try { await back.decode(); } catch { busy = false; schedule(); return; }
+    back.getBoundingClientRect();
     back.classList.add('is-transitioning');
     setTimeout(() => {
       front.src = photo.src;
