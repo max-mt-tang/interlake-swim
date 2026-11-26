@@ -6,7 +6,7 @@ const LOCAL_UPDATES = [
     "title": "Weekly Update #3",
     "category": "Coach update",
     "pinned": "TRUE",
-    "body": "Coach Eberth’s Nov. 22 update: WIAA requires seven recorded practice days before a swimmer can compete. Sign up for the Dec. 1 meet by Friday, Nov. 27. Arrange your own ride to Edgebrook and arrive no later than 8:00 PM for warm-ups. If you need a ride, let him know promptly so a carpool can be arranged. There is no practice on meet day.",
+    "body": "Coach Eberth’s Nov. 22 update: WIAA requires seven recorded practice days before a swimmer can compete. Sign up for the Dec. 1 meet by Friday, Nov. 27. Arrange your own ride to Mary Wayte Pool and arrive no later than 8:00 PM for warm-ups. If you need a ride, let him know promptly so a carpool can be arranged. There is no practice on meet day.",
     "link": "",
     "link_label": ""
   },
@@ -116,9 +116,9 @@ const LOCAL_EVENTS = [
     "end_time": "22:30",
     "type": "Dual meet",
     "title": "Interlake vs. Bellevue",
-    "location": "Edgebrook",
+    "location": "Mary Wayte Pool",
     "signup_deadline": "2026-11-27",
-    "notes": "WIAA requires at least 7 recorded practice days before a swimmer can compete. Confirm your practice count with Coach Eberth.\nNo school bus transportation; arrange your own ride to Edgebrook. If you need a ride, contact Coach Eberth promptly so a carpool can be arranged.\nNo practice on Tuesday, Dec. 1.\nArrive at Edgebrook no later than 8:00 PM for warm-ups. The meet starts at 8:30 PM.\nMeet sign-up deadline: Friday, Nov. 27.",
+    "notes": "WIAA requires at least 7 recorded practice days before a swimmer can compete. Confirm your practice count with Coach Eberth.\nNo school bus transportation; arrange your own ride to Mary Wayte Pool. If you need a ride, contact Coach Eberth promptly so a carpool can be arranged.\nNo practice on Tuesday, Dec. 1.\nArrive at Mary Wayte Pool no later than 8:00 PM for warm-ups. The meet starts at 8:30 PM.\nMeet sign-up deadline: Friday, Nov. 27.",
     "link": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=OUFKmQZ8HkmAmHkAbVdd4NW0wze9h95Ivctw9NN0cZVURENKNTJBQTZNTEcyUUlMTldWSDJRN1hPSi4u"
   },
   {
