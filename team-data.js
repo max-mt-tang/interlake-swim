@@ -285,7 +285,7 @@ const LOCAL_EVENTS = [
     "type": "Team event",
     "title": "Final Banquet",
     "location": "Interlake High School",
-    "notes": "The season banquet will be held at Interlake High School. Date and time to be announced.",
+    "notes": "Potluck at Interlake High School, tentatively in the second week of February 2027. Exact date and time to be announced. Coach Eberth expects all swimmers and parents to attend. A SignUpGenius link will be added once the date is finalized.",
     "link": ""
   }
 ];

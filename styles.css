@@ -756,7 +756,8 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 #calendar > .section-heading, #banquet > .section-heading, #meets > .section-heading, #results > .section-heading, #postseason > .section-heading { border-top: 4px solid #127bb8; padding-top: 16px; }
 #banquet > .section-heading { border-color: #d29513; }
 .banquet-details { border: 1px solid var(--line); border-radius: 10px; background: white; }
-.banquet-signup-note { margin: 14px 0 0; color: var(--text); font-size: 13px; }
+.banquet-attendance { margin: 14px 0 0; color: var(--text); font-size: 14px; }
+.banquet-signup-note { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
 #meets > .section-heading { border-color: #b52e42; }
 #results > .section-heading { border-color: #d29513; }
 #postseason > .section-heading { border-color: #168575; }
