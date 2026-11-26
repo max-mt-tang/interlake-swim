@@ -392,7 +392,11 @@ function renderBanquet() {
   const card = el('article', null, 'pending-event-card');
   const info = el('div');
   const when = valid(banquet.date) ? `${date(banquet.date)} · ${time(banquet.time)}` : 'Date & time to be announced';
-  info.append(el('p', when, 'eyebrow'), poolLink(banquet.location));
+  info.append(
+    el('p', when, 'eyebrow'),
+    poolLink(banquet.location),
+    el('p', 'Potluck food and supplies sign-up will be posted here when available.', 'banquet-signup-note')
+  );
   const image = el('img', null, 'banquet-photo');
   image.src = 'assets/banquet/chips-and-dips.jpg';
   image.alt = 'Chips with salsa and dips';
