@@ -70,6 +70,11 @@
     "link": "https://photos.google.com/share/AF1QipNCtQ8Mhm5YkMqt7qgQUqDF2yvSPjTg3Pf0FvlBGYZody0rIDV1FyzFJIBO7Gk45w/photo/AF1QipOJHRn6yJadqHfArb59fXQgzs2JE2nNpU00VhuK?key=ckdrdmxlUEtNVmo1dDNLZEw3VVhKOHU0eDh1R2hn",
     "alt": "Three teammates posing together"
   },
+  ..."KQ1A6374 KQ1A6529 KQ1A6505 KQ1A6497 KQ1A6446 KQ1A6406 KQ1A6572 KQ1A6213".split(" ").map(name => ({
+    src: `assets/team/${name}.jpg`,
+    link: `assets/team/${name}.jpg`,
+    alt: "Interlake Home Meet and Senior Night"
+  })),
   {
     "src": "assets/team/KQ1A0390.JPG",
     "link": "assets/team/KQ1A0390.JPG",
