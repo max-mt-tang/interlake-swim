@@ -878,9 +878,14 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .parent-volunteers .parent-help .eyebrow { margin: 0 0 6px; color: #875c00; font-size: 12px; font-weight: 800; letter-spacing: 1.2px; }
 .parent-volunteers .parent-help h3 { margin: 0 0 6px; font-size: clamp(22px, 2.4vw, 28px); }
 .parent-volunteers .parent-help p { margin: 0; font-size: 15px; }
-.volunteer-needs { display: flex; flex-wrap: wrap; gap: 12px; margin: 18px 0; }
-.volunteer-needs span { display: inline-flex; align-items: baseline; gap: 7px; padding: 8px 14px; border-radius: 6px; background: white; border: 1px solid #e4c66c; color: var(--navy); font-size: 16px; font-weight: 700; }
-.volunteer-needs strong { font-size: 25px; line-height: 1.1; }
+.parent-volunteers .parent-help h4 { margin: 20px 0 10px; color: var(--navy); font-size: 17px; }
+.volunteer-roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin: 0 0 12px; padding: 0; list-style: none; }
+.volunteer-roles li { display: flex; flex-direction: column; justify-content: center; min-height: 66px; padding: 10px 14px; border: 1px solid #e4c66c; border-radius: 6px; background: white; color: var(--navy); }
+.volunteer-roles strong { font-size: 16px; }
+.volunteer-roles li:first-child { border-color: #d29513; background: #fff1c8; }
+.volunteer-roles li:first-child strong { font-size: 20px; }
+.volunteer-roles span { color: var(--muted); font-size: 12px; }
+.parent-volunteers .parent-help .volunteer-role-note { margin: 0 0 18px; color: var(--muted); font-size: 12px; }
 .volunteer-contact { display: inline-flex; align-items: center; gap: 8px; padding: 11px 15px; border-radius: 5px; background: var(--navy); color: white; font-size: 14px; font-weight: 700; text-decoration: none; }
 .volunteer-contact:hover { background: #175f88; }
 .volunteer-contact:focus-visible { outline: 3px solid #1684b5; outline-offset: 3px; }
@@ -888,8 +893,9 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .parent-volunteers .parent-help .volunteer-postseason { margin-top: 18px; color: var(--muted); font-size: 12px; }
 @media (max-width: 600px) {
   .parent-volunteers .parent-help { margin-bottom: 0; padding: 18px; }
-  .volunteer-needs { gap: 8px; }
-  .volunteer-needs span { font-size: 14px; }
+  .volunteer-roles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .volunteer-roles li { min-height: 62px; padding: 8px 10px; }
+  .volunteer-roles strong { font-size: 14px; }
 }
 
 /* Shared header treatment across the calendar and schedule tables. */
