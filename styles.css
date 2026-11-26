@@ -636,6 +636,29 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 #photo-toggle.is-paused::before { width: 0; height: 0; border: 0; border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-left: 19px solid currentColor; margin-left: 4px; }
 @media (max-width:700px) { .photo-hero .photo-controls { gap: 12px; } .photo-hero .photo-controls button { width: 48px; height: 48px; font-size: 30px; } .photo-hero #photo-count { font-size: 12px; letter-spacing: 2px; } }
 
+/* Full-screen gallery viewer. */
+.photo-viewer[open] { display: grid; place-items: center; }
+.photo-viewer { box-sizing: border-box; position: fixed; inset: 0; width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 64px 76px 72px; border: 0; background: #07131f; color: white; }
+.photo-viewer::backdrop { background: #07131f; }
+.photo-viewer img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.photo-viewer button { position: absolute; z-index: 1; display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid #ffffff80; border-radius: 8px; background: #07131fcc; color: white; font: 30px/1 system-ui,sans-serif; cursor: pointer; }
+.photo-viewer button:hover, .photo-viewer button:focus-visible { background: #28485e; }
+.photo-viewer button:focus-visible, .viewer-footer a:focus-visible { outline: 3px solid white; outline-offset: 3px; }
+.viewer-close { top: 12px; right: 16px; }
+.viewer-arrow { top: 50%; transform: translateY(-50%); }
+.viewer-prev { left: 16px; }
+.viewer-next { right: 16px; }
+.viewer-footer { position: absolute; bottom: 16px; left: 24px; right: 24px; display: flex; align-items: center; justify-content: center; gap: 16px; font-size: 14px; }
+.viewer-footer a { color: white; text-underline-offset: 3px; }
+#viewer-count { white-space: nowrap; font-variant-numeric: tabular-nums; }
+@media (max-width: 700px) {
+  .photo-hero .photo-controls { gap: 4px; }
+  .photo-hero .photo-controls button { width: 44px; height: 44px; }
+  .photo-viewer { padding: 64px 8px 104px; }
+  .viewer-arrow { top: auto; bottom: 56px; transform: none; }
+  .viewer-footer { bottom: 12px; left: 70px; right: 70px; flex-wrap: wrap; gap: 4px 10px; text-align: center; font-size: 12px; }
+}
+
 /* Stronger hierarchy for the next meet and practice schedule. */
 #team-home > .section-heading { border-top: 4px solid #102b46; padding-top: 16px; }
 .upcoming-grid { grid-template-columns: 1.1fr 1fr; gap: 22px; align-items: stretch; }

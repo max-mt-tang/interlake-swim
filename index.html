@@ -37,7 +37,7 @@
     <section id="photos" class="team-gallery photo-hero" aria-labelledby="photos-heading" aria-roledescription="carousel">
       <a id="photo-link" class="photo-stage" href="https://photos.google.com/share/AF1QipNCtQ8Mhm5YkMqt7qgQUqDF2yvSPjTg3Pf0FvlBGYZody0rIDV1FyzFJIBO7Gk45w/photo/AF1QipN_FUJh729jw8L_uil34yeMKuTKCS94kmT5WYC7?key=ckdrdmxlUEtNVmo1dDNLZEw3VVhKOHU0eDh1R2hn" target="_blank" rel="noopener noreferrer" aria-label="Open current photo in Google Photos"><img id="photo-front" src="assets/team/swim-01.jpg" alt="Swimmers gathering beside balloons and a photo display" width="1440" height="960" fetchpriority="high"><img id="photo-back" alt="" aria-hidden="true" width="1440" height="960"></a>
       <div class="photo-hero-content"><p class="eyebrow">INTERLAKE HIGH SCHOOL · 2026–27</p><h1 id="photos-heading">Interlake<br>Swim &amp; Dive</h1><div class="photo-hero-links"><a href="#calendar">Calendar →</a><a href="#meets">Meets →</a></div></div>
-      <div class="photo-hero-bottom"><div class="photo-controls"><span id="photo-count">01 / 74</span><button type="button" id="photo-toggle" aria-label="Pause slideshow"></button><button type="button" id="photo-prev" aria-label="Previous photo">←</button><button type="button" id="photo-next" aria-label="Next photo">→</button></div></div>
+      <div class="photo-hero-bottom"><div class="photo-controls"><span id="photo-count">01 / 74</span><button type="button" id="photo-toggle" aria-label="Pause slideshow"></button><button type="button" id="photo-prev" aria-label="Previous photo">←</button><button type="button" id="photo-next" aria-label="Next photo">→</button><button type="button" id="photo-expand" aria-label="View photo full screen" title="View photo full screen">⛶</button></div></div>
       <p id="photo-status" class="photo-status" aria-live="off">Swimmers gathering beside balloons and a photo display</p>
     </section>
     <section id="coach" class="coach-section" aria-labelledby="coach-heading">
@@ -139,6 +139,13 @@
 
 
   </main>
+  <dialog id="photo-viewer" class="photo-viewer" aria-label="Full-screen team photo viewer">
+    <button id="viewer-close" class="viewer-close" type="button" aria-label="Close photo viewer">×</button>
+    <button id="viewer-prev" class="viewer-arrow viewer-prev" type="button" aria-label="Previous photo">←</button>
+    <img id="viewer-image" alt="">
+    <button id="viewer-next" class="viewer-arrow viewer-next" type="button" aria-label="Next photo">→</button>
+    <div class="viewer-footer"><span id="viewer-count" aria-live="polite"></span><span id="viewer-caption"></span><a id="viewer-original" href="#" target="_blank" rel="noopener noreferrer">Open original</a></div>
+  </dialog>
 
   <footer class="site-footer"><div class="footer-inner"><div><img src="assets/interlake-logo-white.svg" width="202" height="60" alt="Interlake High School Saints"><p>SWIM &amp; DIVE · 2026–27</p></div><div class="footer-note"><p>Contact Max Tang or Ray Tang for website issues.<br>Confirm schedule changes with Coach Eberth.</p></div></div></footer>
   <dialog id="cal-dialog" aria-labelledby="cal-event-title"><div class="cal-dialog-top"><p id="cal-event-type" class="eyebrow"></p><button id="cal-close" class="icon-button" type="button" aria-label="Close event details"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#x"></use></svg></button></div><h2 id="cal-event-title"></h2><div class="detail-line"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#clock"></use></svg><p id="cal-event-time"></p></div><div class="detail-line"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#map-pin"></use></svg><p id="cal-event-location"></p></div><p id="cal-event-notes" class="body"></p><div id="cal-event-links"></div></dialog>

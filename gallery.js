@@ -117,8 +117,30 @@
   const link = document.getElementById('photo-link');
   const toggle = document.getElementById('photo-toggle');
   const status = document.getElementById('photo-status');
+  const viewer = document.getElementById('photo-viewer');
+  const viewerImage = document.getElementById('viewer-image');
+  const viewerCount = document.getElementById('viewer-count');
+  const viewerCaption = document.getElementById('viewer-caption');
+  const viewerOriginal = document.getElementById('viewer-original');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let index = 0, paused = reduced.matches, timer, busy = false, visible = false;
+  let index = 0, viewerIndex = 0, paused = reduced.matches, timer, busy = false, visible = false;
+  function showViewerPhoto(next) {
+    viewerIndex = (next + photos.length) % photos.length;
+    const photo = photos[viewerIndex];
+    viewerImage.src = photo.src;
+    viewerImage.alt = photo.alt;
+    viewerCount.textContent = `${String(viewerIndex + 1).padStart(2, '0')} / ${photos.length}`;
+    viewerCaption.textContent = photo.alt;
+    viewerOriginal.href = photo.link;
+  }
+  function openViewer(event) {
+    if (event) event.preventDefault();
+    paused = true;
+    schedule();
+    showViewerPhoto(index);
+    viewer.showModal();
+    document.getElementById('viewer-close').focus();
+  }
   function schedule() {
     clearTimeout(timer);
     toggle.textContent = '';
@@ -152,6 +174,17 @@
   function manual(delta) { paused = true; schedule(); show(index + delta); }
   document.getElementById('photo-prev').addEventListener('click', () => manual(-1));
   document.getElementById('photo-next').addEventListener('click', () => manual(1));
+  document.getElementById('photo-expand').addEventListener('click', openViewer);
+  link.addEventListener('click', openViewer);
+  document.getElementById('viewer-close').addEventListener('click', () => viewer.close());
+  document.getElementById('viewer-prev').addEventListener('click', () => showViewerPhoto(viewerIndex - 1));
+  document.getElementById('viewer-next').addEventListener('click', () => showViewerPhoto(viewerIndex + 1));
+  viewer.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      showViewerPhoto(viewerIndex + (event.key === 'ArrowLeft' ? -1 : 1));
+    }
+  });
   toggle.addEventListener('click', () => { paused = !paused; schedule(); });
   root.addEventListener('keydown', event => {
     if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
