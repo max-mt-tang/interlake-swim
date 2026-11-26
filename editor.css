@@ -2,12 +2,7 @@
   display: none !important;
 }
 .editor-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 5%;
-  border-bottom: 1px solid var(--line);
-  background: white;
+  background: rgba(255,255,255,.97);
 }
 .editor-main {
   max-width: 1100px;
@@ -116,11 +111,9 @@
 }
 
 /* Compact sign-in page; the writing workspace keeps its wider layout. */
-.editor-brand { display: flex; align-items: center; gap: 20px; text-decoration: none; }
-.editor-brand img { display: block; width: 174px; height: auto; }
-.editor-brand span { padding-left: 20px; border-left: 1px solid var(--line); color: var(--navy); font-size: 11px; font-weight: 750; letter-spacing: 1.4px; }
 .editor-header-actions { display: flex; align-items: center; gap: 20px; font-size: 13px; }
-.editor-header-actions > a { color: var(--muted); text-decoration: none; }
+.editor-header-actions > a { color: var(--muted); text-decoration: none; white-space: nowrap; }
+.editor-header-actions > a:hover { color: var(--navy); }
 .auth-screen { background: #f4f7f9; }
 .auth-screen .editor-main { max-width: 440px; margin: 56px auto; padding: 32px 36px 24px; background: #fff; border: 1px solid #dce4eb; border-radius: 12px; box-shadow: 0 8px 28px #102b4608; }
 .auth-screen .editor-main h1 { margin: 0 0 8px; font-size: 28px; letter-spacing: -.7px; }
@@ -143,11 +136,15 @@
 .auth-screen #message { font-size: 13px; line-height: 1.5; margin: 14px 0; }
 .editor-main :is(input,select,button,a):focus-visible { outline: 3px solid #629fc4; outline-offset: 3px; }
 @media (max-width: 600px) {
-  .editor-header { padding: 14px 20px; min-height: 76px; }
-  .editor-brand img { width: 146px; }
-  .editor-brand span { display: none; }
-  .editor-header-actions { gap: 8px; font-size: 12px; }
+  .editor-header-actions { gap: 10px; font-size: 16px; }
+  .editor-back-label { display: none; }
   .auth-screen .editor-main { margin: 28px 16px; max-width: none; padding: 28px 24px 22px; }
+}
+@media (max-width: 380px) {
+  .editor-header .brand img { width: 110px; }
+  .editor-header .brand-sport { font-size: 16px; }
+  .editor-header-actions { gap: 6px; }
+  .editor-header-actions button { padding-inline: 8px; }
 }
 
 /* Coach writing workspace. */

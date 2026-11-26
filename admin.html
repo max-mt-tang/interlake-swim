@@ -6,6 +6,7 @@
     <meta name="robots" content="noindex" />
     <title>Team editor · Interlake Swim &amp; Dive</title>
     <link rel="icon" href="assets/favicon.svg" />
+    <link rel="preload" href="assets/barlow-condensed-bold.ttf" as="font" type="font/ttf" crossorigin />
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="assets/vendor/quill.snow.css" />
     <link rel="stylesheet" href="editor.css" />
@@ -15,9 +16,14 @@
     <script type="module" src="editor.js"></script>
   </head>
   <body class="auth-screen">
-    <header class="editor-header">
-      <a class="editor-brand" href="/" aria-label="Interlake Swim and Dive home"><img src="assets/interlake-logo.svg" width="174" height="52" alt="Interlake High School"><span>SWIM &amp; DIVE</span></a>
-      <div class="editor-header-actions"><a href="/">Back to team site <span aria-hidden="true">↗</span></a><button id="signout" hidden>Sign out</button></div>
+    <header class="site-header editor-header">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="Interlake Swim and Dive home">
+          <img src="assets/interlake-logo.svg" width="216" height="64" alt="Interlake High School Saints">
+          <span class="brand-sport">SWIM <span class="brand-amp">&amp;</span> DIVE</span>
+        </a>
+        <div class="editor-header-actions"><a href="/" aria-label="Back to team site"><span class="editor-back-label">Back to team site </span><span aria-hidden="true">↗</span></a><button id="signout" hidden>Sign out</button></div>
+      </div>
     </header>
     <main class="editor-main">
       <h1 id="editor-title">Coach sign-in</h1>
