@@ -76,6 +76,11 @@
           <form id="post-form">
             <h2 id="form-heading">New update</h2>
             <p class="form-intro">Share practice changes, meet details, and weekly news with families.</p>
+            <div class="editor-actions publish-actions">
+              <button type="submit" value="publish" class="primary">Publish update</button>
+              <button type="button" id="delete-post" hidden>Delete post</button>
+            </div>
+            <p id="save-state" role="status" aria-live="polite"></p>
             <label>Title<input id="title" maxlength="160" required placeholder="e.g. This week’s practice and meet details" /></label>
             <div class="editor-row">
               <label>Date<input id="post-date" type="date" required /></label
@@ -101,27 +106,9 @@
             <input id="document-file" type="file" accept="application/pdf,.pdf" hidden><p id="document-status" class="field-help" role="status">PDFs up to 10 MB. Uploaded PDFs are public to anyone with the link, even before publishing. Remove a PDF link from the message to detach it; this does not delete the file.</p>
             <input id="photo-file" type="file" accept="image/jpeg,image/png,image/webp" hidden>
             <p id="photo-status" class="field-help" role="status">Photos are resized and saved to the team’s Google Drive folder. Uploaded photos can be viewed by anyone with their image link, including before a post is published.</p>
-            <fieldset class="optional-link"><legend>Add a link <span>(optional)</span></legend><div class="editor-row"><label
-              >Web or photo-album link<input
-                id="post-link"
-                type="url"
-                placeholder="https://"
-                maxlength="2048" /></label
-            ><label>Link text<input id="link-label" maxlength="100" placeholder="e.g. Meet schedule" /></label></div></fieldset
-            ><label class="check-label"
+            <label class="check-label"
               ><input id="pinned" type="checkbox" /> Keep this update at the top</label
             >
-            <div class="editor-actions publish-actions">
-              <button type="button" id="preview-button">Preview</button
-              ><button type="submit" value="draft">
-                Save draft / unpublish</button
-              ><button type="submit" value="publish" class="primary">
-                Publish update
-              </button>
-            </div>
-            <button type="button" id="delete-post" hidden>Delete post</button>
-            <p id="save-state"></p>
-            <article id="preview" hidden></article>
           </form>
         </div>
       </section>

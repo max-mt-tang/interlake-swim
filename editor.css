@@ -90,16 +90,6 @@
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
-#preview {
-  padding: 20px;
-  border: 1px solid var(--line);
-  background: white;
-  margin-top: 20px;
-  overflow-wrap: anywhere;
-}
-#preview p {
-  white-space: pre-wrap;
-}
 @media (max-width: 700px) {
   .editor-layout,
   .editor-row {
@@ -168,22 +158,19 @@ body:not(.auth-screen) #message { background: transparent; padding: 0; margin: 6
 #post-form textarea { line-height: 1.7; min-height: 300px; padding: 16px; }
 #post-form input::placeholder, #post-form textarea::placeholder { color: #7b8b97; }
 #post-form .editor-row label { margin-top: 0; }
-.optional-link { border: 0; border-top: 1px solid #e1e7ed; padding: 16px 0 0; margin: 24px 0 0; min-width: 0; }
-.optional-link legend { padding: 0 12px 0 0; font-size: 13px; font-weight: 600; }
-.optional-link legend span { color: #73808e; font-weight: 400; }
 #post-form .check-label { display: flex; align-items: center; gap: 9px; font-weight: 400; }
 #pinned { width: 17px; height: 17px; margin: 0; accent-color: #123f60; }
-.publish-actions { border-top: 1px solid #e1e7ed; padding-top: 20px; margin: 24px 0 0; }
+.publish-actions { border-bottom: 1px solid #e1e7ed; padding-bottom: 20px; margin: 0 0 18px; }
 .publish-actions button { font-size: 13px; border-color: #cad6df; }
-.publish-actions .primary { margin-left: auto; font-weight: 600; border-color: #123f60; }
-#save-state { font-size: 12px; color: #586c7c; margin: 12px 0 0; }
+.publish-actions .primary { font-weight: 600; border-color: #123f60; }
+#save-state { font-size: 12px; color: #586c7c; margin: 0 0 12px; }
+#save-state:empty { display: none; }
 @media (max-width: 760px) {
   .editor-layout { grid-template-columns: 1fr; gap: 20px; }
   #post-list { max-height: 170px; overflow-y: auto; }
   #post-form { padding: 22px 18px; }
   .workspace-toolbar a { margin-left: 0; }
   .publish-actions { gap: 8px; }
-  .publish-actions .primary { margin-left: 0; }
 }
 .writing-area { border: 1px solid #cad6df; border-radius: 6px; }
 #format-toolbar { border: 0; border-bottom: 1px solid #dce4eb; background: #f6f8fa; border-radius: 6px 6px 0 0; padding: 10px; }
@@ -196,11 +183,10 @@ body:not(.auth-screen) #message { background: transparent; padding: 0; margin: 6
 #rich-body .ql-tooltip { left: 0 !important; max-width: 100%; white-space: normal; z-index: 2; }
 #rich-body .ql-tooltip input { display: inline-block; width: 160px; }
 .field-help { font-size: 12px; line-height: 1.5; color: #586c7c; margin: 8px 0 0; }
-#preview :is(ul,ol) { padding-left: 24px; }
 #format-toolbar #add-photo { width: auto; padding: 3px 9px; color: #123f60; font-size: 13px; font-weight: 600; }
-#rich-body img, #preview img { display: block; max-width: 100%; height: auto; border-radius: 6px; margin: 12px 0; }
+#rich-body img { display: block; max-width: 100%; height: auto; border-radius: 6px; margin: 12px 0; }
 
-#delete-post { margin-top: 16px; color: #a12636; border-color: #d6a3aa; background: #fff; }
+#delete-post { margin-left: auto; color: #a12636; border-color: #d6a3aa; background: #fff; }
 #delete-post:hover { background: #fff1f3; }
 
 /* Compact writing workspace with distinct post navigation and upload controls. */
@@ -226,8 +212,7 @@ body:not(.auth-screen) .editor-main { max-width: 1120px; margin: 22px auto; }
 #rich-body .ql-editor { min-height: 220px; padding: 16px; line-height: 1.6; }
 #rich-body .ql-editor.ql-blank::before { left: 16px; }
 .field-help { font-size: 11px; line-height: 1.45; }
-.optional-link { margin-top: 16px; padding-top: 10px; }
-.publish-actions { padding-top: 14px; margin-top: 16px; }
+.publish-actions { padding-bottom: 14px; margin: 0 0 16px; }
 @media(max-width:760px) {
   .editor-layout { grid-template-columns: 1fr; gap: 14px; }
   .editor-layout aside { padding: 12px; }

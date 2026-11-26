@@ -85,7 +85,6 @@ function emptyForm() {
   }).format(new Date());
   $("#form-heading").textContent = "New update";
   $("#save-state").textContent = "";
-  $("#preview").hidden = true;
 }
 function mayDiscard() {
   return !dirty || confirm("Discard your unsaved changes?");
@@ -120,17 +119,20 @@ async function listPosts() {
       $("#delete-post").hidden = false;
       revision = p.revision;
       $("#title").value = p.title;
-      writer.setContents(SwimContent.decode(p.body), 'silent');
+      const content = SwimContent.decode(p.body);
+      if (p.link) content.ops.push(
+        {insert: '\n'},
+        {insert: p.link_label || 'Read more', attributes: {link: p.link}},
+        {insert: '\n'},
+      );
+      writer.setContents(content, 'silent');
       $("#post-date").value = p.date;
       $("#category").value = p.category;
-      $("#post-link").value = p.link;
-      $("#link-label").value = p.link_label;
       $("#pinned").checked = p.pinned;
       $("#form-heading").textContent = "Edit update";
       $("#save-state").textContent = p.published
         ? "Currently published"
         : "Private draft";
-      $("#preview").hidden = true;
       dirty = false;
     });
     $("#post-list").append(button);
@@ -176,16 +178,6 @@ function credentials() {
   const email = $("#email").value.trim().toLowerCase();
   if (!editorEmails.includes(email)) throw Error("not-editor");
   return { email, password: $("#password").value };
-}
-function preview() {
-  const box = $("#preview");
-  box.replaceChildren();
-  const title = document.createElement("h3");
-  title.textContent = $("#title").value;
-  const body = document.createElement("div");
-  SwimContent.render(body, SwimContent.encode(writer.getContents()));
-  box.append(title, body);
-  box.hidden = false;
 }
 function setPasswordVisible(visible) {
   $("#password").type = visible ? "text" : "password";
@@ -286,7 +278,6 @@ if (!auth) {
       await listPosts();
     }),
   );
-  $("#preview-button").addEventListener("click", preview);
   $("#post-form").addEventListener("input", () => {
     dirty = true;
   });
@@ -383,20 +374,15 @@ if (!auth) {
     if (saving || uploading) return;
     attempt(async () => {
       if (!allowed(auth.currentUser)) throw Error("not-editor");
-      const link = $("#post-link").value.trim();
-      if (link && new URL(link).protocol !== "https:") {
-        message("Use an https:// link.");
-        return;
-      }
       const data = {
         title: $("#title").value.trim(),
         body: SwimContent.encode(writer.getContents()),
         date: $("#post-date").value,
         category: $("#category").value,
         pinned: $("#pinned").checked,
-        published: e.submitter?.value === "publish",
-        link,
-        link_label: $("#link-label").value.trim(),
+        published: true,
+        link: "",
+        link_label: "",
       };
       if (!data.title || (!writer.getText().trim() && !writer.getContents().ops.some(op => op.insert?.image))) {
         message("Add a title and message.");
@@ -441,10 +427,8 @@ if (!auth) {
         $("#delete-post").hidden = false;
         revision = (oldRevision || 0) + 1;
         dirty = false;
-        $("#save-state").textContent = data.published
-          ? "Published. Parents can now read this update."
-          : "Draft saved. Only editors can read it.";
-        message(data.published ? "Update published." : "Private draft saved.");
+        $("#save-state").textContent = "Published. Parents can now read this update.";
+        message("Update published.");
         await listPosts();
       } finally {
         saving = false;
