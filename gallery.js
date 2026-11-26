@@ -167,11 +167,11 @@
     const photo = photos[next];
     back.src = photo.src;
     try { await back.decode(); } catch { busy = false; schedule(); return; }
-    back.style.opacity = '1';
+    back.classList.add('is-transitioning');
     setTimeout(() => {
       front.src = photo.src;
       front.alt = photo.alt;
-      back.style.opacity = '0';
+      back.classList.remove('is-transitioning');
       index = next;
       link.href = photo.link;
       link.setAttribute('aria-label', photo.link.startsWith('assets/') ? 'Open current photo' : 'Open current photo in Google Photos');
@@ -179,7 +179,7 @@
       status.textContent = photo.alt;
       busy = false;
       schedule();
-    }, reduced.matches ? 0 : 650);
+    }, reduced.matches ? 0 : 1100);
   }
   function manual(delta) { paused = true; schedule(); show(index + delta); }
   document.getElementById('photo-prev').addEventListener('click', () => manual(-1));
