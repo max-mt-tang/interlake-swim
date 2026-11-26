@@ -377,7 +377,7 @@ function renderPendingEvents() {
     const card = el('article', null, 'pending-event-card');
     const info = el('div');
     info.append(el('p', 'Date & time to be announced', 'eyebrow'), el('h4', event.title), poolLink(event.location));
-    card.append(info, action('Event details', () => showCalendarEvent(event)));
+    card.append(info);
     list.append(card);
   }
 }

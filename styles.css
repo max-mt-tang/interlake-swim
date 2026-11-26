@@ -191,12 +191,11 @@ details[open] > summary .icon { transform: rotate(180deg); }
 .calendar-footnotes { display: flex; justify-content: space-between; align-items: start; gap: 24px; margin-top: 14px; font-size: 11px; color: var(--muted); }
 .pending-events { margin-top: 18px; border: 1px solid var(--line); border-radius: 10px; background: white; overflow: hidden; }
 .pending-events h3 { margin: 0; padding: 14px 22px; border-bottom: 1px solid var(--line); font-size: 17px; }
-.pending-event-card { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 22px; }
+.pending-event-card { padding: 18px 22px; }
 .pending-event-card .eyebrow { color: var(--blue); margin-bottom: 5px; }
 .pending-event-card h4 { margin: 0 0 5px; color: var(--navy); font-size: 21px; }
 .pending-event-card .pool-map-link { font-size: 12px; }
 .pending-event-card .pool-address { font-size: 11px; }
-.pending-event-card .text-button { flex-shrink: 0; }
 .calendar-footnotes p { margin: 0; }
 .calendar-footnotes a { white-space: nowrap; }
 .calendar-footnotes .icon, .section-footnote .icon { width: 13px; height: 13px; }
@@ -215,7 +214,7 @@ details[open] > summary .icon { transform: rotate(180deg); }
 .state-standards-table thead th { background: #f0f5f7; color: var(--navy); font-size: 11px; }
 .state-standards-table tbody th { font-weight: 600; }
 .state-standards-table tbody tr:nth-child(even) { background: #fafcfd; }
-@media (max-width: 700px) { .pending-event-card, .state-standards-heading { flex-direction: column; align-items: flex-start; } .state-standards-table :is(th, td) { padding: 8px 12px; } .state-standards-table { font-size: 11px; } }
+@media (max-width: 700px) { .state-standards-heading { flex-direction: column; align-items: flex-start; } .state-standards-table :is(th, td) { padding: 8px 12px; } .state-standards-table { font-size: 11px; } }
 .meet-table-wrap { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: white; }
 .meet-table { width: 100%; border-collapse: collapse; }
 .meet-table th { font-size: 10px; font-weight: 650; letter-spacing: 1px; color: var(--muted); text-align: left; padding: 15px 24px; background: #f9fbfc; border-bottom: 1px solid var(--line); }
