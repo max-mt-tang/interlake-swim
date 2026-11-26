@@ -69,6 +69,11 @@
     "src": "assets/team/swim-14.jpg",
     "link": "https://photos.google.com/share/AF1QipNCtQ8Mhm5YkMqt7qgQUqDF2yvSPjTg3Pf0FvlBGYZody0rIDV1FyzFJIBO7Gk45w/photo/AF1QipOJHRn6yJadqHfArb59fXQgzs2JE2nNpU00VhuK?key=ckdrdmxlUEtNVmo1dDNLZEw3VVhKOHU0eDh1R2hn",
     "alt": "Three teammates posing together"
+  },
+  {
+    "src": "assets/team/KQ1A0390.JPG",
+    "link": "assets/team/KQ1A0390.JPG",
+    "alt": "Interlake Swim & Dive team photo"
   }
 ];
   const root = document.getElementById('photos');
