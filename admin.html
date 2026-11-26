@@ -22,7 +22,7 @@
           <img src="assets/interlake-logo.svg" width="216" height="64" alt="Interlake High School Saints">
           <span class="brand-sport">SWIM <span class="brand-amp">&amp;</span> DIVE</span>
         </a>
-        <div class="editor-header-actions"><a href="/" aria-label="Back to team site"><span class="editor-back-label">Back to team site </span><span aria-hidden="true">↗</span></a><button id="signout" hidden>Sign out</button></div>
+        <div class="editor-header-actions"><a href="/" aria-label="Back to team site"><span class="editor-back-label">Back to team site </span><span aria-hidden="true">↗</span></a><button id="signout" hidden><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#log-out"></use></svg>Sign out</button></div>
       </div>
     </header>
     <main class="editor-main">
@@ -39,15 +39,15 @@
             <option value="s-tangra@bsd405.org">Ray (school) · s-tangra@bsd405.org</option>
             <option value="riverae@bsd405.org" selected>Coach Eberth · riverae@bsd405.org</option>
           </select>
-          <button type="button" id="google-login" hidden>Continue with Google <span aria-hidden="true">→</span></button>
+          <button type="button" id="google-login" hidden>Continue with Google <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#arrow-right"></use></svg></button>
           <div id="password-signin">
           <label for="password">Password</label>
           <div class="password-field">
             <input id="password" type="password" autocomplete="current-password" required placeholder="Enter your password">
-            <button type="button" id="toggle-password" aria-controls="password" aria-pressed="false">Show password</button>
+            <button type="button" id="toggle-password" aria-controls="password" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#eye"></use></svg><span>Show password</span></button>
           </div>
-          <button type="submit" class="primary email-signin">Sign in</button>
-          <button type="button" id="reset">Forgot password?</button>
+          <button type="submit" class="primary email-signin"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#log-in"></use></svg>Sign in</button>
+          <button type="button" id="reset"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#key-round"></use></svg>Forgot password?</button>
           </div>
         </form>
         <p class="login-footer">Looking for team news? <a href="/#updates">Read updates</a></p>
@@ -55,30 +55,28 @@
       <section id="verification" hidden>
         <h2>Verify your email</h2>
         <p>Open the verification message in your inbox, then return here.</p>
-        <button id="resend">Send verification email</button>
-        <button id="check-verification">I’ve verified my email</button>
+        <button id="resend"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#mail"></use></svg>Send verification email</button>
+        <button id="check-verification"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#circle-check"></use></svg>I’ve verified my email</button>
       </section>
       <section id="workspace" hidden>
         <div class="editor-actions workspace-toolbar">
-          <button id="new-post" class="primary">+ New update</button
-          ><button id="reload-posts">Refresh list</button
-          ><button id="import-posts" hidden>
-            Import existing weekly update</button
+          <button id="import-posts" hidden>
+            <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#download"></use></svg>Import existing weekly update</button
           ><a href="/#updates" target="_blank" rel="noopener"
             >View published updates ↗</a
           >
         </div>
         <div class="editor-layout">
           <aside>
-            <h2>Recent updates</h2>
+            <div class="post-list-heading"><h2>Recent updates</h2><button id="new-post" type="button" hidden><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#plus"></use></svg>New</button></div>
             <div id="post-list"></div>
           </aside>
           <form id="post-form">
             <h2 id="form-heading">New update</h2>
             <p class="form-intro">Share practice changes, meet details, and weekly news with families.</p>
             <div class="editor-actions publish-actions">
-              <button type="submit" value="publish" class="primary">Publish update</button>
-              <button type="button" id="delete-post" hidden>Delete post</button>
+              <button type="submit" value="publish" class="primary"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#circle-check"></use></svg>Publish update</button>
+              <button type="button" id="delete-post" hidden><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#trash-2"></use></svg>Delete post</button>
             </div>
             <p id="save-state" role="status" aria-live="polite"></p>
             <label>Title<input id="title" maxlength="160" required placeholder="e.g. This week’s practice and meet details" /></label>
@@ -99,7 +97,7 @@
                 <span class="ql-formats"><select class="ql-header" aria-label="Text style"><option selected>Normal</option><option value="1">Heading</option><option value="2">Subheading</option></select></span>
                 <span class="ql-formats"><button type="button" class="ql-bold" aria-label="Bold"></button><button type="button" class="ql-italic" aria-label="Italic"></button><button type="button" class="ql-underline" aria-label="Underline"></button></span>
                 <span class="ql-formats"><button type="button" class="ql-list" value="bullet" aria-label="Bullet list"></button><button type="button" class="ql-list" value="ordered" aria-label="Numbered list"></button><button type="button" class="ql-link" aria-label="Add link"></button><button type="button" class="ql-clean" aria-label="Clear formatting"></button></span>
-                <span class="ql-formats"><button type="button" id="add-photo">Add photo</button><button type="button" id="add-document">Attach PDF</button></span>
+                <span class="ql-formats"><button type="button" id="add-photo"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#image"></use></svg>Add photo</button><button type="button" id="add-document"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#results"></use></svg>Attach PDF</button></span>
               </div>
               <div id="rich-body"></div>
             </div>
@@ -110,5 +108,15 @@
         </div>
       </section>
     </main>
+    <dialog id="confirm-dialog" class="editor-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-description">
+      <form method="dialog">
+        <h2 id="confirm-title"></h2>
+        <p id="confirm-description"></p>
+        <div class="editor-dialog-actions">
+          <button type="submit" value="cancel" autofocus><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#x"></use></svg>Keep editing</button>
+          <button type="submit" value="confirm" id="confirm-accept"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#trash-2"></use></svg><span>Delete update</span></button>
+        </div>
+      </form>
+    </dialog>
   </body>
 </html>

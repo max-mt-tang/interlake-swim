@@ -73,6 +73,7 @@ function emptyForm() {
   selected = null;
   $("#post-list").querySelectorAll("button").forEach(n => n.classList.remove("selected"));
   $("#delete-post").hidden = true;
+  $("#new-post").hidden = true;
   revision = null;
   dirty = false;
   $("#post-form").reset();
@@ -86,8 +87,18 @@ function emptyForm() {
   $("#form-heading").textContent = "New update";
   $("#save-state").textContent = "";
 }
-function mayDiscard() {
-  return !dirty || confirm("Discard your unsaved changes?");
+function askConfirmation(title, description, confirmText, icon = 'trash-2') {
+  const dialog = $("#confirm-dialog");
+  $("#confirm-title").textContent = title;
+  $("#confirm-description").textContent = description;
+  $("#confirm-accept span").textContent = confirmText;
+  $("#confirm-accept use").setAttribute('href', `assets/icons.svg#${icon}`);
+  dialog.returnValue = 'cancel';
+  dialog.showModal();
+  return new Promise(resolve => dialog.addEventListener('close', () => resolve(dialog.returnValue === 'confirm'), {once:true}));
+}
+async function mayDiscard() {
+  return !dirty || await askConfirmation('Leave without saving?', 'Your unsaved changes to this update will be lost.', 'Discard changes', 'x');
 }
 async function listPosts() {
   const snap = await getDocs(collection(db, "posts"));
@@ -111,12 +122,13 @@ async function listPosts() {
     meta.textContent = (p.published ? "Published" : "Draft") + " · " + p.date;
     button.append(title, meta);
     button.classList.toggle("selected", selected === p.id);
-    button.addEventListener("click", () => {
-      if (saving || uploading || !mayDiscard()) return;
+    button.addEventListener("click", async () => {
+      if (saving || uploading || !(await mayDiscard())) return;
       $("#post-list").querySelectorAll("button").forEach(n => n.classList.remove("selected"));
       button.classList.add("selected");
       selected = p.id;
       $("#delete-post").hidden = false;
+      $("#new-post").hidden = false;
       revision = p.revision;
       $("#title").value = p.title;
       const content = SwimContent.decode(p.body);
@@ -180,7 +192,8 @@ function credentials() {
 }
 function setPasswordVisible(visible) {
   $("#password").type = visible ? "text" : "password";
-  $("#toggle-password").textContent = visible ? "Hide password" : "Show password";
+  $("#toggle-password span").textContent = visible ? "Hide password" : "Show password";
+  $("#toggle-password use").setAttribute('href', `assets/icons.svg#${visible ? 'eye-off' : 'eye'}`);
   $("#toggle-password").setAttribute("aria-pressed", String(visible));
 }
 $("#toggle-password").addEventListener("click", () => {
@@ -244,13 +257,12 @@ if (!auth) {
       await showUser(auth.currentUser);
     }),
   );
-  $("#signout").addEventListener("click", () => {
-    if (!saving && !uploading && mayDiscard()) attempt(() => signOut(auth));
+  $("#signout").addEventListener("click", async () => {
+    if (!saving && !uploading && await mayDiscard()) attempt(() => signOut(auth));
   });
-  $("#new-post").addEventListener("click", () => {
-    if (!saving && !uploading && mayDiscard()) emptyForm();
+  $("#new-post").addEventListener("click", async () => {
+    if (!saving && !uploading && await mayDiscard()) emptyForm();
   });
-  $("#reload-posts").addEventListener("click", () => attempt(listPosts));
   $("#import-posts").addEventListener("click", () =>
     attempt(async () => {
       const source = LOCAL_UPDATES.find((p) => p.title === "Weekly Update #3");
@@ -342,9 +354,10 @@ if (!auth) {
       $('#photo-file').value = '';
     }
   });
-  $("#delete-post").addEventListener("click", () => {
+  $("#delete-post").addEventListener("click", async () => {
     if (!selected || saving || uploading || !allowed(auth.currentUser)) return;
-    if (!confirm('Permanently delete this post? This cannot be undone. Unsaved edits will be discarded. Uploaded photos and PDFs will remain in Drive.')) return;
+    if (!(await askConfirmation('Delete this update?', 'It will disappear from the team site, and you cannot undo this. Photos and PDFs you uploaded will stay available. Unsaved changes will be lost.', 'Delete update'))) return;
+    if (!selected || saving || uploading || !allowed(auth.currentUser)) return;
     const ref = doc(db, "posts", selected);
     const oldRevision = revision;
     saving = true;
@@ -424,6 +437,7 @@ if (!auth) {
         });
         selected = ref.id;
         $("#delete-post").hidden = false;
+        $("#new-post").hidden = false;
         revision = (oldRevision || 0) + 1;
         dirty = false;
         $("#save-state").textContent = "Published. Parents can now read this update.";
