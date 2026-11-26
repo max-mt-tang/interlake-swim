@@ -124,7 +124,7 @@ function nowKey() {
 }
 
 function eventKey(event) {
-  return event.date + 'T' + (/^([01][0-9]|2[0-3]):[0-5][0-9]$/.test(event.time) ? event.time : '23:59');
+  return (valid(event.date) ? event.date : '9999-12-31') + 'T' + (/^([01][0-9]|2[0-3]):[0-5][0-9]$/.test(event.time) ? event.time : '23:59');
 }
 
 function date(value, options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }) {
@@ -143,13 +143,14 @@ function calendarTime(event) {
 
 function calendarClass(event) {
   if (event.type === 'Practice') return event.title.toLowerCase().includes('diving') ? 'dive' : 'swim';
+  if (event.type === 'Team event') return 'team';
   return event.type === 'Home meet' ? 'home' : event.type === 'WA State' ? 'state' : 'meet';
 }
 
 function sportBadge(event) {
   const kind = calendarClass(event);
-  const labels = { swim: 'SWIM', dive: 'DIVE', home: 'HOME MEET', meet: event.type === 'Dual meet' ? 'AWAY MEET' : event.type.toUpperCase(), state: 'STATE' };
-  const icons = { swim: 'swimmer', dive: 'diver', home: 'house', meet: 'map-pin', state: 'trophy' };
+  const labels = { swim: 'SWIM', dive: 'DIVE', home: 'HOME MEET', meet: event.type === 'Dual meet' ? 'AWAY MEET' : event.type.toUpperCase(), state: 'STATE', team: 'TEAM EVENT' };
+  const icons = { swim: 'swimmer', dive: 'diver', home: 'house', meet: 'map-pin', state: 'trophy', team: 'calendar-days' };
   const badge = el('span', null, 'sport-badge');
   if (icons[kind]) badge.append(icon(icons[kind]));
   badge.append(el('span', labels[kind]));
@@ -165,14 +166,14 @@ function schoolDayOff(value) {
   return holiday.title;
 }
 
-async function load(url, required, fallback) {
+async function load(url, required, fallback, allowUndated = false) {
   if (!url) return fallback;
   if (!safe(url)) throw new Error('Invalid feed URL');
   const response = await fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(15000) });
   if (!response.ok) throw new Error('Feed unavailable');
   const rows = csv(await response.text());
   if (rows[0] && !required.every(header => Object.hasOwn(rows[0], header))) throw new Error('Incorrect headings');
-  return rows.filter(row => row.published?.toLowerCase() === 'true' && row.title && valid(row.date));
+  return rows.filter(row => row.published?.toLowerCase() === 'true' && row.title && (valid(row.date) || (allowUndated && row.type === 'Team event' && !row.date)));
 }
 
 function renderPosts(rows) {
@@ -204,8 +205,8 @@ function renderPosts(rows) {
 }
 
 function renderHome() {
-  const upcoming = events.filter(event => eventKey(event) >= nowKey());
-  const meet = upcoming.find(event => event.type !== 'Practice');
+  const upcoming = events.filter(event => valid(event.date) && eventKey(event) >= nowKey());
+  const meet = upcoming.find(event => ['Dual meet', 'Home meet', 'WA State'].includes(event.type));
   const actions = $('#home-meet-actions');
   const deadline = $('#home-meet-deadline');
   actions.replaceChildren();
@@ -254,7 +255,7 @@ function renderHome() {
 function showCalendarEvent(event) {
   $('#cal-event-type').textContent = event.senior_night === 'TRUE' ? 'HOME MEET · SENIOR NIGHT' : event.type;
   $('#cal-event-title').textContent = event.title;
-  $('#cal-event-time').textContent = date(event.date) + ' · ' + calendarTime(event) + ' PT';
+  $('#cal-event-time').textContent = valid(event.date) ? date(event.date) + ' · ' + calendarTime(event) + ' PT' : 'Date and time to be announced';
   const pool = POOL_DIRECTORY[event.location];
   $('#cal-event-location').replaceChildren(poolLink(event.location));
   $('#cal-event-notes').textContent = event.notes || '';
@@ -366,6 +367,21 @@ function renderCalendar() {
   setCalendarView(calendarView);
 }
 
+function renderPendingEvents() {
+  const section = $('#pending-events');
+  const list = $('#pending-event-list');
+  const pending = events.filter(event => event.type === 'Team event' && !valid(event.date));
+  section.hidden = !pending.length;
+  list.replaceChildren();
+  for (const event of pending) {
+    const card = el('article', null, 'pending-event-card');
+    const info = el('div');
+    info.append(el('p', 'Date & time to be announced', 'eyebrow'), el('h4', event.title), poolLink(event.location));
+    card.append(info, action('Event details', () => showCalendarEvent(event)));
+    list.append(card);
+  }
+}
+
 function setCalendarView(view) {
   calendarView = view;
   $('#month-view').hidden = view !== 'month';
@@ -386,6 +402,7 @@ function renderMeets() {
     const matchup = el('td', null, 'meet-matchup');
     matchup.append(el('strong', event.title.replace('Senior Night · ', '').replace(' @ ', ' vs. ')), el('span', isHome ? (event.senior_night === 'TRUE' ? 'HOME MEET · SENIOR NIGHT' : 'HOME MEET') : 'AWAY MEET', 'meet-badge ' + (isHome ? 'home-badge' : 'away-badge')));
     if (event.senior_night === 'TRUE') matchup.append(el('span', 'A small party celebrating our seniors.', 'cell-detail'));
+    if (event.volunteer_note) matchup.append(el('span', event.volunteer_note, 'cell-detail'));
     const poolCell = el('td');
     poolCell.append(poolLink(event.location));
     poolCell.append(action('Meet details', () => showCalendarEvent(event)));
@@ -475,13 +492,14 @@ async function loadUpdates() {
 async function init() {
   const results = await Promise.allSettled([
     loadUpdates(),
-    load(TEAM_CONFIG.scheduleCsvUrl, ['published', 'date', 'time', 'end_time', 'title', 'type', 'location', 'notes', 'link'], LOCAL_EVENTS)
+    load(TEAM_CONFIG.scheduleCsvUrl, ['published', 'date', 'time', 'end_time', 'title', 'type', 'location', 'notes', 'link'], LOCAL_EVENTS, true)
   ]);
   if (results[0].status === 'fulfilled') renderPosts(results[0].value);
   else $('#posts').textContent = 'Updates could not load. Please refresh or contact the coach.';
   events = [...(results[1].status === 'fulfilled' ? results[1].value : LOCAL_EVENTS)].sort((a, b) => eventKey(a).localeCompare(eventKey(b)));
   renderHome();
   renderCalendar();
+  renderPendingEvents();
   renderMeets();
   renderPostseason();
   const failed = results[1].status === 'rejected';

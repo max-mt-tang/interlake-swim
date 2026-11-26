@@ -153,6 +153,7 @@ img { display: block; max-width: 100%; }
 .cal-event span { margin-top: 2px; font-size: 10px; line-height: 1.35; }
 .swim { --event-color: var(--swim); --event-bg: #eaf3fb; --event-text: #215a87; }
 .dive { --event-color: #7952b3; --event-bg: #f2ecfa; --event-text: #633697; }
+.team { --event-color: #b67a19; --event-bg: #fff4dc; --event-text: #69460d; }
 .cal-event .sport-badge, .agenda-event .sport-badge { display: flex; align-items: center; gap: 5px; margin: 0 0 4px; font-size: 10px; font-weight: 800; letter-spacing: .5px; }
 .sport-badge .icon, .agenda-event .sport-badge .icon { width: 22px; height: 22px; }
 .cal-event .sport-badge span { margin: 0; font-size: inherit; }
@@ -188,11 +189,33 @@ details[open] > summary .icon { transform: rotate(180deg); }
 .school-summary { margin-top: 12px; display: grid; gap: 7px; }
 .school-breaks > p { font-size: 10px; margin: 10px 0 0; }
 .calendar-footnotes { display: flex; justify-content: space-between; align-items: start; gap: 24px; margin-top: 14px; font-size: 11px; color: var(--muted); }
+.pending-events { margin-top: 18px; border: 1px solid var(--line); border-radius: 10px; background: white; overflow: hidden; }
+.pending-events h3 { margin: 0; padding: 14px 22px; border-bottom: 1px solid var(--line); font-size: 17px; }
+.pending-event-card { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 22px; }
+.pending-event-card .eyebrow { color: var(--blue); margin-bottom: 5px; }
+.pending-event-card h4 { margin: 0 0 5px; color: var(--navy); font-size: 21px; }
+.pending-event-card .pool-map-link { font-size: 12px; }
+.pending-event-card .pool-address { font-size: 11px; }
+.pending-event-card .text-button { flex-shrink: 0; }
 .calendar-footnotes p { margin: 0; }
 .calendar-footnotes a { white-space: nowrap; }
 .calendar-footnotes .icon, .section-footnote .icon { width: 13px; height: 13px; }
 .calendar-download-note { margin: 4px 0 0; font-size: 11px; color: var(--muted); }
 .season-tag { color: var(--muted); font-size: 10px; font-weight: 600; letter-spacing: 1px; padding-bottom: 4px; }
+.state-standards { margin-top: 24px; border: 1px solid var(--line); border-radius: 10px; background: white; overflow: hidden; }
+.state-standards-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; padding: 20px 22px 8px; }
+.state-standards-heading .eyebrow { color: var(--blue); margin-bottom: 4px; }
+.state-standards-heading h3 { margin: 0; font-size: 22px; }
+.state-standards-heading a { flex-shrink: 0; font-size: 12px; font-weight: 650; }
+.state-standards-heading .icon { width: 13px; height: 13px; }
+.state-standards > p { margin: 0; padding: 0 22px 16px; color: var(--muted); font-size: 12px; }
+.state-standards-table-wrap { overflow-x: auto; }
+.state-standards-table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+.state-standards-table :is(th, td) { padding: 9px 22px; border-top: 1px solid var(--line); text-align: left; }
+.state-standards-table thead th { background: #f0f5f7; color: var(--navy); font-size: 11px; }
+.state-standards-table tbody th { font-weight: 600; }
+.state-standards-table tbody tr:nth-child(even) { background: #fafcfd; }
+@media (max-width: 700px) { .pending-event-card, .state-standards-heading { flex-direction: column; align-items: flex-start; } .state-standards-table :is(th, td) { padding: 8px 12px; } .state-standards-table { font-size: 11px; } }
 .meet-table-wrap { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: white; }
 .meet-table { width: 100%; border-collapse: collapse; }
 .meet-table th { font-size: 10px; font-weight: 650; letter-spacing: 1px; color: var(--muted); text-align: left; padding: 15px 24px; background: #f9fbfc; border-bottom: 1px solid var(--line); }
@@ -819,6 +842,8 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .parent-volunteers dl { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 .parent-training { max-width: 480px; margin: 24px auto 0; padding-top: 18px; border-top: 1px solid var(--line); }
 .parent-training .parent-help { margin: 0 0 12px; line-height: 1.6; }
+.parent-training .parent-help h3 { margin: 0 0 10px; font-size: 19px; }
+.parent-training .parent-help p + p { margin-top: 10px; }
 .parent-training .video-preview { width: 100%; margin-top: 0; }
 @media (max-width: 600px) {
   .parent-volunteers dl { grid-template-columns: 1fr; gap: 18px; }

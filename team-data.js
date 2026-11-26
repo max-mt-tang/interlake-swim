@@ -250,7 +250,8 @@ const LOCAL_EVENTS = [
     "type": "Home meet",
     "title": "Senior Night · Interlake vs. THE",
     "location": "Mary Wayte Pool",
-    "notes": "Home meet & Senior Night · Join us for a small party celebrating our seniors and their contributions to the team. Opponent is listed as “THE” in Coach Eberth’s update.",
+    "notes": "Our final dual meet and only home meet of the season. Senior Night includes a small celebration of our seniors. We need 12 parent timers and several meet officials; contact parent coordinator Yingde Tang to help. Opponent is listed as “THE” in Coach Eberth’s update.",
+    "volunteer_note": "Volunteers needed: 12 timers and several officials",
     "link": "",
     "senior_night": "TRUE"
   },
@@ -275,10 +276,25 @@ const LOCAL_EVENTS = [
     "location": "King County Aquatic Center",
     "notes": "Saturday · 3A session. Facility opens 7:00 AM; warm-up begins 7:30 AM. 650 SW Campus Dr, Federal Way, WA 98023. Confirm team arrival with Coach Eberth.",
     "link": "https://www.wiaa.com/tournament-bsw/?sportid=5"
+  },
+  {
+    "published": "TRUE",
+    "date": "",
+    "time": "",
+    "end_time": "",
+    "type": "Team event",
+    "title": "Final Banquet",
+    "location": "Interlake High School",
+    "notes": "The season banquet will be held at Interlake High School. Date and time to be announced.",
+    "link": ""
   }
 ];
 
 const POOL_DIRECTORY = {
+  "Interlake High School": {
+    "name": "Interlake High School",
+    "address": "16245 NE 24th Street, Bellevue, WA 98008"
+  },
   "King County Aquatic Center": {
     "name": "King County Aquatic Center",
     "address": "650 SW Campus Dr, Federal Way, WA 98023"
