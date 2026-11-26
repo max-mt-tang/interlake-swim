@@ -6,7 +6,7 @@ const LOCAL_UPDATES = [
     "title": "Weekly Update #3",
     "category": "Coach update",
     "pinned": "TRUE",
-    "body": "Coach Eberth’s Nov. 22 update has the latest practice and meet schedule below. Sign up for the Dec. 1 meet by Friday, November 27.\n\nDiving practice is listed Monday–Friday, 3:30–5:00 PM at Bellevue Aquatic Center, except Tuesday, Dec. 1, when there is no practice because of the meet. The update labels the second practice week “Nov. 31–Dec. 4”; the calendar below uses Nov. 30–Dec. 4 to match the Monday–Friday sequence.",
+    "body": "Coach Eberth’s Nov. 22 update has the latest practice and meet schedule below. Sign up for the Dec. 1 meet by Friday, November 27.",
     "link": "",
     "link_label": ""
   },

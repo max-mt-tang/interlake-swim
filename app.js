@@ -185,7 +185,13 @@ function renderPosts(rows) {
   const sorted = [...rows].filter(row => row.category !== 'Coach introduction').sort((a, b) =>
     b.date.localeCompare(a.date) || postTime(b) - postTime(a));
   if (!sorted.length) target.append(el('p', 'No announcements posted yet. Coach’s weekly updates will appear here.', 'empty'));
-  for (const row of sorted) {
+  for (const original of sorted) {
+    // The saved legacy post still contains a removed diving note and an unrelated video link.
+    const row = original.id === 'weekly-update-2026-11-22' ? {
+      ...original,
+      body: (original.body || '').split('\n\n').filter(paragraph => !paragraph.startsWith('Diving practice is listed Monday–Friday')).join('\n\n'),
+      link: original.link?.includes('bPFJCbQkZnc') ? '' : original.link
+    } : original;
     const post = el('article', null, 'post');
     const meta = el('div', null, 'post-meta');
     meta.append(el('span', date(row.date)), el('span', '·'), el('span', row.category || 'Team update'));
