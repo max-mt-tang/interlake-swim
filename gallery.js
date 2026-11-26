@@ -74,7 +74,37 @@
     "src": "assets/team/KQ1A0390.JPG",
     "link": "assets/team/KQ1A0390.JPG",
     "alt": "Interlake Swim & Dive team photo"
-  }
+  },
+  ...[
+    ["KQ1A0461", "KingCo swim championships"],
+    ["KQ1A0067", "KingCo swim championships"],
+    ["KQ1A0077", "KingCo swim championships"],
+    ["KQ1A0267", "KingCo swim championships"],
+    ["KQ1A9951", "KingCo swim championships"],
+    ["KQ1A9961", "KingCo swim championships"],
+    ["KQ1A0123", "KingCo swim championships"],
+    ["KQ1A0132", "KingCo swim championships"],
+    ["KQ1A6969", "State swim championships"],
+    ["KQ1A6907", "State swim championships"],
+    ["KQ1A7145", "State swim championships"],
+    ["KQ1A7160", "State swim championships"],
+    ["KQ1A7178", "State swim championships"],
+    ["KQ1A7185", "State swim championships"],
+    ["KQ1A7243", "State swim championships"],
+    ["KQ1A7298", "State swim championships"],
+    ["KQ1A7310", "State swim championships"],
+    ["KQ1A7308", "State swim championships"],
+    ["KQ1A7314", "State swim championships"],
+    ["KQ1A7316", "State swim championships"],
+    ["KQ1A7323", "State swim championships"],
+    ["KQ1A7327", "State swim championships"],
+    ["KQ1A7350", "State swim championships"],
+    ["KQ1A7359", "State swim championships"]
+  ].map(([name, alt]) => ({
+    src: `assets/team/${name}.jpg`,
+    link: `assets/team/${name}.jpg`,
+    alt
+  }))
 ];
   const root = document.getElementById('photos');
   const front = document.getElementById('photo-front');
@@ -107,6 +137,7 @@
       back.style.opacity = '0';
       index = next;
       link.href = photo.link;
+      link.setAttribute('aria-label', photo.link.startsWith('assets/') ? 'Open current photo' : 'Open current photo in Google Photos');
       document.getElementById('photo-count').textContent = String(index + 1).padStart(2, '0') + ' / ' + String(photos.length).padStart(2, '0');
       status.textContent = photo.alt;
       busy = false;
