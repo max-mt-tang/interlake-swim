@@ -398,6 +398,10 @@ function renderBanquet() {
     el('p', 'The final banquet will be a potluck. Coach Eberth expects all swimmers and parents to attend as we celebrate the season together.', 'banquet-attendance'),
     el('p', 'The potluck SignUpGenius link will be added once the date is finalized.', 'banquet-signup-note')
   );
+  const signup = el('button', 'Potluck sign-up link to be added', 'button banquet-signup-button');
+  signup.type = 'button';
+  signup.disabled = true;
+  info.append(signup);
   const image = el('img', null, 'banquet-photo');
   image.src = 'assets/banquet/chips-and-dips.jpg';
   image.alt = 'Chips with salsa and dips';

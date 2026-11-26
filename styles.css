@@ -758,6 +758,7 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .banquet-details { border: 1px solid var(--line); border-radius: 10px; background: white; }
 .banquet-attendance { margin: 14px 0 0; color: var(--text); font-size: 14px; }
 .banquet-signup-note { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+.banquet-signup-button:disabled { width: min(100%, 340px); min-height: 54px; margin-top: 16px; border: 1px dashed #d3ad54; background: linear-gradient(120deg, #fff4d6, #ffe4a6); color: #675225; font-size: 15px; font-weight: 700; opacity: 1; }
 #meets > .section-heading { border-color: #b52e42; }
 #results > .section-heading { border-color: #d29513; }
 #postseason > .section-heading { border-color: #168575; }
