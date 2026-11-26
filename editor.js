@@ -128,7 +128,6 @@ async function listPosts() {
       writer.setContents(content, 'silent');
       $("#post-date").value = p.date;
       $("#category").value = p.category;
-      $("#pinned").checked = p.pinned;
       $("#form-heading").textContent = "Edit update";
       $("#save-state").textContent = p.published
         ? "Currently published"
@@ -265,7 +264,7 @@ if (!auth) {
           date: source.date,
           category: source.category,
           published: true,
-          pinned: true,
+          pinned: false,
           link: source.link || "",
           link_label: source.link_label || "",
           createdBy: auth.currentUser.uid,
@@ -379,7 +378,7 @@ if (!auth) {
         body: SwimContent.encode(writer.getContents()),
         date: $("#post-date").value,
         category: $("#category").value,
-        pinned: $("#pinned").checked,
+        pinned: false,
         published: true,
         link: "",
         link_label: "",

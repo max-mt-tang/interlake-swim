@@ -158,8 +158,6 @@ body:not(.auth-screen) #message { background: transparent; padding: 0; margin: 6
 #post-form textarea { line-height: 1.7; min-height: 300px; padding: 16px; }
 #post-form input::placeholder, #post-form textarea::placeholder { color: #7b8b97; }
 #post-form .editor-row label { margin-top: 0; }
-#post-form .check-label { display: flex; align-items: center; gap: 9px; font-weight: 400; }
-#pinned { width: 17px; height: 17px; margin: 0; accent-color: #123f60; }
 .publish-actions { border-bottom: 1px solid #e1e7ed; padding-bottom: 20px; margin: 0 0 18px; }
 .publish-actions button { font-size: 13px; border-color: #cad6df; }
 .publish-actions .primary { font-weight: 600; border-color: #123f60; }

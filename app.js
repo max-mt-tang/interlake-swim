@@ -180,21 +180,14 @@ function renderPosts(rows) {
   target.replaceChildren();
   const results = $('#result-posts');
   results.replaceChildren();
+  const postTime = row => row.updatedAt?.toMillis?.() ?? row.createdAt?.toMillis?.() ?? 0;
   const sorted = [...rows].filter(row => row.category !== 'Coach introduction').sort((a, b) =>
-    Number(b.pinned?.toLowerCase() === 'true') - Number(a.pinned?.toLowerCase() === 'true') || b.date.localeCompare(a.date));
+    b.date.localeCompare(a.date) || postTime(b) - postTime(a));
   if (!sorted.length) target.append(el('p', 'No announcements posted yet. Coach’s weekly updates will appear here.', 'empty'));
-  const resultCount = sorted.filter(row => row.category === 'Meet results').length;
-  const updateCount = sorted.length - resultCount;
   for (const row of sorted) {
     const post = el('article', null, 'post');
     const meta = el('div', null, 'post-meta');
     meta.append(el('span', date(row.date)), el('span', '·'), el('span', row.category || 'Team update'));
-    const sectionCount = row.category === 'Meet results' ? resultCount : updateCount;
-    if (sectionCount > 1 && row.pinned?.toLowerCase() === 'true') {
-      const pinned = el('span', null, 'pinned-label');
-      pinned.append(icon('pin'), el('span', 'Pinned'));
-      meta.append(pinned);
-    }
     const body = el('div', null, 'body');
     SwimContent.render(body, row.body || '');
     post.append(meta, el('h3', row.title), body);
@@ -475,7 +468,7 @@ async function loadUpdates() {
   const { loadPublishedPosts } = await import('./posts-feed.js');
   const posts = await Promise.race([loadPublishedPosts(), new Promise((_, reject) => setTimeout(() => reject(new Error('Updates timed out')), 15000))]);
   if (posts !== null) return posts;
-  return load(TEAM_CONFIG.updatesCsvUrl, ['published', 'date', 'title', 'body', 'pinned'], LOCAL_UPDATES);
+  return load(TEAM_CONFIG.updatesCsvUrl, ['published', 'date', 'title', 'body'], LOCAL_UPDATES);
 }
 
 async function init() {
