@@ -850,6 +850,9 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .parent-volunteers .parent-help p { margin: 0 0 12px; }
 .parent-volunteers .parent-training { width: min(100%, 360px); max-width: none; margin: 20px 0 0; padding: 0; border: 0; }
 .parent-volunteers .video-preview { width: 100%; margin-top: 0; }
+.postseason-volunteers { max-width: 760px; margin-top: 28px; }
+.postseason-volunteers h3 { margin: 0 0 8px; font-size: 19px; }
+.postseason-volunteers p { margin: 0; font-size: 14px; }
 @media (max-width: 700px) {
   .parent-volunteers dl { grid-template-columns: 1fr; gap: 18px; }
 }
