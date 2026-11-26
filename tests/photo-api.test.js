@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import photo from '../api/photo.js';
 import upload from '../api/upload-photo.js';
+import {editor} from '../lib/drive.js';
 const originalFetch = globalThis.fetch;
 function response(){return {code:200,headers:{},setHeader(k,v){this.headers[k]=v},status(c){this.code=c;return this},json(v){this.value=v;return this},send(v){this.value=v;return this},end(){return this}};}
 test('photo API authorization and folder boundaries',async t=>{
@@ -15,6 +16,17 @@ test('photo API authorization and folder boundaries',async t=>{
     await t.test('unverified accounts cannot upload',async()=>{
       globalThis.fetch=async()=>Response.json({users:[{email:'s-tangm@bsd405.org',emailVerified:false}]});
       const res=response();await upload({method:'POST',headers:{authorization:'Bearer fake'},body:{}},res);assert.equal(res.code,403);
+    });
+    await t.test('coach password sign-in works without email verification',async()=>{
+      const id='coach-account';
+      const token=`header.${Buffer.from(JSON.stringify({sub:id,firebase:{sign_in_provider:'password'}})).toString('base64url')}.signature`;
+      globalThis.fetch=async()=>Response.json({users:[{localId:id,email:'riverae@bsd405.org',emailVerified:false}]});
+      assert.equal((await editor({headers:{authorization:`Bearer ${token}`}})).localId,id);
+    });
+    await t.test('unverified coach using another sign-in method is denied',async()=>{
+      const token=`header.${Buffer.from(JSON.stringify({sub:'coach-account',firebase:{sign_in_provider:'google.com'}})).toString('base64url')}.signature`;
+      globalThis.fetch=async()=>Response.json({users:[{localId:'coach-account',email:'riverae@bsd405.org',emailVerified:false}]});
+      await assert.rejects(editor({headers:{authorization:`Bearer ${token}`}}),{status:403});
     });
     await t.test('non-editor accounts cannot upload',async()=>{
       globalThis.fetch=async()=>Response.json({users:[{email:'outsider@example.com',emailVerified:true}]});

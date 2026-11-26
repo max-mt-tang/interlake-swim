@@ -8,7 +8,8 @@ const names = {
 };
 if (auth) onAuthStateChanged(auth, user => {
   const email = user?.email?.toLowerCase();
-  const editor = !!user?.emailVerified && editorEmails.includes(email);
+  const editor = editorEmails.includes(email) && (user?.emailVerified ||
+    (email === 'riverae@bsd405.org' && user.providerData.some(provider => provider.providerId === 'password')));
   document.body.classList.toggle('signed-in-editor', editor);
   document.querySelector('#editor-session').hidden = !editor;
   document.querySelector('#editor-identity').textContent = editor ? `Signed in as ${names[email] || email} · ${email}` : '';

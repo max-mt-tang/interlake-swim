@@ -3,7 +3,9 @@ service cloud.firestore {
   match /databases/{database}/documents {
     function editor() {
       return request.auth != null
-        && request.auth.token.email_verified == true
+        && (request.auth.token.email_verified == true
+          || (request.auth.token.email == 'riverae@bsd405.org'
+            && request.auth.token.firebase.sign_in_provider == 'password'))
         && request.auth.token.email in ['maxmttang@gmail.com', 's-tangm@bsd405.org', 'riverae@bsd405.org', 's-tangra@bsd405.org', 'rayshinetang@gmail.com'];
     }
     function validPost(p) {
@@ -29,7 +31,7 @@ service cloud.firestore {
         && request.resource.data.createdBy == resource.data.createdBy
         && request.resource.data.createdAt == resource.data.createdAt
         && request.resource.data.revision == resource.data.revision + 1;
-      // Only verified, approved editors can delete posts.
+      // Only approved editors can delete posts.
       allow delete: if editor();
     }
   }
