@@ -221,7 +221,7 @@ function renderHome() {
     if (valid(meet.signup_deadline)) {
       deadline.hidden = false;
       const closed = meet.signup_deadline < today();
-      deadline.append(el('strong', (closed ? 'Sign-up deadline passed · ' : 'Sign up by ') + date(meet.signup_deadline)), el('span', 'No late registrations accepted.'));
+      deadline.append(el('strong', (closed ? 'Sign-up deadline passed · ' : 'Sign up by ') + date(meet.signup_deadline)));
     }
     const signup = link(meet.link, meet.type === 'Dual meet' ? 'Meet sign-up' : 'Official details', 'button');
     if (signup) actions.append(signup);
