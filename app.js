@@ -186,11 +186,15 @@ function renderPosts(rows) {
     b.date.localeCompare(a.date) || postTime(b) - postTime(a));
   if (!sorted.length) target.append(el('p', 'No announcements posted yet. Coach’s weekly updates will appear here.', 'empty'));
   for (const original of sorted) {
-    // The saved legacy post still contains a removed diving note and an unrelated video link.
-    const row = original.id === 'weekly-update-2026-11-22' ? {
+    // Keep the older saved coach post aligned with the corrected public schedule.
+    const legacyPost = original.id === 'weekly-update-2026-11-22';
+    const legacyUpdate = legacyPost &&
+      original.body?.includes('The update labels the second practice week “Nov. 31–Dec. 4”');
+    const legacyVideo = legacyPost && original.link?.includes('bPFJCbQkZnc');
+    const row = (legacyUpdate || legacyVideo) ? {
       ...original,
-      body: (original.body || '').split('\n\n').filter(paragraph => !paragraph.startsWith('Diving practice is listed Monday–Friday')).join('\n\n'),
-      link: original.link?.includes('bPFJCbQkZnc') ? '' : original.link
+      body: legacyUpdate ? (LOCAL_UPDATES.find(update => update.date === '2026-11-22')?.body || original.body) : original.body,
+      link: legacyVideo ? '' : original.link
     } : original;
     const post = el('article', null, 'post');
     const meta = el('div', null, 'post-meta');
