@@ -388,6 +388,7 @@ function renderMeets() {
     if (event.senior_night === 'TRUE') matchup.append(el('span', 'A small party celebrating our seniors.', 'cell-detail'));
     const poolCell = el('td');
     poolCell.append(poolLink(event.location));
+    poolCell.append(action('Meet details', () => showCalendarEvent(event)));
     row.append(dateCell, timeCell, matchup, poolCell);
     target.append(row);
   }

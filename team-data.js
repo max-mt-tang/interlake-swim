@@ -6,7 +6,7 @@ const LOCAL_UPDATES = [
     "title": "Weekly Update #3",
     "category": "Coach update",
     "pinned": "TRUE",
-    "body": "Coach Eberth’s Nov. 22 update has the latest practice and meet schedule below. Sign up for the Dec. 1 meet by Friday, November 27. No late registrations will be accepted.\n\nDiving practice is listed Monday–Friday, 3:30–5:00 PM at Bellevue Aquatic Center. The update labels the second practice week “Nov. 31–Dec. 4”; the calendar below uses Nov. 30–Dec. 4 to match the Monday–Friday sequence.",
+    "body": "Coach Eberth’s Nov. 22 update has the latest practice and meet schedule below. Sign up for the Dec. 1 meet by Friday, November 27. No late registrations will be accepted.\n\nDiving practice is listed Monday–Friday, 3:30–5:00 PM at Bellevue Aquatic Center, except Tuesday, Dec. 1, when there is no practice because of the meet. The update labels the second practice week “Nov. 31–Dec. 4”; the calendar below uses Nov. 30–Dec. 4 to match the Monday–Friday sequence.",
     "link": "",
     "link_label": ""
   },
@@ -118,19 +118,8 @@ const LOCAL_EVENTS = [
     "title": "Interlake vs. Bellevue",
     "location": "Mary Wayte Pool",
     "signup_deadline": "2026-11-27",
-    "notes": "Meet sign-up deadline: Friday, November 27, 2026. No late registrations will be accepted. The coach’s update does not specify a cutoff time.",
+    "notes": "No school bus transportation; swimmers need their own ride.\nNo practice on Tuesday, Dec. 1.\nThe meet starts at 8:30 PM. Swimmers should arrive earlier for warm-up; the exact team arrival time has not been confirmed. Check with Coach Eberth.\nMeet sign-up deadline: Friday, Nov. 27. No late registrations will be accepted. The cutoff time has not been specified.",
     "link": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=OUFKmQZ8HkmAmHkAbVdd4NW0wze9h95Ivctw9NN0cZVURENKNTJBQTZNTEcyUUlMTldWSDJRN1hPSi4u"
-  },
-  {
-    "published": "TRUE",
-    "date": "2026-12-01",
-    "time": "15:30",
-    "end_time": "17:00",
-    "type": "Practice",
-    "title": "Diving practice",
-    "location": "Bellevue Aquatic Center",
-    "notes": "Tuesday · 3:30–5:00 PM.",
-    "link": ""
   },
   {
     "published": "TRUE",

@@ -253,7 +253,7 @@ details[open] > summary .icon { transform: rotate(180deg); }
 .cal-dialog-top .eyebrow { color: var(--blue); margin: 0; }
 .cal-dialog-top .icon-button { flex: 0 0 auto; }
 #cal-dialog h2 { font-size: 28px; margin-bottom: 20px; }
-#cal-event-notes { border-top: 1px solid var(--line); padding-top: 20px; margin-top: 20px; font-size: 13px; color: var(--muted); white-space: pre-line; }
+#cal-event-notes { border-top: 1px solid var(--line); padding-top: 20px; margin-top: 20px; font-size: 13px; color: var(--text); white-space: pre-line; line-height: 1.7; }
 #cal-event-links { display: flex; flex-wrap: wrap; gap: 10px; }
 .empty { padding: 25px; color: var(--muted); font-size: 13px; margin: 0; }
 .noscript-note { background: white; color: var(--text); padding: 25px; margin: 0; text-align: center; }
