@@ -158,7 +158,7 @@
     toggle.setAttribute('aria-label', paused ? 'Play slideshow' : 'Pause slideshow');
     toggle.title = paused ? 'Play slideshow' : 'Pause slideshow';
     status.setAttribute('aria-live', paused ? 'polite' : 'off');
-    if (!paused && visible && !document.hidden) timer = setTimeout(() => show(index + 1), 6000);
+    if (!paused && visible && !document.hidden) timer = setTimeout(() => show(index + 1), 9000);
   }
   async function show(next) {
     if (busy) return;
