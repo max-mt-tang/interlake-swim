@@ -1,5 +1,5 @@
 import { auth } from './firebase-client.js';
-import { editorEmails } from './firebase-config.js';
+import { editorEmails, passwordEditorEmails } from './firebase-config.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js';
 const names = {
   'maxmttang@gmail.com': 'Max', 's-tangm@bsd405.org': 'Max',
@@ -9,7 +9,7 @@ const names = {
 if (auth) onAuthStateChanged(auth, user => {
   const email = user?.email?.toLowerCase();
   const editor = editorEmails.includes(email) && (user?.emailVerified ||
-    (email === 'riverae@bsd405.org' && user.providerData.some(provider => provider.providerId === 'password')));
+    (passwordEditorEmails.includes(email) && user.providerData.some(provider => provider.providerId === 'password')));
   document.body.classList.toggle('signed-in-editor', editor);
   document.querySelector('#editor-session').hidden = !editor;
   document.querySelector('#editor-identity').textContent = editor ? `Signed in as ${names[email] || email} · ${email}` : '';

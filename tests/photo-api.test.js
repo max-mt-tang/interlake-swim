@@ -17,12 +17,14 @@ test('photo API authorization and folder boundaries',async t=>{
       globalThis.fetch=async()=>Response.json({users:[{email:'s-tangm@bsd405.org',emailVerified:false}]});
       const res=response();await upload({method:'POST',headers:{authorization:'Bearer fake'},body:{}},res);assert.equal(res.code,403);
     });
-    await t.test('coach password sign-in works without email verification',async()=>{
-      const id='coach-account';
-      const token=`header.${Buffer.from(JSON.stringify({sub:id,firebase:{sign_in_provider:'password'}})).toString('base64url')}.signature`;
-      globalThis.fetch=async()=>Response.json({users:[{localId:id,email:'riverae@bsd405.org',emailVerified:false}]});
-      assert.equal((await editor({headers:{authorization:`Bearer ${token}`}})).localId,id);
-    });
+    for (const email of ['riverae@bsd405.org', 's-tangra@bsd405.org']) {
+      await t.test(`${email} password sign-in works without email verification`,async()=>{
+        const id='editor-account';
+        const token=`header.${Buffer.from(JSON.stringify({sub:id,firebase:{sign_in_provider:'password'}})).toString('base64url')}.signature`;
+        globalThis.fetch=async()=>Response.json({users:[{localId:id,email,emailVerified:false}]});
+        assert.equal((await editor({headers:{authorization:`Bearer ${token}`}})).localId,id);
+      });
+    }
     await t.test('unverified coach using another sign-in method is denied',async()=>{
       const token=`header.${Buffer.from(JSON.stringify({sub:'coach-account',firebase:{sign_in_provider:'google.com'}})).toString('base64url')}.signature`;
       globalThis.fetch=async()=>Response.json({users:[{localId:'coach-account',email:'riverae@bsd405.org',emailVerified:false}]});

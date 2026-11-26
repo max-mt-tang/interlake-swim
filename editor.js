@@ -1,6 +1,6 @@
 import { uploadDocument } from './document-upload.js';
 import { auth, db } from "./firebase-client.js";
-import { editorEmails } from "./firebase-config.js";
+import { editorEmails, passwordEditorEmails } from "./firebase-config.js";
 import { uploadPhoto } from './photo-upload.js';
 import {
   GoogleAuthProvider,
@@ -46,7 +46,7 @@ const message = (text) => {
 const allowed = (user) =>
   user &&
   editorEmails.includes(user.email?.toLowerCase()) &&
-  (user.emailVerified || (user.email?.toLowerCase() === 'riverae@bsd405.org' &&
+  (user.emailVerified || (passwordEditorEmails.includes(user.email?.toLowerCase()) &&
     user.providerData.some(provider => provider.providerId === 'password')));
 function errorMessage(e) {
   const messages = {
