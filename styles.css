@@ -753,7 +753,9 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .coach-photo { border-radius: 2px; }
 .coach-section > .team-people { border-top: 3px solid #f4c64e; }
 .coach-section > .team-people h3 { color: #095582; }
-#calendar > .section-heading, #meets > .section-heading, #results > .section-heading, #postseason > .section-heading { border-top: 4px solid #127bb8; padding-top: 16px; }
+#calendar > .section-heading, #banquet > .section-heading, #meets > .section-heading, #results > .section-heading, #postseason > .section-heading { border-top: 4px solid #127bb8; padding-top: 16px; }
+#banquet > .section-heading { border-color: #d29513; }
+.banquet-details { border: 1px solid var(--line); border-radius: 10px; background: white; }
 #meets > .section-heading { border-color: #b52e42; }
 #results > .section-heading { border-color: #d29513; }
 #postseason > .section-heading { border-color: #168575; }

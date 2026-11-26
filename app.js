@@ -370,7 +370,7 @@ function renderCalendar() {
 function renderPendingEvents() {
   const section = $('#pending-events');
   const list = $('#pending-event-list');
-  const pending = events.filter(event => event.type === 'Team event' && !valid(event.date));
+  const pending = events.filter(event => event.type === 'Team event' && !valid(event.date) && event.title !== 'Final Banquet');
   section.hidden = !pending.length;
   list.replaceChildren();
   for (const event of pending) {
@@ -378,17 +378,29 @@ function renderPendingEvents() {
     const info = el('div');
     info.append(el('p', 'Date & time to be announced', 'eyebrow'), el('h4', event.title), poolLink(event.location));
     card.append(info);
-    if (event.title === 'Final Banquet') {
-      const image = el('img', null, 'banquet-photo');
-      image.src = 'assets/banquet/chips-and-dips.jpg';
-      image.alt = 'Chips with salsa and dips';
-      image.loading = 'lazy';
-      image.width = 325;
-      image.height = 217;
-      card.append(image);
-    }
     list.append(card);
   }
+}
+
+function renderBanquet() {
+  const section = $('#banquet');
+  const details = $('#banquet-details');
+  const banquet = events.find(event => event.type === 'Team event' && event.title === 'Final Banquet');
+  section.hidden = !banquet;
+  details.replaceChildren();
+  if (!banquet) return;
+  const card = el('article', null, 'pending-event-card');
+  const info = el('div');
+  const when = valid(banquet.date) ? `${date(banquet.date)} · ${time(banquet.time)}` : 'Date & time to be announced';
+  info.append(el('p', when, 'eyebrow'), poolLink(banquet.location));
+  const image = el('img', null, 'banquet-photo');
+  image.src = 'assets/banquet/chips-and-dips.jpg';
+  image.alt = 'Chips with salsa and dips';
+  image.loading = 'lazy';
+  image.width = 325;
+  image.height = 217;
+  card.append(info, image);
+  details.append(card);
 }
 
 function setCalendarView(view) {
@@ -509,6 +521,7 @@ async function init() {
   renderHome();
   renderCalendar();
   renderPendingEvents();
+  renderBanquet();
   renderMeets();
   renderPostseason();
   const failed = results[1].status === 'rejected';
