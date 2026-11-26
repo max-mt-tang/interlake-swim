@@ -109,6 +109,11 @@
     src: `assets/team/${name}.jpg`,
     link: `assets/team/${name}.jpg`,
     alt: "Interlake swim meet photo"
+  })),
+  ..."KQ1A7328 KQ1A7449 KQ1A7387 KQ1A7422 KQ1A7443 KQ1A7141".split(" ").map(name => ({
+    src: `assets/team/${name}.jpg`,
+    link: `assets/team/${name}.jpg`,
+    alt: "State swim championships"
   }))
 ];
   const root = document.getElementById('photos');
