@@ -306,7 +306,9 @@ if (!auth) {
     $('#document-status').textContent = 'Uploading PDF…';
     try {
       if (!allowed(auth.currentUser)) throw Error('Please sign in with an approved editor account.');
-      const result = await uploadDocument(file, await auth.currentUser.getIdToken());
+      const result = await uploadDocument(file, await auth.currentUser.getIdToken(), percent => {
+        $('#document-status').textContent = `Uploading PDF… ${percent}%`;
+      });
       if (!/^https:\/\/drive\.google\.com\/file\/d\/[A-Za-z0-9_-]{10,150}\/view$/.test(result.url)) throw Error('Invalid document link.');
       writer.insertText(documentPosition, '\n', 'api');
       writer.insertText(documentPosition+1, 'PDF: ' + file.name, {link:result.url}, 'api');
