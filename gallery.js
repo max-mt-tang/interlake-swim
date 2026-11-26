@@ -133,6 +133,7 @@
   const viewerCaption = document.getElementById('viewer-caption');
   const viewerOriginal = document.getElementById('viewer-original');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const effects = ['zoom', 'slide-left', 'reveal', 'slide-up', 'zoom-out', 'slide-right', 'reveal-up', 'slide-down'];
   let index = 0, viewerIndex = 0, paused = reduced.matches, timer, busy = false, visible = false;
   function showViewerPhoto(next) {
     viewerIndex = (next + photos.length) % photos.length;
@@ -165,7 +166,7 @@
     busy = true;
     next = (next + photos.length) % photos.length;
     const photo = photos[next];
-    back.className = `effect-${['zoom', 'slide-left', 'reveal', 'slide-right'][next % 4]}`;
+    back.className = `effect-${effects[next % effects.length]}`;
     back.src = photo.src;
     try { await back.decode(); } catch { busy = false; schedule(); return; }
     back.getBoundingClientRect();
