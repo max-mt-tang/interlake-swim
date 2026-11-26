@@ -878,6 +878,7 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .parent-volunteers .parent-help .eyebrow { margin: 0 0 6px; color: #875c00; font-size: 12px; font-weight: 800; letter-spacing: 1.2px; }
 .parent-volunteers .parent-help h3 { margin: 0 0 6px; font-size: clamp(22px, 2.4vw, 28px); }
 .parent-volunteers .parent-help p { margin: 0; font-size: 15px; }
+.parent-volunteers .parent-help .senior-night-invite { margin-top: 12px; font-weight: 700; }
 .parent-volunteers .parent-help h4 { margin: 20px 0 10px; color: var(--navy); font-size: 17px; }
 .volunteer-roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin: 0 0 12px; padding: 0; list-style: none; }
 .volunteer-roles li { display: flex; flex-direction: column; justify-content: center; min-height: 66px; padding: 10px 14px; border: 1px solid #e4c66c; border-radius: 6px; background: white; color: var(--navy); }
