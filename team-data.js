@@ -118,7 +118,7 @@ const LOCAL_EVENTS = [
     "title": "Interlake vs. Bellevue",
     "location": "Mary Wayte Pool",
     "signup_deadline": "2026-11-27",
-    "notes": "No school bus transportation; swimmers need their own ride.\nNo practice on Tuesday, Dec. 1.\nThe meet starts at 8:30 PM. Swimmers should arrive earlier for warm-up; the exact team arrival time has not been confirmed. Check with Coach Eberth.\nMeet sign-up deadline: Friday, Nov. 27. No late registrations will be accepted. The cutoff time has not been specified.",
+    "notes": "No school bus transportation; swimmers need their own ride.\nNo practice on Tuesday, Dec. 1.\nThe meet starts at 8:30 PM. Swimmers should arrive earlier for warm-up; the exact team arrival time has not been confirmed. Check with Coach Eberth.\nMeet sign-up deadline: Friday, Nov. 27. No late registrations will be accepted.",
     "link": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=OUFKmQZ8HkmAmHkAbVdd4NW0wze9h95Ivctw9NN0cZVURENKNTJBQTZNTEcyUUlMTldWSDJRN1hPSi4u"
   },
   {
