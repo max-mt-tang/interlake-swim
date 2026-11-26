@@ -853,6 +853,8 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .parent-volunteers .parent-help p { margin: 0 0 12px; }
 .parent-volunteers .parent-training { width: min(100%, 360px); max-width: none; margin: 20px 0 0; padding: 0; border: 0; }
 .parent-volunteers .video-preview { width: 100%; margin-top: 0; }
+.parent-volunteers .home-meet-signup-button { display: flex; width: 100%; min-height: 58px; margin-top: 18px; padding: 12px 16px; font-size: 16px; font-weight: 750; text-align: center; }
+.home-meet-signup-button .icon { width: 18px; height: 18px; }
 .postseason-volunteers { margin-top: 16px; }
 .postseason-volunteers h3 { margin: 0 0 8px; font-size: 19px; }
 .postseason-volunteers p { margin: 0; font-size: 14px; }
