@@ -29,7 +29,7 @@
       <h1 id="editor-title">Team sign-in</h1>
       <p id="message" role="status" aria-live="polite">Loading…</p>
       <section id="login" aria-labelledby="editor-title" hidden>
-        <p class="login-intro">Coach Eberth, Ray, and Max can manage updates and parent emails. Treasurers Vicky and Ying can manage parent emails.</p>
+        <p class="login-intro">Coach Eberth, Ray, and Max can manage updates and parent emails. Parent coordinator Yingde and treasurers Vicky and Ying can manage parent emails.</p>
         <form id="login-form">
           <label for="email">Email</label>
           <select id="email" name="email" required>
@@ -40,6 +40,7 @@
             <option value="riverae@bsd405.org" selected>Coach Eberth · riverae@bsd405.org</option>
             <option value="vivachui@outlook.com">Vicky · vivachui@outlook.com</option>
             <option value="yin65@yahoo.com">Ying · yin65@yahoo.com</option>
+            <option value="yingde_tang@yahoo.com">Yingde · yingde_tang@yahoo.com</option>
           </select>
           <button type="button" id="google-login" hidden>Continue with Google <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#arrow-right"></use></svg></button>
           <div id="password-signin">
@@ -74,7 +75,7 @@
         </div>
         <section id="parents-panel" class="parents-panel" aria-labelledby="parents-heading" hidden>
           <h2 id="parents-heading">Parent emails</h2>
-          <p>Only Coach Eberth, Ray, and Max can view this private list. Addresses are stored in the team database, not on the public website or in GitHub. When emailing families, paste copied addresses into Bcc.</p>
+          <p>Only approved team organizers can view this private list. Addresses are stored in the team database, not on the public website or in GitHub. When emailing families, paste copied addresses into Bcc.</p>
           <form id="add-parents-form">
             <label for="parent-emails">Add email addresses</label>
             <textarea id="parent-emails" rows="4" placeholder="Paste addresses, separated by commas or new lines" required></textarea>

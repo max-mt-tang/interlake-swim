@@ -52,8 +52,8 @@ const allowed = (user) =>
   editorEmails.includes(user.email?.toLowerCase()) &&
   (user.emailVerified || (passwordEditorEmails.includes(user.email?.toLowerCase()) &&
     user.providerData.some(provider => provider.providerId === 'password')));
-const treasurerEmails = ['vivachui@outlook.com', 'yin65@yahoo.com'];
-const parentListEmails = [...editorEmails, ...treasurerEmails];
+const parentOnlyEmails = ['vivachui@outlook.com', 'yin65@yahoo.com', 'yingde_tang@yahoo.com'];
+const parentListEmails = [...editorEmails, ...parentOnlyEmails];
 const canEditParentList = user => user &&
   parentListEmails.includes(user.email?.toLowerCase()) &&
   (user.emailVerified || (passwordEditorEmails.includes(user.email?.toLowerCase()) &&
@@ -333,8 +333,8 @@ function updateSignInMethod() {
   $("#password-signin").hidden = useGoogle;
   $("#password").disabled = useGoogle;
   $("#password").required = !useGoogle;
-  $("#create-account").hidden = !treasurerEmails.includes($("#email").value);
-  $("#account-help").hidden = !treasurerEmails.includes($("#email").value);
+  $("#create-account").hidden = !parentOnlyEmails.includes($("#email").value);
+  $("#account-help").hidden = !parentOnlyEmails.includes($("#email").value);
   $("#password").value = "";
   setPasswordVisible(false);
 }
@@ -369,7 +369,7 @@ if (!auth) {
   });
   $("#create-account").addEventListener("click", () => attempt(async () => {
     const c = credentials();
-    if (!treasurerEmails.includes(c.email)) return;
+    if (!parentOnlyEmails.includes(c.email)) return;
     if (c.password.length < 12) { message('Choose a password with at least 12 characters.'); return; }
     const account = await createUserWithEmailAndPassword(auth, c.email, c.password);
     $("#password").value = "";
