@@ -218,8 +218,11 @@ function renderHome() {
   const upcoming = events.filter(event => valid(event.date) && eventKey(event) >= nowKey());
   const meet = upcoming.find(event => ['Dual meet', 'Home meet', 'WA State'].includes(event.type));
   const actions = $('#home-meet-actions');
+  const arrival = $('#home-meet-arrival');
   const deadline = $('#home-meet-deadline');
   actions.replaceChildren();
+  arrival.replaceChildren();
+  arrival.hidden = true;
   deadline.replaceChildren();
   deadline.hidden = true;
   if (meet) {
@@ -229,6 +232,11 @@ function renderHome() {
     $('#home-meet-kind').textContent = meet.type === 'Home meet' ? (meet.senior_night === 'TRUE' ? 'HOME · SENIOR NIGHT' : 'HOME MEET') : meet.type === 'WA State' ? 'State' : 'Away meet';
     $('#home-meet-time').textContent = date(meet.date) + ' · ' + calendarTime(meet) + ' PT';
     $('#home-meet-pool').replaceChildren(poolLink(meet.location));
+    const arrivalNote = meet.notes?.split('\n').find(line => line.startsWith('Arrive at ') && line.includes('no later than'));
+    if (arrivalNote) {
+      arrival.textContent = arrivalNote.match(/^.*?for warm-ups\./)?.[0] || arrivalNote;
+      arrival.hidden = false;
+    }
     if (valid(meet.signup_deadline)) {
       deadline.hidden = false;
       const closed = meet.signup_deadline < today();

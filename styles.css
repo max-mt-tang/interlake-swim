@@ -721,6 +721,7 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .next-meet-card .date-tile strong { font-size: 54px; }
 .next-meet-card .detail-line > .icon { color: #a9d6ef; }
 .next-meet-card .pool-map-link { color: #d4edff; }
+.next-meet-card .meet-arrival-reminder { margin: 18px 0 0; padding: 10px 14px; border-left: 4px solid #f4c64e; border-radius: 4px; background: #fff2cf; color: #102b46; font-weight: 750; }
 .next-meet-card .signup-deadline { border-color: #496075; }
 .next-meet-card .signup-deadline strong { color: #ffdc76; }
 .next-meet-card .signup-deadline span { color: #c7d4df; }
