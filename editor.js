@@ -191,6 +191,9 @@ async function showUser(user) {
   $("#workspace").hidden = false;
   message(`Signed in as ${user.email}`);
   await attempt(listPosts);
+  if (new URLSearchParams(location.search).get('view') === 'parents' && canEditParentList(user)) {
+    $("#show-parents").click();
+  }
   try {
     const response = await fetch('/api/photo-status', {headers:{Authorization:`Bearer ${await user.getIdToken()}`}});
     if (!response.ok || !(await response.json()).configured) {
