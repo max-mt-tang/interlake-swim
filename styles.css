@@ -202,11 +202,12 @@ details[open] > summary .icon { transform: rotate(180deg); }
 .calendar-download-note { margin: 4px 0 0; font-size: 11px; color: var(--muted); }
 .season-tag { color: var(--muted); font-size: 10px; font-weight: 600; letter-spacing: 1px; padding-bottom: 4px; }
 .state-standards { margin-top: 24px; border: 1px solid var(--line); border-radius: 10px; background: white; overflow: hidden; }
-.postseason-overview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 325px); align-items: center; gap: 24px; }
-.postseason-photo { min-width: 0; margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: white; }
-.postseason-photo img { display: block; width: 100%; height: auto; }
-.postseason-photo figcaption { padding: 10px 14px; color: var(--muted); font-size: 12px; }
+.postseason-overview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 325px); align-items: center; gap: 24px; padding: 20px; border: 1px solid var(--line); border-radius: 10px; background: white; }
+.postseason-photo { min-width: 0; margin: 0; }
+.postseason-photo img { display: block; width: 100%; height: auto; border-radius: 6px; }
+.postseason-photo figcaption { padding-top: 8px; color: var(--muted); font-size: 12px; }
 @media (max-width: 1000px) { .postseason-overview { grid-template-columns: 1fr; } .postseason-photo { width: min(100%, 325px); margin: 0 auto; } }
+@media (max-width: 700px) { .postseason-overview { padding: 12px; } }
 .state-standards-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; padding: 20px 22px 8px; }
 .state-standards-heading .eyebrow { color: var(--blue); margin-bottom: 4px; }
 .state-standards-heading h3 { margin: 0; font-size: 22px; }
