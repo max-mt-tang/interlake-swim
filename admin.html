@@ -26,10 +26,10 @@
       </div>
     </header>
     <main class="editor-main">
-      <h1 id="editor-title">Coach sign-in</h1>
+      <h1 id="editor-title">Team sign-in</h1>
       <p id="message" role="status" aria-live="polite">Loading…</p>
       <section id="login" aria-labelledby="editor-title" hidden>
-        <p class="login-intro">Coach Eberth, Ray, and Max can sign in to manage updates and the private parent email list.</p>
+        <p class="login-intro">Coach Eberth, Ray, and Max can manage updates and parent emails. Treasurers Vicky and Ying can manage parent emails.</p>
         <form id="login-form">
           <label for="email">Email</label>
           <select id="email" name="email" required>
@@ -38,6 +38,8 @@
             <option value="rayshinetang@gmail.com">Ray · rayshinetang@gmail.com</option>
             <option value="s-tangra@bsd405.org">Ray (school) · s-tangra@bsd405.org</option>
             <option value="riverae@bsd405.org" selected>Coach Eberth · riverae@bsd405.org</option>
+            <option value="vivachui@outlook.com">Vicky · vivachui@outlook.com</option>
+            <option value="yin65@yahoo.com">Ying · yin65@yahoo.com</option>
           </select>
           <button type="button" id="google-login" hidden>Continue with Google <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#arrow-right"></use></svg></button>
           <div id="password-signin">
@@ -47,6 +49,8 @@
             <button type="button" id="toggle-password" aria-controls="password" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#eye"></use></svg><span>Show password</span></button>
           </div>
           <button type="submit" class="primary email-signin"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#log-in"></use></svg>Sign in</button>
+          <p id="account-help" class="field-help" hidden>First time? Choose a password of at least 12 characters, then create your account and verify your email.</p>
+          <button type="button" id="create-account" hidden>First time? Create account</button>
           <button type="button" id="reset"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#key-round"></use></svg>Forgot password?</button>
           </div>
         </form>

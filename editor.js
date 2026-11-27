@@ -6,6 +6,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   sendEmailVerification,
   sendPasswordResetEmail,
   signOut,
@@ -51,18 +52,22 @@ const allowed = (user) =>
   editorEmails.includes(user.email?.toLowerCase()) &&
   (user.emailVerified || (passwordEditorEmails.includes(user.email?.toLowerCase()) &&
     user.providerData.some(provider => provider.providerId === 'password')));
-const canEditParentList = user => allowed(user) &&
-  ['riverae@bsd405.org', 'rayshinetang@gmail.com', 's-tangra@bsd405.org', 'maxmttang@gmail.com', 's-tangm@bsd405.org'].includes(user.email?.toLowerCase());
+const treasurerEmails = ['vivachui@outlook.com', 'yin65@yahoo.com'];
+const parentListEmails = [...editorEmails, ...treasurerEmails];
+const canEditParentList = user => user &&
+  parentListEmails.includes(user.email?.toLowerCase()) &&
+  (user.emailVerified || (passwordEditorEmails.includes(user.email?.toLowerCase()) &&
+    user.providerData.some(provider => provider.providerId === 'password')));
 function errorMessage(e) {
   const messages = {
     'permission-denied': 'Access denied. Sign in with an approved editor account.',
     'auth/invalid-credential': 'Email or password is incorrect.',
-    'auth/email-already-in-use': 'An account already uses this email. Sign in or reset your password.',
     'auth/weak-password': 'Choose a password with at least 12 characters.',
+    'auth/email-already-in-use': 'This account already exists. Sign in or use Forgot password.',
     'auth/popup-blocked': 'Allow the sign-in popup, then try again.',
     'auth/popup-closed-by-user': 'Sign-in was cancelled.',
     'auth/too-many-requests': 'Too many attempts. Please wait and try again.',
-    'not-editor': 'Use Max’s, Ray’s, or Coach Eberth’s approved email address.',
+    'not-editor': 'Use an approved team account.',
     conflict: 'This post changed in another session. Copy your text, refresh the list and reopen the latest version before saving.'
   };
   return messages[e.code] || messages[e.message] || 'Could not complete the request. Check your connection and try again.';
@@ -159,8 +164,10 @@ async function listPosts() {
 }
 async function showUser(user) {
   currentUser = user;
-  document.body.classList.toggle("auth-screen", !allowed(user));
-  $("#editor-title").textContent = allowed(user) ? "Team updates" : "Coach sign-in";
+  const canPost = allowed(user);
+  const canManageParents = canEditParentList(user);
+  document.body.classList.toggle("auth-screen", !canPost && !canManageParents);
+  $("#editor-title").textContent = canPost ? "Team updates" : canManageParents ? "Parent emails" : "Team sign-in";
   $("#login").hidden = !!user;
   $("#signout").hidden = !user;
   $("#verification").hidden = true;
@@ -168,7 +175,7 @@ async function showUser(user) {
   $("#parents-panel").hidden = true;
   $(".editor-layout").hidden = false;
   $("#show-updates").hidden = true;
-  $("#show-parents").hidden = !canEditParentList(user);
+  $("#show-parents").hidden = !canManageParents;
   if (!user) {
     parentEmails = [];
     $("#parents-list").replaceChildren();
@@ -177,23 +184,24 @@ async function showUser(user) {
     message("");
     return;
   }
-  if (!editorEmails.includes(user.email?.toLowerCase())) {
+  if (!parentListEmails.includes(user.email?.toLowerCase())) {
     message(
-      "This account does not have editor access. Please sign out and use your approved email.",
+      "This account does not have team access. Please sign out and use your approved email.",
     );
     return;
   }
-  if (!allowed(user)) {
+  if (!canPost && !canManageParents) {
     $("#verification").hidden = false;
-    message("Verify your email before posting.");
+    message("Verify your email before continuing.");
     return;
   }
   $("#workspace").hidden = false;
   message(`Signed in as ${user.email}`);
-  await attempt(listPosts);
-  if (new URLSearchParams(location.search).get('view') === 'parents' && canEditParentList(user)) {
+  if (canPost) await attempt(listPosts);
+  if (canManageParents && (!canPost || new URLSearchParams(location.search).get('view') === 'parents')) {
     $("#show-parents").click();
   }
+  if (!canPost) return;
   try {
     const response = await fetch('/api/photo-status', {headers:{Authorization:`Bearer ${await user.getIdToken()}`}});
     if (!response.ok || !(await response.json()).configured) {
@@ -266,11 +274,12 @@ $("#show-parents").addEventListener('click', () => attempt(async () => {
   $(".editor-layout").hidden = true;
   $("#parents-panel").hidden = false;
   $("#show-parents").hidden = true;
-  $("#show-updates").hidden = false;
+  $("#show-updates").hidden = !allowed(auth.currentUser);
   $("#editor-title").textContent = 'Parent emails';
   await listParents();
 }));
 $("#show-updates").addEventListener('click', () => {
+  if (!allowed(auth.currentUser)) return;
   $("#parents-panel").hidden = true;
   $(".editor-layout").hidden = false;
   $("#show-parents").hidden = !canEditParentList(auth.currentUser);
@@ -306,7 +315,7 @@ $("#add-parents-form").addEventListener('submit', event => {
 });
 function credentials() {
   const email = $("#email").value.trim().toLowerCase();
-  if (!editorEmails.includes(email)) throw Error("not-editor");
+  if (!parentListEmails.includes(email)) throw Error("not-editor");
   return { email, password: $("#password").value };
 }
 function setPasswordVisible(visible) {
@@ -324,6 +333,8 @@ function updateSignInMethod() {
   $("#password-signin").hidden = useGoogle;
   $("#password").disabled = useGoogle;
   $("#password").required = !useGoogle;
+  $("#create-account").hidden = !treasurerEmails.includes($("#email").value);
+  $("#account-help").hidden = !treasurerEmails.includes($("#email").value);
   $("#password").value = "";
   setPasswordVisible(false);
 }
@@ -356,6 +367,15 @@ if (!auth) {
       setPasswordVisible(false);
     });
   });
+  $("#create-account").addEventListener("click", () => attempt(async () => {
+    const c = credentials();
+    if (!treasurerEmails.includes(c.email)) return;
+    if (c.password.length < 12) { message('Choose a password with at least 12 characters.'); return; }
+    const account = await createUserWithEmailAndPassword(auth, c.email, c.password);
+    $("#password").value = "";
+    await sendEmailVerification(account.user);
+    message('Account created. Open the verification email, then return here.');
+  }));
   $("#reset").addEventListener("click", () =>
     attempt(async () => {
       const c = credentials();

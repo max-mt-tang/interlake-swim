@@ -23,7 +23,7 @@ service cloud.firestore {
     }
     function parentListEditor() {
       return request.auth != null
-        && request.auth.token.email in ['riverae@bsd405.org', 'rayshinetang@gmail.com', 's-tangra@bsd405.org', 'maxmttang@gmail.com', 's-tangm@bsd405.org']
+        && request.auth.token.email in ['riverae@bsd405.org', 'rayshinetang@gmail.com', 's-tangra@bsd405.org', 'maxmttang@gmail.com', 's-tangm@bsd405.org', 'vivachui@outlook.com', 'yin65@yahoo.com']
         && (request.auth.token.email_verified == true
           || (request.auth.token.email in ['riverae@bsd405.org', 's-tangra@bsd405.org']
             && request.auth.token.firebase.sign_in_provider == 'password'));
