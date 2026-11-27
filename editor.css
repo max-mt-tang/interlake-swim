@@ -1,7 +1,7 @@
 [hidden] {
   display: none !important;
 }
-.parents-panel { max-width: 900px; padding: 26px; border: 1px solid #dce4eb; border-top: 3px solid #123f60; border-radius: 8px; background: #fff; }
+.parents-panel { max-width: 900px; padding: 18px 26px 26px; border: 1px solid #dce4eb; border-top: 3px solid #123f60; border-radius: 8px; background: #fff; }
 .parents-panel > p { color: #586c7c; line-height: 1.5; }
 .parents-panel textarea { min-height: 100px; }
 .parents-panel #add-parents-form > button { margin-top: 16px; }
@@ -216,7 +216,7 @@ body:not(.auth-screen) #message { background: transparent; padding: 0; margin: 6
 
 /* Compact writing workspace with distinct post navigation and upload controls. */
 body:not(.auth-screen) .editor-main { max-width: 1120px; margin: 22px auto; }
-.workspace-toolbar { margin-bottom: 16px; }
+.workspace-toolbar { margin-bottom: 4px; }
 .editor-layout { grid-template-columns: 220px minmax(0, 1fr); gap: 20px; }
 .editor-layout aside { background: #eaf1f6; border-top: 3px solid #1684b5; padding: 16px 12px; border-radius: 4px; }
 .editor-layout aside h2 { color: #123f60; margin: 0 6px 12px; }
