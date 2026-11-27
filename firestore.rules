@@ -21,6 +21,13 @@ service cloud.firestore {
         && p.createdBy is string && p.createdAt is timestamp && p.updatedAt == request.time
         && p.revision is int;
     }
+    function parentListEditor() {
+      return request.auth != null
+        && request.auth.token.email in ['riverae@bsd405.org', 'rayshinetang@gmail.com', 's-tangra@bsd405.org', 'maxmttang@gmail.com', 's-tangm@bsd405.org']
+        && (request.auth.token.email_verified == true
+          || (request.auth.token.email in ['riverae@bsd405.org', 's-tangra@bsd405.org']
+            && request.auth.token.firebase.sign_in_provider == 'password'));
+    }
     match /posts/{postId} {
       allow read: if editor() || resource.data.published == true;
       allow create: if editor() && validPost(request.resource.data)
@@ -33,6 +40,17 @@ service cloud.firestore {
         && request.resource.data.revision == resource.data.revision + 1;
       // Only approved editors can delete posts.
       allow delete: if editor();
+    }
+    match /parentContacts/{email} {
+      // Parent addresses are never available to anonymous or public site visitors.
+      allow read, delete: if parentListEditor();
+      allow create: if parentListEditor()
+        && request.resource.data.keys().hasOnly(['email', 'createdAt'])
+        && request.resource.data.keys().hasAll(['email', 'createdAt'])
+        && request.resource.data.email == email
+        && email.matches('^[a-z0-9.!#$%&*+/=?^_`{|}~-]+@[a-z0-9.-]+\\.[a-z]{2,}$')
+        && request.resource.data.createdAt == request.time;
+      allow update: if false;
     }
   }
 }

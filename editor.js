@@ -19,8 +19,10 @@ import {
   collection,
   doc,
   getDocs,
+  deleteDoc,
   runTransaction,
   serverTimestamp,
+  writeBatch,
 } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
 let requestedPost = new URLSearchParams(location.search).get("post");
 const $ = (s) => document.querySelector(s);
@@ -39,6 +41,7 @@ let selected = null,
   saving = false,
   uploading = false,
   currentUser = null;
+let parentEmails = [];
 const message = (text) => {
   $("#message").textContent = text;
   $("#message").hidden = !text;
@@ -48,6 +51,8 @@ const allowed = (user) =>
   editorEmails.includes(user.email?.toLowerCase()) &&
   (user.emailVerified || (passwordEditorEmails.includes(user.email?.toLowerCase()) &&
     user.providerData.some(provider => provider.providerId === 'password')));
+const canEditParentList = user => allowed(user) &&
+  ['riverae@bsd405.org', 'rayshinetang@gmail.com', 's-tangra@bsd405.org', 'maxmttang@gmail.com', 's-tangm@bsd405.org'].includes(user.email?.toLowerCase());
 function errorMessage(e) {
   const messages = {
     'permission-denied': 'Access denied. Sign in with an approved editor account.',
@@ -158,7 +163,13 @@ async function showUser(user) {
   $("#signout").hidden = !user;
   $("#verification").hidden = true;
   $("#workspace").hidden = true;
+  $("#parents-panel").hidden = true;
+  $(".editor-layout").hidden = false;
+  $("#show-updates").hidden = true;
+  $("#show-parents").hidden = !canEditParentList(user);
   if (!user) {
+    parentEmails = [];
+    $("#parents-list").replaceChildren();
     $("#post-list").replaceChildren();
     emptyForm();
     message("");
@@ -185,6 +196,109 @@ async function showUser(user) {
     }
   } catch { $('#photo-status').textContent = 'Photo storage is not connected yet. Text updates are ready to use.'; }
 }
+const validParentEmail = email => /^[^\s@,;]+@[^\s@,;]+\.[^\s@,;]+$/.test(email);
+const parentsStatus = text => { $("#parents-status").textContent = text; };
+async function listParents() {
+  if (!canEditParentList(auth.currentUser)) return;
+  const snap = await getDocs(collection(db, 'parentContacts'));
+  if (!canEditParentList(auth.currentUser)) return;
+  parentEmails = snap.docs.map(item => item.id).sort((a, b) => a.localeCompare(b));
+  $("#parents-count").textContent = `(${parentEmails.length})`;
+  const list = $("#parents-list");
+  list.replaceChildren();
+  if (!parentEmails.length) {
+    const empty = document.createElement('li');
+    empty.textContent = 'No addresses added yet.';
+    list.append(empty);
+    return;
+  }
+  for (const email of parentEmails) {
+    const row = document.createElement('li');
+    const value = document.createElement('span');
+    value.textContent = email;
+    const edit = document.createElement('button');
+    edit.type = 'button'; edit.textContent = 'Edit';
+    const remove = document.createElement('button');
+    remove.type = 'button'; remove.textContent = 'Remove';
+    edit.addEventListener('click', () => {
+      const input = document.createElement('input');
+      input.type = 'email'; input.value = email;
+      input.setAttribute('aria-label', `Correct ${email}`);
+      const save = document.createElement('button');
+      save.type = 'button'; save.textContent = 'Save';
+      const cancel = document.createElement('button');
+      cancel.type = 'button'; cancel.textContent = 'Cancel';
+      row.replaceChildren(input, save, cancel);
+      cancel.addEventListener('click', listParents);
+      save.addEventListener('click', () => attempt(async () => {
+        if (!canEditParentList(auth.currentUser)) throw Error('not-editor');
+        const next = input.value.trim().toLowerCase();
+        if (!validParentEmail(next)) { parentsStatus('Enter a valid email address.'); return; }
+        if (next === email) { await listParents(); return; }
+        if (parentEmails.includes(next)) { parentsStatus('That address is already in the list.'); return; }
+        const batch = writeBatch(db);
+        batch.set(doc(db, 'parentContacts', next), {email: next, createdAt: serverTimestamp()});
+        batch.delete(doc(db, 'parentContacts', email));
+        await batch.commit();
+        parentsStatus('Email address updated.');
+        await listParents();
+      }));
+      input.focus();
+    });
+    remove.addEventListener('click', () => attempt(async () => {
+      if (!canEditParentList(auth.currentUser)) throw Error('not-editor');
+      if (!(await askConfirmation('Remove parent email?', `${email} will be removed from the private list.`, 'Remove email'))) return;
+      await deleteDoc(doc(db, 'parentContacts', email));
+      parentsStatus('Email address removed.');
+      await listParents();
+    }));
+    row.append(value, edit, remove);
+    list.append(row);
+  }
+}
+$("#show-parents").addEventListener('click', () => attempt(async () => {
+  if (!canEditParentList(auth.currentUser) || !(await mayDiscard())) return;
+  $(".editor-layout").hidden = true;
+  $("#parents-panel").hidden = false;
+  $("#show-parents").hidden = true;
+  $("#show-updates").hidden = false;
+  $("#editor-title").textContent = 'Parent emails';
+  await listParents();
+}));
+$("#show-updates").addEventListener('click', () => {
+  $("#parents-panel").hidden = true;
+  $(".editor-layout").hidden = false;
+  $("#show-parents").hidden = !canEditParentList(auth.currentUser);
+  $("#show-updates").hidden = true;
+  $("#editor-title").textContent = 'Team updates';
+});
+$("#refresh-parents").addEventListener('click', () => attempt(listParents));
+$("#copy-parents").addEventListener('click', () => attempt(async () => {
+  if (!canEditParentList(auth.currentUser)) throw Error('not-editor');
+  await navigator.clipboard.writeText(parentEmails.join('; '));
+  parentsStatus(`Copied ${parentEmails.length} email addresses.`);
+}));
+$("#add-parents-form").addEventListener('submit', event => {
+  event.preventDefault();
+  attempt(async () => {
+    if (!canEditParentList(auth.currentUser)) throw Error('not-editor');
+    const raw = $("#parent-emails").value;
+    const emails = [...new Set(raw.split(/[\s,;]+/).map(value => value.trim().toLowerCase()).filter(Boolean))];
+    const invalid = emails.filter(email => !validParentEmail(email));
+    if (invalid.length) { parentsStatus(`Check these addresses: ${invalid.join(', ')}`); return; }
+    const fresh = emails.filter(email => !parentEmails.includes(email));
+    for (let start = 0; start < fresh.length; start += 400) {
+      const batch = writeBatch(db);
+      for (const email of fresh.slice(start, start + 400)) {
+        batch.set(doc(db, 'parentContacts', email), {email, createdAt: serverTimestamp()});
+      }
+      await batch.commit();
+    }
+    $("#parent-emails").value = '';
+    parentsStatus(`Added ${fresh.length} email addresses. ${emails.length - fresh.length} were already saved.`);
+    await listParents();
+  });
+});
 function credentials() {
   const email = $("#email").value.trim().toLowerCase();
   if (!editorEmails.includes(email)) throw Error("not-editor");

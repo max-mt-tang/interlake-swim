@@ -60,12 +60,26 @@
       </section>
       <section id="workspace" hidden>
         <div class="editor-actions workspace-toolbar">
+          <button id="show-updates" type="button" hidden>Team updates</button>
+          <button id="show-parents" type="button">Parent emails</button>
           <button id="import-posts" hidden>
             <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#download"></use></svg>Import existing weekly update</button
           ><a href="/#updates" target="_blank" rel="noopener"
             >View published updates ↗</a
           >
         </div>
+        <section id="parents-panel" class="parents-panel" aria-labelledby="parents-heading" hidden>
+          <h2 id="parents-heading">Parent emails</h2>
+          <p>Only Coach Eberth, Ray, and Max can view this private list. Addresses are stored in the team database, not on the public website or in GitHub.</p>
+          <form id="add-parents-form">
+            <label for="parent-emails">Add email addresses</label>
+            <textarea id="parent-emails" rows="4" placeholder="Paste addresses, separated by commas or new lines" required></textarea>
+            <button type="submit" class="primary">Add to private list</button>
+          </form>
+          <p id="parents-status" role="status" aria-live="polite"></p>
+          <div class="parents-list-heading"><h3>Saved addresses <span id="parents-count">(0)</span></h3><div><button id="copy-parents" type="button">Copy all emails</button> <button id="refresh-parents" type="button">Refresh list</button></div></div>
+          <ul id="parents-list" class="parents-list"></ul>
+        </section>
         <div class="editor-layout">
           <aside>
             <div class="post-list-heading"><h2>Recent updates</h2><button id="new-post" type="button" hidden><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#plus"></use></svg>New</button></div>

@@ -1,6 +1,17 @@
 [hidden] {
   display: none !important;
 }
+.parents-panel { max-width: 900px; padding: 26px; border: 1px solid #dce4eb; border-top: 3px solid #123f60; border-radius: 8px; background: #fff; }
+.parents-panel > p { color: #586c7c; line-height: 1.5; }
+.parents-panel textarea { min-height: 100px; }
+.parents-list-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+.parents-list-heading h3 { margin: 0; font-size: 18px; }
+.parents-list { list-style: none; padding: 0; margin: 12px 0 0; }
+.parents-list li { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid #e1e7ed; }
+.parents-list li span { flex: 1; overflow-wrap: anywhere; }
+.parents-list li input { flex: 1; min-width: 0; margin: 0 !important; }
+.parents-list li button { flex: none; }
+@media (max-width: 600px) { .parents-panel { padding: 18px; } .parents-list li { flex-wrap: wrap; } .parents-list li span { flex-basis: 100%; } }
 .editor-header {
   background: rgba(255,255,255,.97);
 }
