@@ -268,8 +268,10 @@ function showCalendarEvent(event) {
   $('#cal-event-time').textContent = valid(event.date) ? date(event.date) + ' · ' + calendarTime(event) + ' PT' : 'Date and time to be announced';
   const pool = POOL_DIRECTORY[event.location];
   $('#cal-event-location').replaceChildren(poolLink(event.location));
-  $('#cal-event-notes').textContent = event.notes || '';
-  $('#cal-event-notes').hidden = !event.notes;
+  const notes = $('#cal-event-notes');
+  notes.replaceChildren(...(event.notes || '').split('\n').map(line =>
+    el('span', line, event.title === 'Interlake vs. Bellevue' && line.startsWith('Arrive at ') ? 'arrival-reminder' : 'note-line')));
+  notes.hidden = !event.notes;
   const links = $('#cal-event-links');
   links.replaceChildren();
   const query = pool ? pool.name + ', ' + pool.address : event.location;
