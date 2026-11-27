@@ -202,6 +202,9 @@ details[open] > summary .icon { transform: rotate(180deg); }
 .calendar-download-note { margin: 4px 0 0; font-size: 11px; color: var(--muted); }
 .season-tag { color: var(--muted); font-size: 10px; font-weight: 600; letter-spacing: 1px; padding-bottom: 4px; }
 .state-standards { margin-top: 24px; border: 1px solid var(--line); border-radius: 10px; background: white; overflow: hidden; }
+.postseason-photo { max-width: 900px; margin: 24px auto 0; overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: white; }
+.postseason-photo img { display: block; width: 100%; height: auto; }
+.postseason-photo figcaption { padding: 10px 14px; color: var(--muted); font-size: 12px; }
 .state-standards-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; padding: 20px 22px 8px; }
 .state-standards-heading .eyebrow { color: var(--blue); margin-bottom: 4px; }
 .state-standards-heading h3 { margin: 0; font-size: 22px; }
@@ -852,13 +855,13 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .parent-volunteers > h2 { margin: 0 0 22px; }
 .parent-volunteers .volunteer-tile { padding: 22px 24px; border: 1px solid var(--line); border-radius: 10px; background: white; }
 .parent-volunteers dl { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-.parent-volunteers .home-meet-volunteer-tile { margin-top: 16px; }
-.parent-volunteers .parent-help { max-width: 960px; margin: 0; padding: 0; border: 0; background: none; color: var(--text); font-size: 14px; line-height: 1.6; }
+.parent-volunteers .home-meet-volunteer-tile { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 360px); gap: 28px; align-items: start; margin-top: 16px; }
+.parent-volunteers .parent-help { max-width: none; margin: 0; padding: 0; border: 0; background: none; color: var(--text); font-size: 14px; line-height: 1.6; }
 .parent-volunteers .parent-help h3 { margin: 0 0 12px; font-size: 19px; }
 .parent-volunteers .parent-help p { margin: 0 0 12px; }
 .parent-volunteers .parent-help .volunteer-need-summary, .parent-volunteers .postseason-volunteers .volunteer-need-summary { margin: 0 0 14px; color: var(--navy); font-size: 15px; font-weight: 700; }
 .parent-volunteers .parent-help .volunteer-need-summary, .parent-volunteers .postseason-volunteers .volunteer-need-summary { padding: 12px 16px; border-left: 4px solid #d9891b; border-radius: 4px; background: #fff2cf; }
-.parent-volunteers .parent-training { width: min(100%, 360px); max-width: none; margin: 20px 0 0; padding: 0; border: 0; }
+.parent-volunteers .parent-training { width: 100%; max-width: none; margin: 0; padding: 0; border: 0; }
 .parent-volunteers .video-preview { width: 100%; margin-top: 0; }
 .parent-volunteers .home-meet-signup-button { display: flex; width: 100%; min-height: 58px; margin-top: 18px; padding: 12px 16px; border: 1px solid #d9891b; background: linear-gradient(120deg, #ffe082, #ffb63b 58%, #f79221); box-shadow: 0 4px 0 #c77b13, 0 9px 20px #ad6a1126; color: var(--navy); font-size: 16px; font-weight: 750; text-align: center; }
 .parent-volunteers .home-meet-signup-button:hover { background: linear-gradient(120deg, #ffea9d, #ffc75c 58%, #ffa43d); box-shadow: 0 5px 0 #c77b13, 0 11px 22px #ad6a1133; }
@@ -866,6 +869,10 @@ h2 { font-size: 28px; letter-spacing: -.8px; }
 .postseason-volunteers { margin-top: 16px; }
 .postseason-volunteers h3 { margin: 0 0 8px; font-size: 19px; }
 .postseason-volunteers p { margin: 0; font-size: 14px; }
+@media (max-width: 900px) {
+  .parent-volunteers .home-meet-volunteer-tile { grid-template-columns: 1fr; }
+  .parent-volunteers .parent-training { margin-top: 8px; max-width: 360px; }
+}
 @media (max-width: 700px) {
   .parent-volunteers dl { grid-template-columns: 1fr; gap: 18px; }
   .parent-volunteers .volunteer-tile { padding: 18px; }
