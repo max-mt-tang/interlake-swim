@@ -6,7 +6,6 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
   sendEmailVerification,
   sendPasswordResetEmail,
   signOut,
@@ -19,6 +18,7 @@ import {
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
   deleteDoc,
   runTransaction,
@@ -43,6 +43,7 @@ let selected = null,
   uploading = false,
   currentUser = null;
 let parentEmails = [];
+let approvedParentUid = null;
 const message = (text) => {
   $("#message").textContent = text;
   $("#message").hidden = !text;
@@ -54,10 +55,10 @@ const allowed = (user) =>
     user.providerData.some(provider => provider.providerId === 'password')));
 const parentOnlyEmails = ['vivachui@outlook.com', 'yin65@yahoo.com', 'yingde_tang@yahoo.com'];
 const parentListEmails = [...editorEmails, ...parentOnlyEmails];
-const canEditParentList = user => user &&
-  parentListEmails.includes(user.email?.toLowerCase()) &&
-  (user.emailVerified || (passwordEditorEmails.includes(user.email?.toLowerCase()) &&
-    user.providerData.some(provider => provider.providerId === 'password')));
+const canEditParentList = user => allowed(user) || (user &&
+  parentOnlyEmails.includes(user.email?.toLowerCase()) &&
+  user.providerData.some(provider => provider.providerId === 'password') &&
+  approvedParentUid === user.uid);
 function errorMessage(e) {
   const messages = {
     'permission-denied': 'Access denied. Sign in with an approved editor account.',
@@ -164,6 +165,14 @@ async function listPosts() {
 }
 async function showUser(user) {
   currentUser = user;
+  approvedParentUid = null;
+  if (user && parentOnlyEmails.includes(user.email?.toLowerCase()) &&
+      user.providerData.some(provider => provider.providerId === 'password')) {
+    try {
+      const approval = await getDoc(doc(db, 'parentListApprovals', user.uid));
+      if (approval.exists() && auth.currentUser?.uid === user.uid) approvedParentUid = user.uid;
+    } catch { /* Access remains closed if approval cannot be checked. */ }
+  }
   const canPost = allowed(user);
   const canManageParents = canEditParentList(user);
   document.body.classList.toggle("auth-screen", !canPost && !canManageParents);
@@ -191,6 +200,10 @@ async function showUser(user) {
     return;
   }
   if (!canPost && !canManageParents) {
+    if (parentOnlyEmails.includes(user.email?.toLowerCase())) {
+      message('This account is waiting for the team admin to finish setup.');
+      return;
+    }
     $("#verification").hidden = false;
     message("Verify your email before continuing.");
     return;
@@ -333,8 +346,6 @@ function updateSignInMethod() {
   $("#password-signin").hidden = useGoogle;
   $("#password").disabled = useGoogle;
   $("#password").required = !useGoogle;
-  $("#create-account").hidden = !parentOnlyEmails.includes($("#email").value);
-  $("#account-help").hidden = !parentOnlyEmails.includes($("#email").value);
   $("#password").value = "";
   setPasswordVisible(false);
 }
@@ -367,15 +378,6 @@ if (!auth) {
       setPasswordVisible(false);
     });
   });
-  $("#create-account").addEventListener("click", () => attempt(async () => {
-    const c = credentials();
-    if (!parentOnlyEmails.includes(c.email)) return;
-    if (c.password.length < 12) { message('Choose a password with at least 12 characters.'); return; }
-    const account = await createUserWithEmailAndPassword(auth, c.email, c.password);
-    $("#password").value = "";
-    await sendEmailVerification(account.user);
-    message('Account created. Open the verification email, then return here.');
-  }));
   $("#reset").addEventListener("click", () =>
     attempt(async () => {
       const c = credentials();
