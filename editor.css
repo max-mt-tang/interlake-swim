@@ -4,14 +4,21 @@
 .parents-panel { max-width: 900px; padding: 26px; border: 1px solid #dce4eb; border-top: 3px solid #123f60; border-radius: 8px; background: #fff; }
 .parents-panel > p { color: #586c7c; line-height: 1.5; }
 .parents-panel textarea { min-height: 100px; }
+.parents-panel #add-parents-form > button { margin-top: 16px; }
 .parents-list-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
 .parents-list-heading h3 { margin: 0; font-size: 18px; }
-.parents-list { list-style: none; padding: 0; margin: 12px 0 0; }
-.parents-list li { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid #e1e7ed; }
-.parents-list li span { flex: 1; overflow-wrap: anywhere; }
-.parents-list li input { flex: 1; min-width: 0; margin: 0 !important; }
-.parents-list li button { flex: none; }
-@media (max-width: 600px) { .parents-panel { padding: 18px; } .parents-list li { flex-wrap: wrap; } .parents-list li span { flex-basis: 100%; } }
+.parents-table-wrap { overflow-x: auto; margin-top: 12px; }
+.parents-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.parents-table th { padding: 8px 10px; background: #eef3f7; color: #405c70; font-size: 11px; text-align: left; }
+.parents-table th:last-child { width: 100px; text-align: center; }
+.parents-table td { padding: 4px 10px; border-bottom: 1px solid #e1e7ed; overflow-wrap: anywhere; }
+.parents-table .parent-row-actions { white-space: nowrap; text-align: center; }
+.parents-table .parent-row-action { width: 36px; min-height: 36px; padding: 7px; border: 0; background: transparent; color: #315d7c; }
+.parents-table .parent-row-action:hover { background: #e8f2f9; }
+.parents-table .parent-row-remove { color: #a12636; }
+.parents-table .parent-row-action .icon { width: 17px; height: 17px; }
+.parents-table td input { margin: 0 !important; }
+@media (max-width: 600px) { .parents-panel { padding: 18px; } }
 .editor-header {
   background: rgba(255,255,255,.97);
 }
@@ -158,6 +165,10 @@ body:not(.auth-screen) #message { background: transparent; padding: 0; margin: 6
 .workspace-toolbar { margin: 0 0 22px; gap: 12px; }
 .workspace-toolbar button, .workspace-toolbar a { font-size: 13px; }
 .workspace-toolbar a { margin-left: auto; color: #315d7c; text-decoration: none; }
+.workspace-toolbar .workspace-tab { border-radius: 8px 8px 0 0; border-bottom: 3px solid #a9c6d8; background: #edf4f8; font-weight: 650; }
+.workspace-toolbar .workspace-tab[aria-pressed="true"] { border-color: #123f60; border-bottom-color: #1684b5; background: #fff; }
+.workspace-toolbar .workspace-back { border: 0; background: transparent; color: #315d7c; padding-inline: 4px; }
+.workspace-toolbar .workspace-back:hover { text-decoration: underline; }
 .editor-layout { grid-template-columns: 250px minmax(0, 1fr); gap: 28px; align-items: start; }
 .editor-layout aside h2 { margin: 4px 0 14px; font-size: 13px; color: #586c7c; }
 .post-list-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }

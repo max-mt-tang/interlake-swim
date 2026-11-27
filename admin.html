@@ -63,8 +63,8 @@
       </section>
       <section id="workspace" hidden>
         <div class="editor-actions workspace-toolbar">
-          <button id="show-updates" type="button" hidden>Team updates</button>
-          <button id="show-parents" type="button">Parent emails</button>
+          <button id="show-updates" class="workspace-back" type="button" hidden>← Back to post updates</button>
+          <button id="show-parents" class="workspace-tab" type="button" aria-pressed="false">Parent emails</button>
           <button id="import-posts" hidden>
             <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#download"></use></svg>Import existing weekly update</button
           ><a href="/#updates" target="_blank" rel="noopener"
@@ -81,7 +81,7 @@
           </form>
           <p id="parents-status" role="status" aria-live="polite"></p>
           <div class="parents-list-heading"><h3>Saved addresses <span id="parents-count">(0)</span></h3><div><button id="copy-parents" type="button">Copy all emails</button> <button id="refresh-parents" type="button">Refresh list</button></div></div>
-          <ul id="parents-list" class="parents-list"></ul>
+          <div class="parents-table-wrap"><table class="parents-table"><thead><tr><th scope="col">Email</th><th scope="col">Actions</th></tr></thead><tbody id="parents-list"></tbody></table></div>
         </section>
         <div class="editor-layout">
           <aside>

@@ -185,6 +185,7 @@ async function showUser(user) {
   $(".editor-layout").hidden = false;
   $("#show-updates").hidden = true;
   $("#show-parents").hidden = !canManageParents;
+  $("#show-parents").setAttribute('aria-pressed', 'false');
   if (!user) {
     parentEmails = [];
     $("#parents-list").replaceChildren();
@@ -224,6 +225,21 @@ async function showUser(user) {
 }
 const validParentEmail = email => /^[^\s@,;]+@[^\s@,;]+\.[^\s@,;]+$/.test(email);
 const parentsStatus = text => { $("#parents-status").textContent = text; };
+function parentActionButton(icon, label, email) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'parent-row-action';
+  button.title = label;
+  button.setAttribute('aria-label', `${label} ${email}`);
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'icon');
+  svg.setAttribute('aria-hidden', 'true');
+  const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+  use.setAttribute('href', `assets/icons.svg#${icon}`);
+  svg.append(use);
+  button.append(svg);
+  return button;
+}
 async function listParents() {
   if (!canEditParentList(auth.currentUser)) return;
   const snap = await getDocs(collection(db, 'parentContacts'));
@@ -233,19 +249,23 @@ async function listParents() {
   const list = $("#parents-list");
   list.replaceChildren();
   if (!parentEmails.length) {
-    const empty = document.createElement('li');
-    empty.textContent = 'No addresses added yet.';
+    const empty = document.createElement('tr');
+    const cell = document.createElement('td');
+    cell.colSpan = 2;
+    cell.textContent = 'No addresses added yet.';
+    empty.append(cell);
     list.append(empty);
     return;
   }
   for (const email of parentEmails) {
-    const row = document.createElement('li');
-    const value = document.createElement('span');
+    const row = document.createElement('tr');
+    const value = document.createElement('td');
     value.textContent = email;
-    const edit = document.createElement('button');
-    edit.type = 'button'; edit.textContent = 'Edit';
-    const remove = document.createElement('button');
-    remove.type = 'button'; remove.textContent = 'Remove';
+    const actions = document.createElement('td');
+    actions.className = 'parent-row-actions';
+    const edit = parentActionButton('pencil', 'Edit', email);
+    const remove = parentActionButton('trash-2', 'Remove', email);
+    remove.classList.add('parent-row-remove');
     edit.addEventListener('click', () => {
       const input = document.createElement('input');
       input.type = 'email'; input.value = email;
@@ -254,7 +274,12 @@ async function listParents() {
       save.type = 'button'; save.textContent = 'Save';
       const cancel = document.createElement('button');
       cancel.type = 'button'; cancel.textContent = 'Cancel';
-      row.replaceChildren(input, save, cancel);
+      const inputCell = document.createElement('td');
+      inputCell.append(input);
+      const editActions = document.createElement('td');
+      editActions.className = 'parent-row-actions';
+      editActions.append(save, cancel);
+      row.replaceChildren(inputCell, editActions);
       cancel.addEventListener('click', listParents);
       save.addEventListener('click', () => attempt(async () => {
         if (!canEditParentList(auth.currentUser)) throw Error('not-editor');
@@ -278,7 +303,8 @@ async function listParents() {
       parentsStatus('Email address removed.');
       await listParents();
     }));
-    row.append(value, edit, remove);
+    actions.append(edit, remove);
+    row.append(value, actions);
     list.append(row);
   }
 }
@@ -286,7 +312,7 @@ $("#show-parents").addEventListener('click', () => attempt(async () => {
   if (!canEditParentList(auth.currentUser) || !(await mayDiscard())) return;
   $(".editor-layout").hidden = true;
   $("#parents-panel").hidden = false;
-  $("#show-parents").hidden = true;
+  $("#show-parents").setAttribute('aria-pressed', 'true');
   $("#show-updates").hidden = !allowed(auth.currentUser);
   $("#editor-title").textContent = 'Parent emails';
   await listParents();
@@ -296,6 +322,7 @@ $("#show-updates").addEventListener('click', () => {
   $("#parents-panel").hidden = true;
   $(".editor-layout").hidden = false;
   $("#show-parents").hidden = !canEditParentList(auth.currentUser);
+  $("#show-parents").setAttribute('aria-pressed', 'false');
   $("#show-updates").hidden = true;
   $("#editor-title").textContent = 'Team updates';
 });
