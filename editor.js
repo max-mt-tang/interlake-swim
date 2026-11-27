@@ -182,10 +182,9 @@ async function showUser(user) {
   $("#verification").hidden = true;
   $("#workspace").hidden = true;
   $("#parents-panel").hidden = true;
-  $(".editor-layout").hidden = false;
-  $("#show-updates").hidden = true;
-  $("#show-parents").hidden = !canManageParents;
-  $("#show-parents").setAttribute('aria-pressed', 'false');
+  $("#updates-panel").hidden = false;
+  $("#show-updates").disabled = !canPost;
+  $("#show-parents").disabled = !canManageParents;
   if (!user) {
     parentEmails = [];
     $("#parents-list").replaceChildren();
@@ -213,8 +212,9 @@ async function showUser(user) {
   message(`Signed in as ${user.email}`);
   if (canPost) await attempt(listPosts);
   if (canManageParents && (!canPost || new URLSearchParams(location.search).get('view') === 'parents')) {
-    $("#show-parents").click();
-  }
+    selectWorkspaceTab('parents');
+    await attempt(listParents);
+  } else selectWorkspaceTab('updates');
   if (!canPost) return;
   try {
     const response = await fetch('/api/photo-status', {headers:{Authorization:`Bearer ${await user.getIdToken()}`}});
@@ -308,23 +308,35 @@ async function listParents() {
     list.append(row);
   }
 }
+function selectWorkspaceTab(tab) {
+  const updates = tab === 'updates';
+  $("#updates-panel").hidden = !updates;
+  $("#parents-panel").hidden = updates;
+  $("#show-updates").setAttribute('aria-selected', String(updates));
+  $("#show-parents").setAttribute('aria-selected', String(!updates));
+  $("#show-updates").tabIndex = updates ? 0 : -1;
+  $("#show-parents").tabIndex = updates ? -1 : 0;
+  $("#editor-title").textContent = updates ? 'Team updates' : 'Parent emails';
+}
 $("#show-parents").addEventListener('click', () => attempt(async () => {
   if (!canEditParentList(auth.currentUser) || !(await mayDiscard())) return;
-  $(".editor-layout").hidden = true;
-  $("#parents-panel").hidden = false;
-  $("#show-parents").setAttribute('aria-pressed', 'true');
-  $("#show-updates").hidden = !allowed(auth.currentUser);
-  $("#editor-title").textContent = 'Parent emails';
+  selectWorkspaceTab('parents');
   await listParents();
 }));
 $("#show-updates").addEventListener('click', () => {
   if (!allowed(auth.currentUser)) return;
-  $("#parents-panel").hidden = true;
-  $(".editor-layout").hidden = false;
-  $("#show-parents").hidden = !canEditParentList(auth.currentUser);
-  $("#show-parents").setAttribute('aria-pressed', 'false');
-  $("#show-updates").hidden = true;
-  $("#editor-title").textContent = 'Team updates';
+  selectWorkspaceTab('updates');
+});
+$(".editor-tabs").addEventListener('keydown', event => {
+  if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+  const tabs = [...$(".editor-tabs").querySelectorAll('[role="tab"]:not(:disabled)')];
+  if (!tabs.length) return;
+  const current = tabs.indexOf(document.activeElement);
+  const next = event.key === 'Home' ? tabs[0] : event.key === 'End' ? tabs.at(-1) :
+    tabs[(current + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+  event.preventDefault();
+  next.focus();
+  next.click();
 });
 $("#refresh-parents").addEventListener('click', () => attempt(listParents));
 $("#copy-parents").addEventListener('click', () => attempt(async () => {

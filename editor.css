@@ -165,10 +165,10 @@ body:not(.auth-screen) #message { background: transparent; padding: 0; margin: 6
 .workspace-toolbar { margin: 0 0 22px; gap: 12px; }
 .workspace-toolbar button, .workspace-toolbar a { font-size: 13px; }
 .workspace-toolbar a { margin-left: auto; color: #315d7c; text-decoration: none; }
-.workspace-toolbar .workspace-tab { border-radius: 8px 8px 0 0; border-bottom: 3px solid #a9c6d8; background: #edf4f8; font-weight: 650; }
-.workspace-toolbar .workspace-tab[aria-pressed="true"] { border-color: #123f60; border-bottom-color: #1684b5; background: #fff; }
-.workspace-toolbar .workspace-back { border: 0; background: transparent; color: #315d7c; padding-inline: 4px; }
-.workspace-toolbar .workspace-back:hover { text-decoration: underline; }
+.editor-tabs { display: inline-flex; gap: 2px; border-bottom: 1px solid #b9cad6; }
+.workspace-toolbar .editor-tabs [role="tab"] { border: 1px solid transparent; border-bottom: 3px solid transparent; border-radius: 7px 7px 0 0; background: #edf4f8; padding: 10px 17px; font-weight: 650; }
+.workspace-toolbar .editor-tabs [role="tab"][aria-selected="true"] { border-color: #b9cad6; border-bottom-color: #1684b5; background: #fff; color: #123f60; }
+.workspace-toolbar .editor-tabs [role="tab"]:disabled { opacity: .55; cursor: not-allowed; }
 .editor-layout { grid-template-columns: 250px minmax(0, 1fr); gap: 28px; align-items: start; }
 .editor-layout aside h2 { margin: 4px 0 14px; font-size: 13px; color: #586c7c; }
 .post-list-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }

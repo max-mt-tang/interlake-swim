@@ -63,15 +63,17 @@
       </section>
       <section id="workspace" hidden>
         <div class="editor-actions workspace-toolbar">
-          <button id="show-updates" class="workspace-back" type="button" hidden>← Back to post updates</button>
-          <button id="show-parents" class="workspace-tab" type="button" aria-pressed="false">Parent emails</button>
+          <div class="editor-tabs" role="tablist" aria-label="Team editor sections">
+            <button id="show-updates" type="button" role="tab" aria-selected="true" aria-controls="updates-panel">Team updates</button>
+            <button id="show-parents" type="button" role="tab" aria-selected="false" aria-controls="parents-panel" tabindex="-1">Parent emails</button>
+          </div>
           <button id="import-posts" hidden>
             <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#download"></use></svg>Import existing weekly update</button
           ><a href="/#updates" target="_blank" rel="noopener"
             >View published updates ↗</a
           >
         </div>
-        <section id="parents-panel" class="parents-panel" aria-labelledby="parents-heading" hidden>
+        <section id="parents-panel" class="parents-panel" role="tabpanel" aria-labelledby="show-parents" hidden>
           <h2 id="parents-heading">Parent emails</h2>
           <p>Coach Eberth, site admins Max and Ray, parent coordinator Yingde Tang, and treasurers Vicky Zhao and Ying Pei can view and edit this private list. Addresses are stored in the team database, not on the public website or in GitHub. When emailing families, paste copied addresses into Bcc.</p>
           <form id="add-parents-form">
@@ -83,7 +85,7 @@
           <div class="parents-list-heading"><h3>Saved addresses <span id="parents-count">(0)</span></h3><div><button id="copy-parents" type="button">Copy all emails</button> <button id="refresh-parents" type="button">Refresh list</button></div></div>
           <div class="parents-table-wrap"><table class="parents-table"><thead><tr><th scope="col">Email</th><th scope="col">Actions</th></tr></thead><tbody id="parents-list"></tbody></table></div>
         </section>
-        <div class="editor-layout">
+        <div id="updates-panel" class="editor-layout" role="tabpanel" aria-labelledby="show-updates">
           <aside>
             <div class="post-list-heading"><h2>Recent updates</h2><button id="new-post" type="button" hidden><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#plus"></use></svg>New</button></div>
             <div id="post-list"></div>
