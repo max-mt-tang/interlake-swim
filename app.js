@@ -197,6 +197,7 @@ function renderPosts(rows) {
       link: legacyVideo ? '' : original.link
     } : original;
     const post = el('article', null, 'post');
+    if (row.id) post.id = 'update-' + row.id;
     const meta = el('div', null, 'post-meta');
     meta.append(el('span', date(row.date)), el('span', '·'), el('span', row.category || 'Team update'));
     const body = el('div', null, 'body');
@@ -212,6 +213,11 @@ function renderPosts(rows) {
     (row.category === 'Meet results' ? results : target).append(post);
   }
   if (!results.children.length) results.append(el('p', 'Meet results and PDF reports will appear here after the coach publishes them.', 'empty'));
+  let sharedPost = location.hash.slice(1);
+  try { sharedPost = decodeURIComponent(sharedPost); } catch { /* Keep the original fragment. */ }
+  if (sharedPost.startsWith('update-')) {
+    requestAnimationFrame(() => document.getElementById(sharedPost)?.scrollIntoView());
+  }
 }
 
 function renderHome() {

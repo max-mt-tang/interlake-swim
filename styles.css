@@ -103,6 +103,8 @@ img { display: block; max-width: 100%; }
 .updates-section { display: grid; grid-template-columns: .75fr 1.7fr; gap: 64px; padding-top: 2px; }
 .section-intro > p:not(.eyebrow) { color: var(--muted); font-size: 14px; margin: 18px 0 10px; max-width: 260px; }
 .post { background: white; border: 1px solid var(--line); border-radius: 12px; padding: 28px 32px; }
+.post[id] { scroll-margin-top: 24px; }
+.post:target { border-color: #dba532; box-shadow: 0 0 0 3px #f4c65b55; }
 .post + .post { margin-top: 18px; }
 .post-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 17px; color: var(--muted); font-size: 11px; }
 .post h3 { margin-bottom: 17px; font-size: 24px; }

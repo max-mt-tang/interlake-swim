@@ -78,6 +78,7 @@ function emptyForm() {
   selected = null;
   $("#post-list").querySelectorAll("button").forEach(n => n.classList.remove("selected"));
   $("#delete-post").hidden = true;
+  $("#copy-post-link").hidden = true;
   $("#new-post").hidden = true;
   revision = null;
   dirty = false;
@@ -133,6 +134,7 @@ async function listPosts() {
       button.classList.add("selected");
       selected = p.id;
       $("#delete-post").hidden = false;
+      $("#copy-post-link").hidden = !p.published;
       $("#new-post").hidden = false;
       revision = p.revision;
       $("#title").value = p.title;
@@ -377,6 +379,12 @@ if (!auth) {
   $("#new-post").addEventListener("click", async () => {
     if (!saving && !uploading && await mayDiscard()) emptyForm();
   });
+  $("#copy-post-link").addEventListener("click", () => attempt(async () => {
+    if (!selected || !allowed(auth.currentUser)) return;
+    const url = `${location.origin}/#update-${encodeURIComponent(selected)}`;
+    await navigator.clipboard.writeText(url);
+    message('Post link copied. Paste it into your school email.');
+  }));
   $("#import-posts").addEventListener("click", () =>
     attempt(async () => {
       const source = LOCAL_UPDATES.find((p) => p.title === "Weekly Update #3");
@@ -551,6 +559,7 @@ if (!auth) {
         });
         selected = ref.id;
         $("#delete-post").hidden = false;
+        $("#copy-post-link").hidden = false;
         $("#new-post").hidden = false;
         revision = (oldRevision || 0) + 1;
         dirty = false;
